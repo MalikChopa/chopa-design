@@ -370,3 +370,201 @@ Décisions de l'utilisateur et choix de Diapason appliqués : **U1** (cercles : 
 | Budget `chopa.js` (audit §2) | 5 | 10 Ko, budgets par module à 9,4 Ko (D7) |
 | Algorithme `acc-text` (audit §2 b) | 3 | Bidirectionnel, décrit |
 | Sources (audit §5) | 6 | `<details name>` : Newly available, 3 septembre 2024 ; `::details-content` ajouté |
+
+## 16. Doc immersive (avenant du 2026-11-26)
+
+Statut : proposé (concepteur, brief 32) · 2026-11-26, à auditer puis à valider. Références : `FICHE.md` (avenant du 2026-11-26), `JOURNAL.md` (« Maquette immersive » et sa vérification), `maquette/immersif/` (référence validée). Sections 1 à 15 inchangées ; cette section ne touche ni `chopa.css` ni `dist-lib/`.
+
+### 16.1 La décision en tête
+
+**L'accueil `/` devient le mur, construit par Astro depuis les fiches et un fichier de miniature par pièce (`site/src/tuiles/<slug>.html`) ; three 0.187.0 n'est importé que par le mur, en module chargé à la demande et réduit par Vite aux seules classes utilisées ; tout le reste (titre vivant, curseur carré, aimants, transitions entre pages) est du JavaScript sans dépendance, posé une fois par trois exécuteurs touchés chacun par un seul jalon ; la grille immobile des mêmes tuiles est la page de base, le mur une couche ajoutée par-dessus quand tout est réuni.**
+
+Trois raisons :
+1. **La grille d'abord, le mur ensuite.** Les 72 liens des tuiles existent dans le HTML construit, sans JavaScript ; le mur les clone en décor `aria-hidden`. Clavier, lecteur d'écran, mouvement réduit, petit écran, absence de 3D, lenteur et échec de chargement retombent tous sur la même grille, déjà mesurée dans la maquette (axe 0, 72 liens, 0 défilement à 375 px).
+2. **Une source par donnée, comme en section 1.** Titre, famille, ordre et lien viennent des fiches (`pieces.mjs`, lu sans être modifié) ; la miniature est un fichier par pièce, découvert par glob et contrôlé par `checks/tuiles.mjs`. Ajouter une pièce = ajouter sa fiche, ses exemples et sa tuile.
+3. **Un poids mesuré, payé seulement sur l'accueil.** Bundle jetable fait le 2026-11-26 avec le Vite installé (section 16.5) : three réduit aux imports du mur = 26,3 Ko gzip ; module de la scène complet = 30,8 Ko gzip, chargé après l'affichage, et seulement en mode mur. Les pages de pièce n'en chargent rien.
+
+**Prix à payer :**
+- 72 miniatures écrites à la main (reprises de la maquette) à tenir à jour : une pièce nouvelle sans tuile fait échouer `check-dist`.
+- En mode mur, chaque tuile existe deux fois dans le DOM (lien de la grille hors de la vue, clone 3D décoratif) ; mémoire GPU de 72 calques 3D non mesurée (parade : élagage, section 16.11).
+- La cause des transitions abandonnées de la maquette n'est pas prouvée : la parade (section 16.7) est une garde plus un test de 60 navigations, avec un plan de repli si le test reste rouge.
+- Le banc tourne sans GPU (SwiftShader) : la fluidité réelle, Safari réel et Firefox se regardent à la main au point de contrôle 9.
+- `DocLayout`, `index.astro` et `[slug].astro` sont réécrits une fois chacun (un jalon chacun) : un défaut de l'un se corrige dans ce jalon ou par Diapason, jamais par un autre jalon.
+
+### 16.2 Options écartées
+
+- **Miniature = premier exemple de la fiche, automatiquement** : ids et références à réécrire, tailles prévues pour la page et pas pour 260 px, états fermés (modale, menu) qui ne montrent qu'un bouton ; la maquette validée repose sur des miniatures faites main.
+- **Champ `tuile` dans chaque fiche `.mjs`** : du HTML dans des chaînes JavaScript, que les contrôles HTML (`svg-sans-trace`, `btn-icon`, `figure`) ne lisent pas.
+- **Calque WebGL** (`three.module.js`, lumière, grain en shader) : écarté par la maquette (poids, couleurs mélangées hors palette).
+- **Routeur client d'Astro (`<ClientRouter />`)** : navigation façon appli, scripts relancés autrement, hypothèses du banc cassées ; les transitions natives entre documents suffisent.
+- **Mur sur une page à part (`/mur/`)** : l'avenant dit « l'accueil est un espace 3D ».
+- **Mur simplifié sur téléphone** : choix 2 de la maquette, grille sous 900 × 560 px.
+- **Copier `three.core.js` dans `public/`** (1 474 799 octets bruts) : Vite n'en garde que 92 058 octets minifiés.
+- **Caméra CSS écrite à la main, sans three** : plus légère (non mesuré), mais l'accord de l'utilisateur vise three ; gardée comme repli si le budget de 16.5 saute.
+
+### 16.3 Où vont les choses (décisions M1 à M6)
+
+**M1. Accueil `/` = le mur.** Le contenu d'aujourd'hui y reste en « introduction » : `h1` (logotype CHOPA, texte « Chopa Design » pour le lecteur d'écran), phrase d'accroche, « Par où commencer » (Installation, Jetons, Créer ton thème, Composants), « Un exemple en direct » (`<Example file="button/primary" />`, puis `secondary` et `ghost`) et « Ce que la bibliothèque garantit ». **Contrainte du banc** : `checks/00-core.mjs` exige sur `site/dist/index.html` l'aperçu et le bloc de code de `button/primary`, le lien `chopa.css` et le script de thème en ligne sans `defer` ; `checks/fiches.mjs` exige `href="/composants/<slug>/"` pour chaque fiche (les liens des tuiles le portent, sans `#` ni paramètre). En mode grille, l'introduction est au-dessus des familles. En mode mur, elle est hors de la vue comme la grille, et le script lui pose `inert` (retiré en mode grille) : rien de focalisable n'est caché, le `h1` reste en dehors de la partie `inert`.
+**M2. `/composants/` = la grille immobile des 63 pièces** (5 familles, jamais de 3D), même composant que la grille du mur ; elle remplace la liste en cartes. C'est la cible du lien « Composants » et l'adresse stable de la version sans mouvement.
+**M3. Pages de pièce `/composants/<slug>/`** : mise en page « pleine » de la maquette (`bouton.html`), sans barre latérale. En-tête de pièce (`view-transition-name: im-piece`) : fil « Le mur · famille · numéro » (lien vers `/#p-<slug>`), `h1` en typo vivante, but, **la tuile de la pièce en grand** (`inert`, `aria-hidden` : c'est l'image de la tuile qui devient la page). Puis le contenu actuel inchangé (Quand l'employer, Variantes avec `Example`, Dans les trois thèmes, États, Accessibilité, JavaScript requis), avec un sommaire `ch-toc` (`data-ch-toc`) à gauche dès 1 000 px, et « Pièces voisines » (précédente, suivante dans l'ordre du mur). Boutons aimantés : les `.ch-btn` actifs des aperçus (`.doc-example__preview`) et de l'en-tête. Ancres des sections préfixées `s-` (`s-variantes`…) pour ne jamais croiser un id d'exemple.
+**M4. Autres pages de la doc** (installation, jetons, thème, gabarits, marque, icônes, effets) : mise en page actuelle avec la barre latérale ; elles reçoivent le curseur carré, le fondu de transition et le titre vivant sur leur premier `h1` de `#contenu` (taille inchangée, aucun fichier de page modifié). Pas d'aimants (la page « créer ton thème » est un outil de travail). **Les gabarits publiés (`/gabarits/<genre>/<page>/`) ne reçoivent rien** : ce sont des pages faites seulement avec la bibliothèque (`checks/gabarits.mjs`).
+**M5. Barre du haut, commune** (`DocLayout`) : marque, recherche, thèmes, bouton « Version calme », et en mise en page pleine un menu natif `<details>` « Menu » avec les pages de premier niveau (`pagesNav`) et « Toutes les pièces » (`/composants/`), qui remplace la barre latérale. La barre porte `view-transition-name: im-barre` (elle ne bouge pas pendant une transition).
+**M6. « Version calme »** : un bouton à bascule (`aria-pressed`) dans la barre de toutes les pages de la doc, absent sans JavaScript et en mouvement réduit (qui l'impose déjà). Mémorisé dans `localStorage` sous la clé `doc-calme` (`'1'`). Effet : mur remplacé par la grille, ni titre vivant, ni aimants, ni curseur carré, et transitions réduites au fondu (pas de plongée). Décidé dans `<head>` avant le premier rendu, comme dans la maquette.
+
+| Page | Mur 3D | Titre vivant | Curseur carré | Aimants | Transition |
+|---|---|---|---|---|---|
+| `/` | oui (sinon grille) | logotype de la scène ; `h1` de la grille | oui | non | plongée → page de pièce ; fondu |
+| `/composants/` | jamais | oui | oui | non | fondu |
+| `/composants/<slug>/` | non | oui (en-tête) | oui | `.ch-btn` des aperçus et de l'en-tête | en-tête ↔ tuile ; fondu |
+| installation, jetons, thème, gabarits, marque, icônes, effets | non | premier `h1` | oui | non | fondu |
+| `/gabarits/<genre>/<page>/` | non | non | non | non | aucune |
+
+### 16.4 Données des tuiles (décisions M7 à M9)
+
+**M7. Un fichier de miniature par tuile : `site/src/tuiles/<slug>.html`**, lu par `import.meta.glob('../tuiles/*.html', { query: '?raw', eager: true })`. 63 fichiers nommés comme les fiches, plus 9 pour les familles propres au mur (`gabarit-portfolio`, `gabarit-jeu`, `gabarit-appli`, `gabarit-blog`, `gabarit-doc`, `gabarit-boutique`, `marque`, `icones`, `grain`). Contenu repris de `maquette/immersif/outils/apercus.mjs` au jalon I1 (icônes en `/chopa/chopa-icons.svg#ch-i-<nom>`). Règles (`checks/tuiles.mjs`) : classes `ch-`, `is-` et `im-` seulement ; aucun `id`, `name`, `for`, `form`, attribut de référence ARIA (`aria-labelledby`, `aria-describedby`, `aria-controls`…), `style`, `<style>`, `<script>`, `<dialog>` ouvert par script ni `popover` actif ; `href` seulement `#` ; aucun tracé SVG ; bouton icône avec `aria-label` ; mots de `tests/denylist.txt` interdits (`motif` et `lireListe` importés de `checks/denylist.mjs`, sans le modifier) ; une tuile par fiche et par entrée de `familles-mur.mjs`, aucune tuile orpheline. Réduction facultative : la racine du fichier peut porter `im-z50`, `im-z60`, `im-z70` ou `im-z80` (propriété `zoom`, comme la maquette).
+**M8. Familles et ordre** : `site/src/immersif/donnees-mur.mjs` (nouveau) importe `pieces` et `FAMILLES` de `site/src/lib/pieces.mjs` (**non modifié**) : les 5 familles dans l'ordre de `FAMILLES`, les pièces dans l'ordre de `pieces` (famille, puis titre en français), numéros `NN·MM` calculés. Puis les 2 familles propres au mur, déclarées dans `site/src/immersif/familles-mur.mjs` (seule liste écrite à la main, 9 entrées : `slug`, `titre`, `but`, `href`) : Gabarits (une tuile par genre, vers la première page du genre ; `checks/tuiles.mjs` échoue si un dossier de `site/src/templates/` n'a pas sa tuile ou si un `href` ne vise pas une page construite) et Marque et icônes (Marque → `/marque/`, Icônes → `/icones/`, Grain → `/effets/`). « Logotype » et « Effets de défilement » restent dans Fondations, comme leurs fiches. Total : 72 tuiles, 7 familles.
+**M9. Rendu** : `site/src/components/Tuiles.astro` rend la grille (`<section>` par famille, `h2`, compte, `<ul role="list">`) ; chaque tuile `<li class="im-tuile" id="p-<slug>" data-slug data-famille>` contient l'aperçu (`inert`, `aria-hidden`) et le pied avec le lien (nom accessible = titre). Une tuile sans fichier fait échouer la construction avec le nom du fichier manquant (comme `Example`).
+
+### 16.5 Code, three et poids (décisions M10 à M12)
+
+**M10. Où vit le code** : tout dans `site/src/immersif/` (préfixe de classes `im-`, jamais dans `src/css/` ni dans `chopa.css`) :
+
+| Fichier | Rôle | Chargé par | Jalon |
+|---|---|---|---|
+| `tete.js` | en ligne dans `<head>` (`?raw`, comme `chopa-theme.js`) : drapeau calme et mouvement réduit (`im-calme` sur `<html>`), garde des transitions (16.7) | `DocLayout` | I0 |
+| `socle.css` | barre, menu plein, curseur, typo vivante, règles des transitions, mise en page pleine | `DocLayout` (import) | I0 |
+| `curseur.js`, `vivant.js`, `calme.js` | curseur carré ; titre vivant (`[data-im-vivant]`, sinon premier `h1` de `#contenu`) ; bouton « Version calme » | `DocLayout` (`<script>` traité par Astro, module) | I0 |
+| `tuiles.css`, `donnees-mur.mjs`, `familles-mur.mjs` | grille et tuiles ; données | `Tuiles.astro` | I1 |
+| `mode.js` | en ligne dans `<head>` de `/` (fente `head`) : décision mur ou grille avant le premier rendu (repris de `outils/index.gabarit.html`) | `index.astro` | I2 |
+| `mur.js`, `mur.css` | mode, clavier, liens, `inert` de l'introduction, garde de lenteur | `index.astro` | I2 |
+| `scene.js` | three + `CSS3DRenderer`, caméra, plongée, fond en canevas 2D, élagage | `import()` dans `mur.js` | I2 |
+| `aimants.js`, `piece.css` | boutons aimantés ; en-tête et corps de page de pièce | `[slug].astro` | I3 |
+
+**M11. three par Vite** : `scene.js` importe `import { Scene, PerspectiveCamera, Object3D, Vector3 } from 'three'` et `import { CSS3DRenderer, CSS3DObject } from 'three/examples/jsm/renderers/CSS3DRenderer.js'` (chemin ouvert par le champ `exports` de three 0.187.0 : `"./examples/jsm/*"`, lu le 2026-11-26 ; `sideEffects` de three = `["./src/nodes/**/*"]`). `mur.js` le charge par `import('./scene.js')` seulement en mode mur : Vite en fait un fichier séparé sous `/_astro/`. Rien n'est copié dans `public/`. **Mesure** (2026-11-26, bundle jetable `.out/archi/`, Vite 8.3.8 installé avec Astro 7.4.12, minification par défaut, gzip niveau 9, copies des fichiers de la maquette) :
+
+| Module | Octets | gzip |
+|---|---|---|
+| three seul (les 6 imports ci-dessus) | 92 058 | 26 345 |
+| `scene.js` + three (fichier chargé à la demande) | 102 576 | 30 791 |
+| `mur.js` | 5 366 | 2 336 |
+| typo vivante + aimants + copie (`page.js` sans la page modèle) | 4 011 | 1 778 |
+| `curseur.js` | 2 175 | 919 |
+| `transitions.js` | 230 | 173 |
+
+Aucun moteur WebGL dans le fichier (0 occurrence de `WebGLRenderer`). **La mention de licence de three disparaît à la minification** (`@license` absent du fichier produit) : I2 ajoute `site/src/pages/licences/three.txt.ts` (renvoie `node_modules/three/LICENSE` à la construction) et une ligne « three.js (MIT) » dans le pied du mur. Ces chiffres viennent de Vite seul, pas de `astro build` : `size-immersif` les remesure sur `site/dist`.
+**M12. Budgets** (`scripts/static/size-immersif.mjs`, créé à I0 avec tous ses seuils ; un seuil ne s'applique qu'à ce qui existe) : il lit chaque page construite, suit ses `<script type="module" src>` et leurs imports statiques (`/_astro/…`) puis les imports dynamiques, et mesure en gzip niveau 9 :
+- JS de la doc immersive chargé **au départ** sur `/` : ≤ 8 Ko (estimé 4,5 à 5 Ko d'après les mesures ci-dessus) ;
+- JS chargé **à la demande** sur `/` (scène + three) : ≤ 40 Ko (mesuré 30,8 Ko) ;
+- tout le JS de la doc immersive d'une page de pièce : ≤ 6 Ko (estimé 2,9 Ko) ;
+- toute autre page : ≤ 4 Ko ;
+- **aucune page autre que `/` n'atteint un fichier contenant `__THREE__`** (marque posée par three, retrouvée dans le fichier produit) ;
+- `site/dist/index.html` : ≤ 40 Ko gzip (estimé : la page de la maquette fait 8,2 Ko gzip, sans barre ni exemples) ;
+- `chopa.js`, `chopa-effects.js` restent mesurés par `size.mjs`, inchangé.
+
+**Exécuteurs touchés (règle D2 : un seul jalon chacun, jamais en paire)** : `DocLayout.astro` → I0 ; `index.astro` → I2 ; `[slug].astro` → I3 ; `pieces.mjs` → **aucun** (lu par `donnees-mur.mjs`) ; `build-css`, `run.mjs`, `check-dist`, `Example.astro`, `astro.config.mjs`, `package.json` → aucun.
+**`DocLayout` à I0, exactement** : (1) premier enfant de `<head>` après `meta` et `title` : `<style is:inline>@view-transition { navigation: auto; }</style>` ; (2) juste après, `tete.js` en ligne ; (3) inchangés : `chopa.css`, `chopa.js` avec `defer` et `onerror`, script de thème en ligne sans `defer` ; (4) `<slot name="head" />` ; (5) prop `plein` (sans barre latérale, menu `<details>` dans la barre) ; (6) `<slot name="barre" />` ; (7) bouton « Version calme » `hidden` ; (8) `import '../immersif/socle.css'` et les `<script>` de `curseur.js`, `vivant.js`, `calme.js`.
+
+### 16.6 Accessibilité et version calme (décisions M13 et M14)
+
+**M13. Comportement exact du mur**, repris de la maquette mesurée :
+- **Sans JavaScript** : la grille ; 72 tuiles visibles, 72 liens distincts ; bouton « Version calme » caché ; titres en texte simple ; curseur natif.
+- **Sans 3D CSS** (`CSS.supports('transform-style', 'preserve-3d')` faux), **sans WebGL** (indice d'accélération, il ne dessine rien), **module non chargé** (filet : grille rendue 1,5 s après `load`), **trop lent** (nouveau, M14) : la grille.
+- **Mouvement réduit** : la grille ; scène jamais lancée (`display: none`, 0 image) ; ni titre vivant, ni aimants, ni curseur carré ; transitions sautées ; `document.getAnimations().length === 0` après chargement, pointeur et molette.
+- **Sous 900 × 560 px** : la grille ; passage grille ↔ mur au franchissement du seuil sans recharger (écouteurs `change`).
+- **Clavier** : lien d'évitement « Aller aux pièces » (`#pieces`) ; un seul jeu de focalisables, les liens de la grille (famille par famille, colonne par colonne) ; en mode mur ils restent dans le document, hors de la vue, la caméra suit le lien focalisé et le clone 3D porte l'anneau (2 px `--ch-focus`, décalé de 3 px) ; flèches = tuile voisine ; Entrée = plongée (1,15 s) puis page ; index des familles en bas = trajet jusqu'à la famille ; l'introduction est `inert` en mode mur.
+- **Lecteur d'écran** : scène `aria-hidden`, clones sans lien ni id ni `name`, aperçus `inert` ; la page se lit comme la grille (`h1`, une `h2` par famille avec son compte, une liste de liens nommés par le titre).
+- **Contraste sur la scène** : tout texte posé en 3D (étiquettes, légende, aide, pied des tuiles) est sur une plaque opaque `--ch-bg` ou `--ch-card` ; les particules (couleurs `--ch-line`, `--ch-mute`, `--ch-acc`, lues dans les jetons) passent derrière, jamais sous un texte ; seules les paires autorisées de la section 9 sont permises, mesurées par le test (axe ne lit pas un calque `aria-hidden`).
+- **Curseur** : seulement avec `(hover: hover) and (pointer: fine)`, hors mouvement réduit et hors calme ; natif sur les champs de texte ; `pointer-events: none` ; caché dès Tab ou une flèche et laissé petit (14 px, vide) sur l'élément `:focus-visible` : il ne couvre jamais l'anneau. Il vit dans un calque fixe `inset: 0; overflow: hidden` et n'est créé qu'au premier mouvement de souris (sinon `check-overflow` le verrait hors de la fenêtre à sa position de départ, −100 px dans la maquette).
+- **Typo vivante** : le texte entier reste dans une copie lisible (`im-sr`), les lettres découpées sont `aria-hidden` ; le nom accessible du `h1` ne change pas.
+**M14. Garde de lenteur** (nouveau, non présent dans la maquette) : après le démarrage du mur, si plus d'un tiers des 90 premières images dépassent 50 ms, retour à la grille, `sessionStorage['doc-mur-lent'] = '1'` pour la session et message dans une région `role="status"` (« Version calme : l'affichage était trop lent »). Seuils estimés, à régler à I4.
+
+### 16.7 Transitions de page (décisions M15 et M16)
+
+**Constat** (maquette) : « Transition was aborted because of invalid state. ViewTransition opt-in disabled » par intermittence, toujours avec `bouton.html` au départ ou à l'arrivée ; « … Page already revealed » vu par Diapason dans un volet masqué. **Lecture des sources** (2026-11-26) : le brouillon de la spécification (CSS View Transitions 1, version de travail du 16 février 2025) saute une transition avec `InvalidStateError` si le document est caché au départ ou le devient pendant la transition, si un `view-transition-name` est en double dans l'ancien ou le nouvel état, si la taille du bloc conteneur des captures change, ou si une capture est trop grande ; il rejette alors `ready` sans le marquer comme traité (d'où le rejet non traité si aucun `catch` n'est posé à temps) ; `skipTransition()` saute avec `AbortError`. « opt-in disabled » ne figure pas dans la partie lue de la spécification (les 100 000 premiers caractères) : message propre à Chromium, probablement (non vérifié). **Hypothèse, non vérifiée** : dans la maquette, deux scripts bloquants (`transitions.js`, `chopa-theme.js`) précèdent la feuille qui porte `@view-transition` ; un calcul de style fait avant la lecture de cette feuille verrait l'inscription absente et annulerait la transition déjà préparée pour le nouveau document. Une page de départ cachée (volet masqué) explique l'autre message.
+**M15. Conception gardée** :
+1. Inscription `@view-transition { navigation: auto; }` dans un `<style>` en ligne, **premier** dans `<head>`, hors de toute requête média, sur toutes les pages de la doc (I0).
+2. Garde en ligne juste après (`tete.js`), écouteurs posés avant tout autre script : sur `pageswap` et `pagereveal`, `catch` posé tout de suite sur `ready`, `finished` et `updateCallbackDone` ; puis `skipTransition()` si le document n'est pas visible, si le mouvement est réduit, ou si la navigation est un rechargement (`navigation.activation.navigationType === 'reload'` quand l'API existe ; type non vérifié pour Safari).
+3. Un seul élément nommé `im-piece` par page : la scène en mode mur, l'en-tête sur une page de pièce, rien ailleurs (vérifié par le test). `im-barre` sur la barre de toutes les pages. Aucune transition dans un même document (le changement de thème n'en lance pas).
+4. Mouvement réduit : saut par la garde, plus `animation: none` sur les pseudo-éléments de transition (filet CSS de la maquette, conservé).
+5. Sans prise en charge (Firefox avant la 162, sortie annoncée le 2026-12-08 selon le relevé MDN du brief 31, non revérifié) : navigation ordinaire.
+**M16. Repli mesuré** : si le test de 60 navigations d'I0 ou d'I4 voit encore une erreur après la garde, (1) diagnostic noté au JOURNAL ; (2) retrait du nom `im-piece` (fondu seul) ; (3) retrait de l'inscription (navigation simple). Chaque étape est décidée par Diapason et dite à l'utilisateur ; le site reste juste à chaque étape.
+
+### 16.8 Banc de test
+
+Nouveaux fichiers seulement ; aucun script existant n'est modifié. Tous partent de `scripts/lib/browser.mjs` (`withBench`, `openPage`, `listPages`) et lisent `CH_OUT`.
+
+| Script (jalon) | Ce qu'il mesure |
+|---|---|
+| `static/size-immersif.mjs` (I0) | budgets de M12 ; échec nommé (page, fichier, octets) |
+| `checks/tuiles.mjs` (I1, chargé par `check-dist`) | règles de M7 et M8 ; 72 tuiles ; tuile manquante ou orpheline |
+| `browser/immersif-socle.mjs` (I0) | 60 navigations enchaînées entre pages existantes (Chromium, 3 thèmes) et 20 (WebKit) : 0 erreur console ou de page, `pagereveal.viewTransition` présent ou sauté avec sa raison notée ; un seul `im-piece` et un seul `im-barre` par page ; mouvement réduit : 0 animation pendant et après la navigation ; curseur : absent au toucher (`hasTouch`) et en mouvement réduit, caché après Tab, `elementFromPoint` le traverse ; titre vivant : nom accessible du `h1` inchangé, 0 lettre transformée en mouvement réduit ; calme : `aria-pressed`, mémorisé après rechargement, curseur et titre vivant arrêtés |
+| `browser/immersif-grille.mjs` (I1) | `/composants/` : 63 tuiles en 5 familles dans l'ordre de `pieces`, chaque lien répond 200 ; couleurs calculées des tuiles au repos dans les valeurs du thème (3 thèmes ; liste des rôles lue sur la page) ; 375 px : 0 défilement horizontal |
+| `browser/immersif-mur.mjs` (I2) | `/` à 1 440 × 900 : mode mur, 72 tuiles 3D, 72 liens ; clic sur une tuile → la bonne page ; Tab : les 10 premières tuiles dans l'ordre, la caméra suit, 1 seul anneau 3D ; flèches ; Entrée → page en moins de 2 s ; sans JS, sans WebGL, sans 3D CSS, mouvement réduit, 800 × 600, calme : grille immobile de 72 liens, 0 image de scène ; seuil franchi sans recharger dans les deux sens ; 375 px : 0 défilement ; orbite 5 s : ≥ 50 images par seconde et pire intervalle ≤ 50 ms (banc sans GPU) ; ≤ 30 tuiles 3D visibles au repos (élagage) et ≤ 8 000 nœuds DOM (`Performance.getMetrics`, estimé) ; textes de la scène : paires autorisées ≥ 4,5 ; axe 0 en mode mur et en mode grille, 3 thèmes ; introduction `inert` en mode mur ; arbre ARIA de `/` en mode mur = celui de la grille (API `ariaSnapshot` de Playwright à confirmer) |
+| `browser/immersif-pieces.mjs` (I3) | pages de pièce : en-tête et tuile en grand présents, 1 `h1`, ancres `s-` ; aimant : un `.ch-btn` se déplace vers le pointeur (≤ 14 px) puis revient à `transform: none` ; aucun aimant au toucher, en mouvement réduit, en calme ; pièces voisines = ordre du mur ; « Le mur » mène à `/#p-<slug>` ; axe 0 sur 5 pages choisies × 3 thèmes (toutes les pages restent couvertes par `a11y.mjs`) |
+| `browser/immersif-transitions.mjs` (I4) | boucle mur → plongée → pièce → retour → mur, pièce → voisine, pièce → autre page, avec rechargements intercalés : 60 navigations Chromium (3 thèmes), 20 WebKit ; 0 erreur ; à l'arrivée après plongée, transition présente ; au retour, la caméra part de la tuile et finit libre ; mouvement réduit : 0 animation ; garde de lenteur : ralentissement CPU ×20 (`Emulation.setCPUThrottlingRate`) ou, à défaut, `requestAnimationFrame` ralenti injecté avant chargement → grille en moins de 5 s, message `status`, 0 erreur |
+
+**Les scripts existants doivent rester verts sur les pages changées, sans retouche** :
+- `00-core` et `fiches` (statiques) : contraintes de M1 sur `/`.
+- `ids-uniques` : tuiles sans id (règle M7), ancres `s-` ; les clones 3D n'existent qu'à l'exécution.
+- `denylist` : pages construites ; plus la passe de `checks/tuiles.mjs` sur les sources.
+- `a11y` : toutes les pages × 3 thèmes à 1 280 px (mode mur sur `/` si le Chromium sans fenêtre a WebGL, comme dans la maquette), à 375 px (grille), et l'accueil en WebKit × 3 thèmes (mode mur si WebKit a WebGL : non vérifié).
+- `check-overflow` : scène, grille cachée et calque du curseur sont dans des boîtes `overflow: hidden`, ignorées par le script ; le curseur n'existe pas tant que la souris n'a pas bougé.
+- `motion` : en mouvement réduit tout est à plat. **Coût connu** : ses survols visent aussi les contrôles des miniatures, `inert` et couverts par le lien de la tuile ; chacun attend 2 s avant d'être passé (au plus 25 par page) : environ +50 s sur `/` et +50 s sur `/composants/` (estimé, non mesuré).
+- `palette` : ne lit que `.doc-example__preview` ; les aimants ne changent que `transform`. Les tuiles sont lues par `immersif-grille`.
+- `parity`, `keyboard`, `host`, `mutation` : pages d'essai `/parity/…` et `tests/host.html`, non touchées.
+- `chopa-js`, `contenu`, `medias`, `fenetres`, `retours`, `nav-statique`, `effets` : ils agissent sur les exemples des pages de pièce et sur `/effets/` ; les aimants ne bougent pas un bouton sous un pointeur posé en son centre, et le curseur ne capte aucun clic. **À prouver par I0 et I3** : toute la suite verte.
+- **Aucun contrôle existant n'a besoin d'apprendre les nouvelles pages** : `/` et `/composants/` restent des `index.html` trouvés par `listPages`. Les seuls ajouts sont `checks/tuiles.mjs` et les scripts ci-dessus.
+
+### 16.9 Jalons
+
+Un agent Sonnet par jalon (S ≈ 100–160 k, M ≈ 160–300 k tokens, non mesurés). Les agents ne commitent pas ; Diapason vérifie (build, `npm test`, `npm run test:browser`, navigateur) puis commite. **Critères communs (C′)** : critères C de la section 10 ; `npm run build`, `npm test` et `npm run test:browser` à 0 avec **tous** les scripts existants inchangés (`git diff --stat scripts/ tests/` ne montre que des fichiers ajoutés) ; `src/`, `dist-lib/` et `chopa.css` inchangés ; 0 erreur console sur les pages touchées ; textes fictifs.
+
+| Jalon | Contenu et fichiers | Scripts créés | Critères propres (en plus de C′) | Taille |
+|---|---|---|---|---|
+| **I0** socle commun (le plus petit squelette qui tourne) | `DocLayout.astro` (seul jalon qui le touche, détail en 16.5) ; `site/src/immersif/{tete.js, socle.css, curseur.js, vivant.js, calme.js}` | `static/size-immersif.mjs`, `browser/immersif-socle.mjs` | sur les pages existantes : 60 navigations Chromium et 20 WebKit, **0 erreur** (sinon M16) ; inscription en tête de `<head>` lue dans le HTML construit ; curseur, titre vivant, calme et mouvement réduit selon 16.8 ; JS ajouté ≤ 4 Ko gzip par page ; 0 `__THREE__` | M |
+| **I1** tuiles et grille | `site/src/tuiles/*.html` (72, reprises de la maquette) ; `site/src/immersif/{donnees-mur.mjs, familles-mur.mjs, tuiles.css}` ; `site/src/components/Tuiles.astro` ; `pages/composants/index.astro` | `checks/tuiles.mjs`, `browser/immersif-grille.mjs` | `checks/tuiles` vert, et rouge sur une tuile retirée, un `id`, un `style`, un `<path>`, un mot de la denylist (mutations à la main, restaurées, notées au JOURNAL) ; `/composants/` : 63 tuiles, ordre de `pieces`, liens 200, axe 0 × 3 thèmes, 375 px sans défilement, couleurs des tuiles dans la palette | M |
+| **I2** le mur | `pages/index.astro` (seul jalon) ; `site/src/immersif/{mode.js, mur.js, mur.css, scene.js}` ; `pages/licences/three.txt.ts` | `browser/immersif-mur.mjs` | tous les points d'`immersif-mur` (16.8) ; `00-core` et `fiches` verts sur la nouvelle accueil ; budgets `/` (≤ 8 Ko au départ, ≤ 40 Ko à la demande) ; garde de lenteur et élagage écrits (mesurés à I4) | M |
+| **I3** pages de pièce | `pages/composants/[slug].astro` (seul jalon) ; `site/src/immersif/{aimants.js, piece.css}` | `browser/immersif-pieces.mjs` | tous les points d'`immersif-pieces` ; `chopa-js`, `contenu`, `medias`, `fenetres`, `retours`, `nav-statique` verts sans retouche ; budget pièce ≤ 6 Ko ; 63 pages construites | M |
+| **I4** transitions et intégration | aucun exécuteur ; retouches permises dans `site/src/immersif/**` seulement | `browser/immersif-transitions.mjs` | boucle de 60 + 20 navigations à 0 erreur (sinon M16) ; garde de lenteur déclenchée ; seuils de M14 réglés et notés ; suite complète verte ; temps total du banc noté | S |
+
+**Point de contrôle n° 9 (utilisateur), après I4** : le mur sur le Mac réel (Chrome, Safari), une plongée, une page de pièce, la version calme, le téléphone (grille) ; la fluidité se juge ici (le banc n'a pas de GPU). **Testeur Sonnet n° 3** ensuite, sur la doc immersive (référence : `maquette/immersif/`), avant la mise en ligne.
+
+### 16.10 Parallélisme et ordre avec la mise en ligne
+
+Règles de la section 11 (racine `CH_OUT` par agent, fichiers disjoints, Diapason vérifie chaque agent à part puis l'ensemble).
+
+| Paire | Fichiers disjoints | Condition |
+|---|---|---|
+| I0 ‖ I1 | I0 : `DocLayout`, `immersif/{tete, socle, curseur, vivant, calme}`, 2 scripts ; I1 : `tuiles/`, `immersif/{donnees-mur, familles-mur, tuiles.css}`, `Tuiles.astro`, `composants/index.astro`, 2 scripts | aucune ; Diapason rejoue la suite complète après les deux |
+| I2 ‖ I3 | I2 : `index.astro`, `immersif/{mode, mur, mur.css, scene}`, `licences/` ; I3 : `[slug].astro`, `immersif/{aimants, piece.css}` | I0 et I1 vérifiés ; la plongée vers une page de pièce se teste à I4 |
+
+Séquentiel : I4 après I2 et I3. **Mise en ligne (proposition)** : le réglage d'Access (étape 2 en pause) peut se faire quand l'utilisateur veut, puisqu'il ne dépend pas du contenu ; le vrai `site/dist` n'est envoyé qu'**après** le point de contrôle 9 et le testeur n° 3. Raisons : un seul envoi au lieu de deux (chaque envoi crée des adresses d'aperçu), et l'accueil change entièrement. Rien n'est envoyé sans accord.
+
+### 16.11 Risques et points ouverts
+
+**Risques**
+- **Transitions abandonnées** : cause non prouvée (16.7) ; parade M15, test de 60 + 20 navigations dès I0, repli M16.
+- **Sans GPU ou machine lente** : WebGL sert d'indice, mais un rendu logiciel (SwiftShader, celui du banc) le satisfait aussi ; parade M14 (garde de lenteur). Fluidité réelle non mesurée avant le point de contrôle 9.
+- **Mémoire** : 72 calques 3D de 260 px (environ 1 Mo chacun à une densité de 2, soit environ 75 Mo pour le tout : estimation, non mesurée) ; agrandissement pendant la plongée. Parade : élagage (tuile hors de la fenêtre élargie à 2 largeurs : `visibility: hidden`, plus de calque), ≤ 30 tuiles visibles mesurées à I2.
+- **Safari et Firefox** : 3D CSS courante ; transitions entre documents dans Safari 18.2 et Chrome 126 (relevé MDN du brief 31) ; Firefox sans elles jusqu'à la 162 (annoncée le 2026-12-08, non revérifié) ; le banc a le WebKit de Playwright, pas Safari ; netteté du texte grossi en fin de plongée vue un peu floue dans la maquette.
+- **Focus en 3D** : le lien focalisé est invisible par construction, seul son clone porte l'anneau ; si la scène se fige, l'anneau disparaît. Parade : garde de lenteur, filet du module, test « 1 seul anneau 3D par Tab ».
+- **Banc plus long** : `motion` (+100 s estimés), deux scripts de 60 navigations, `a11y` sur un accueil plus lourd ; non mesuré.
+- **Scripts Astro** : placement et regroupement des `<script>` traités par Astro 7.4.12 non vérifiés ; I0 lit le HTML construit et note ce qui sort.
+- **Aimants et tests existants** : un test qui viserait un point près d'un bouton plutôt que son centre verrait le bouton bouger ; parade : I3 rejoue toute la suite.
+- **Arbre ARIA** : lecteur d'écran réel non testé (limite de la section 9).
+
+**Points ouverts (à soumettre à l'utilisateur)**
+1. Ordre avec la mise en ligne (16.10) : Access quand il veut, envoi du site après le point de contrôle 9.
+2. `/composants/` devient la grille immobile (fin de la liste en cartes).
+3. Plus de barre latérale sur les pages de pièce (menu dans la barre, pièces voisines), comme la maquette.
+4. « Version calme » sur toutes les pages, pas seulement sur le mur.
+5. Titre vivant sur le premier `h1` de toutes les pages de la doc.
+6. Seuils de la garde de lenteur (M14) et de l'élagage : estimés, réglés à I4.
+
+### 16.12 Ce que les exécuteurs ne font pas
+
+- Modifier un script ou un contrôle existant (`scripts/**`, `tests/**`), `src/css`, `src/js`, `dist-lib/`, `package.json`, `astro.config.mjs`, `Example.astro`, `pieces.mjs`, ou un exécuteur réservé à un autre jalon.
+- Ajouter une dépendance (ni GSAP, ni bibliothèque de défilement, ni routeur), importer `three.module.js` ou un moteur WebGL, copier three dans `public/`, utiliser `<ClientRouter />`.
+- Mettre une classe `im-` dans la bibliothèque, ou une couleur hors des jetons (canevas compris).
+- Désactiver un effet parce que la page est pilotée par un robot (`navigator.webdriver`), masquer une erreur de console autrement que par la garde de 16.7, cacher un anneau de focus, rendre focalisable un élément du calque 3D.
+- Écrire un vrai nom ou un texte non fictif ; commiter ; envoyer quoi que ce soit en ligne.

@@ -1,0 +1,63 @@
+/* Socle commun de la doc immersive (I0, §16.5 M10). Préfixes im- (mur, curseur, typo) et doc- (barre, menu) :
+   rien ici ne fait partie de la bibliothèque. Jetons --ch-* seulement ; coins carrés ; aucun mode de fusion.
+   Chargé par DocLayout après doc.css. */
+
+.im-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+/* ---------- Barre du haut ---------- */
+.doc-bar { view-transition-name: im-barre; }
+.doc-bar__outils { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; }
+.doc-calme { min-height: 44px; min-width: 44px; padding: 0 16px; margin: 0; background: none; border: 1px solid var(--ch-line); border-radius: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); cursor: pointer; }
+.doc-calme[hidden] { display: none; }
+.doc-calme:hover { color: var(--ch-fg); }
+.doc-calme[aria-pressed="true"] { background: var(--ch-fg); color: var(--ch-bg); }
+.doc-calme:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+
+/* ---------- Mise en page pleine : pas de barre latérale, menu natif dans la barre ---------- */
+.doc-shell--plein { display: block; }
+.doc-main--plein { max-width: none; padding: 0; margin: 0; }
+.doc-menu { position: relative; }
+.doc-menu__toggle { display: flex; align-items: center; min-height: 44px; padding: 0 4px; cursor: pointer; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-soft); }
+.doc-menu__toggle:hover { color: var(--ch-fg); }
+.doc-menu__toggle:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.doc-menu__panel { position: absolute; top: 100%; left: 0; z-index: var(--ch-z-bar); min-width: 260px; max-height: 70vh; overflow-y: auto; padding: 8px 0; background: var(--ch-card); border: 1px solid var(--ch-line); }
+.doc-menu__panel ul { margin: 0; padding: 0; list-style: none; }
+.doc-menu__panel a, .doc-menu__panel .doc-nav__soon { display: block; box-sizing: border-box; min-height: 44px; padding: 10px 16px; color: var(--ch-soft); text-decoration: none; }
+.doc-menu__panel a:hover { color: var(--ch-fg); }
+.doc-menu__panel a[aria-current="page"] { color: var(--ch-acc-text); font-weight: 600; }
+.doc-menu__panel a:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: -4px; }
+.doc-menu__panel .doc-nav__soon { color: var(--ch-mute); }
+
+/* ---------- Typo vivante (lettres découpées par vivant.js ; la copie lisible est .im-sr) ---------- */
+.im-vivant__mot { display: inline-block; white-space: nowrap; }
+.im-vivant__l { display: inline-block; }
+.im-vivant__point { display: inline-block; width: .2em; height: .2em; margin-left: .08em; background: var(--ch-acc); }
+
+/* ---------- Curseur carré (curseur.js) ---------- */
+.im-curseur-calque { position: fixed; inset: 0; z-index: 1000; overflow: hidden; pointer-events: none; }
+.im-curseur { position: absolute; top: 0; left: 0; width: 14px; height: 14px; margin: -7px 0 0 -7px; box-sizing: border-box; border: 2px solid var(--ch-focus); background: transparent; pointer-events: none; opacity: 0; will-change: transform; transition: width .18s ease, height .18s ease, margin .18s ease, opacity .15s; }
+.im-curseur.is-actif { opacity: 1; }
+.im-curseur.is-grand { width: 44px; height: 44px; margin: -22px 0 0 -22px; }
+.im-curseur.is-cache { opacity: 0; }
+/* Le curseur natif disparaît seulement pendant que le carré vit, et revient dès qu'un calque de la couche supérieure
+   (fenêtre modale, menu, bulle) passe au-dessus du carré. */
+html.im-curseur-on:not(:has(dialog[open], :popover-open)) * { cursor: none; }
+html.im-curseur-on:not(:has(dialog[open], :popover-open)) :is(input:is([type="text"], [type="email"], [type="search"], [type="url"], [type="tel"], [type="password"], [type="number"], :not([type])), textarea, [contenteditable="true"]) { cursor: text; }
+html:has(dialog[open], :popover-open) .im-curseur { opacity: 0; }
+/* Version calme et mouvement réduit : jamais de carré. */
+html.im-calme .im-curseur-calque { display: none; }
+
+/* ---------- Transitions de page (vues croisées entre documents ; l'inscription est dans <head>, en ligne) ---------- */
+/* L'inscription @view-transition est en ligne, première dans <head> (DocLayout) : elle ne dépend d'aucune feuille ni requête média.
+   Ici seulement la durée des groupes. En mouvement réduit : aucune animation (filet, la garde de tete.js saute déjà la transition).
+   En version calme : fondu seul, la plongée (élément nommé im-piece) est retirée. */
+::view-transition-group(im-piece) { animation-duration: .6s; animation-timing-function: cubic-bezier(.2, .7, .1, 1); }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: .3s; }
+html.im-calme .im-scene, html.im-calme .im-piece-hero { view-transition-name: none; }
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*), ::view-transition-image-pair(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
+
+/* Mouvement réduit : les liens du sommaire (chopa.js leur pose aria-current au chargement) ne lancent aucune transition, pas même
+   celle de 0,01 ms de la bibliothèque. Sans cela, sous charge, la révélation de la page voyait 2 animations de couleur (I4). */
+html.im-reduit .ch-toc__link { transition: none !important; }

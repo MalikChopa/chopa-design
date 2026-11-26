@@ -1,8 +1,17 @@
 ---
 // Une page par pièce, générée de site/src/data/<slug>.mjs (getStaticPaths sur la liste lue par glob).
+// Réécrite une seule fois, au jalon I3 de la doc immersive (docs/ARCHITECTURE.md §16.3 M3) : mise en page pleine (sans barre
+// latérale), en-tête de pièce (fil, titre vivant, but, tuile en grand : c'est elle que la transition de page fait venir du mur),
+// (la tuile est rendue dans une ombre déclarative FERMÉE : une copie de la miniature n'entre pas dans les requêtes du document ni dans les
+// sélecteurs de Playwright (ouverte, ses sélecteurs la traversent), que les contrôles du banc comptent élément par élément ; elle porte sa propre copie de chopa.css et des décors de tuile),
+// sommaire à gauche dès 1 000 px, contenu inchangé (mêmes sections, mêmes exemples), pièces voisines dans l'ordre du mur,
+// boutons aimantés. Ancres de section préfixées « s- » : jamais un id d'exemple.
 import DocLayout from '../../components/DocLayout.astro';
 import Example from '../../components/Example.astro';
 import { pieces } from '../../lib/pieces.mjs';
+import { familles } from '../../immersif/donnees-mur.mjs';
+import tuilesCss from '../../immersif/tuiles.css?raw'; // décors des miniatures, recopiés dans la tuile en grand (ombre déclarative)
+import '../../immersif/piece.css';
 
 export function getStaticPaths() {
   return pieces.map((p) => ({ params: { slug: p.slug }, props: { piece: p } }));
@@ -11,49 +20,111 @@ const { piece } = Astro.props;
 const liste = (a: string[] | undefined) => (a && a.length ? a : []);
 const themes = [['sombre', 'Sombre'], ['clair', 'Clair'], ['chaud', 'Chaud']];
 const premier = piece.variantes?.[0]?.exemple;
+
+// Ordre du mur : les pièces des fiches, famille par famille (les familles propres du mur n'ont pas de page de pièce).
+const ordre = familles.filter((f) => !f.propre).flatMap((f) => f.pieces);
+const rang = ordre.findIndex((p) => p.slug === piece.slug);
+const tuile = ordre[rang];
+const precedente = rang > 0 ? ordre[rang - 1] : null;
+const suivante = rang >= 0 && rang < ordre.length - 1 ? ordre[rang + 1] : null;
+
+const etats = liste(piece.etats);
+const a11y = liste(piece.a11y);
+const sections = [
+  piece.quand && ['quand', "Quand l'employer"],
+  ['variantes', 'Variantes'],
+  premier && ['themes', 'Dans les trois thèmes'],
+  etats.length > 0 && ['etats', 'États'],
+  a11y.length > 0 && ['a11y', 'Accessibilité'],
+  ['js', 'JavaScript requis'],
+].filter(Boolean) as string[][];
+const numero = (id: string) => String(sections.findIndex((s) => s[0] === id) + 1).padStart(2, '0');
 ---
-<DocLayout title={piece.titre}>
-  <p class="doc-eyebrow">{piece.famille} · {piece.ref === 'P' ? 'présente dans la planche' : 'nouvelle pièce'}</p>
-  <h1 class="doc-h1 doc-h1--page">{piece.titre}</h1>
-  <p class="doc-lead">{piece.but}</p>
-
-  {piece.quand && <>
-    <h2 class="doc-h2">Quand l'employer</h2>
-    <p class="doc-text">{piece.quand}</p>
-  </>}
-
-  <h2 class="doc-h2">Variantes</h2>
-  {(piece.variantes ?? []).length === 0 && <p class="doc-text">Aucune variante.</p>}
-  {(piece.variantes ?? []).map((v) => (
-    <section class="doc-variant">
-      <h3 class="doc-h3">{v.titre}</h3>
-      {v.texte && <p class="doc-text">{v.texte}</p>}
-      <Example file={v.exemple} />
-    </section>
-  ))}
-
-  {premier && <>
-    <h2 class="doc-h2">Dans les trois thèmes</h2>
-    <div class="doc-themes-grid">
-      {themes.map(([id, label]) => (
-        <div>
-          <p class="doc-eyebrow">{label}</p>
-          <Example file={premier} theme={id} code={false} />
+<DocLayout title={piece.titre} plein>
+  <section class="im-piece-hero" aria-labelledby="s-titre">
+    <div class="im-piece-hero__in">
+      <div class="im-piece-hero__texte">
+        <p class="im-piece-hero__fil">
+          <a href={`/#p-${piece.slug}`}>Le mur</a> · {piece.famille} · <span class="im-piece-hero__num">{tuile?.num}</span> · {piece.ref === 'P' ? 'présente dans la planche' : 'nouvelle pièce'}
+        </p>
+        <h1 class="im-piece-hero__titre" id="s-titre" data-im-vivant>{piece.titre}</h1>
+        <p class="im-piece-hero__but">{piece.but}</p>
+        <div class="im-piece-hero__actions">
+          <a class="ch-btn ch-btn--primary" href="#s-variantes">Voir les variantes</a>
+          <a class="ch-btn ch-btn--secondary" href="#s-themes">Dans les trois thèmes</a>
         </div>
-      ))}
+      </div>
+      {tuile && <div class="im-piece-hero__tuile" inert aria-hidden="true">
+        <template shadowrootmode="closed">
+          <link rel="stylesheet" href="/chopa/chopa.css" />
+          <style is:inline set:html={tuilesCss}></style>
+          <div class="im-tuile"><div class="im-tuile__apercu" set:html={tuile.html} /></div>
+        </template>
+      </div>}
     </div>
-  </>}
+  </section>
 
-  {liste(piece.etats).length > 0 && <>
-    <h2 class="doc-h2">États</h2>
-    <ul class="doc-list">{liste(piece.etats).map((e) => <li>{e}</li>)}</ul>
-  </>}
+  <div class="im-corps">
+    <nav class="ch-toc im-corps__toc" aria-label="Sur cette page" data-ch-toc>
+      <p class="ch-toc__title">Sur cette page</p>
+      <ol class="ch-toc__list">
+        {sections.map(([id, titre]) => <li><a class="ch-toc__link" href={`#s-${id}`}>{titre}</a></li>)}
+      </ol>
+    </nav>
 
-  {liste(piece.a11y).length > 0 && <>
-    <h2 class="doc-h2">Accessibilité</h2>
-    <ul class="doc-list">{liste(piece.a11y).map((e) => <li>{e}</li>)}</ul>
-  </>}
+    <div class="im-corps__main">
+      {piece.quand && <section class="im-bloc" id="s-quand" aria-labelledby="s-quand-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-quand-titre"><b>{numero('quand')}</b>Quand l'employer</h2>
+        <p class="doc-text">{piece.quand}</p>
+      </section>}
 
-  <h2 class="doc-h2">JavaScript requis</h2>
-  <p class="doc-text">{piece.js ?? 'aucun'}</p>
+      <section class="im-bloc" id="s-variantes" aria-labelledby="s-variantes-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-variantes-titre"><b>{numero('variantes')}</b>Variantes</h2>
+        {(piece.variantes ?? []).length === 0 && <p class="doc-text">Aucune variante.</p>}
+        {(piece.variantes ?? []).map((v) => (
+          <section class="doc-variant">
+            <h3 class="doc-h3">{v.titre}</h3>
+            {v.texte && <p class="doc-text">{v.texte}</p>}
+            <Example file={v.exemple} />
+          </section>
+        ))}
+      </section>
+
+      {premier && <section class="im-bloc" id="s-themes" aria-labelledby="s-themes-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-themes-titre"><b>{numero('themes')}</b>Dans les trois thèmes</h2>
+        <div class="doc-themes-grid">
+          {themes.map(([id, label]) => (
+            <div>
+              <p class="doc-eyebrow">{label}</p>
+              <Example file={premier} theme={id} code={false} />
+            </div>
+          ))}
+        </div>
+      </section>}
+
+      {etats.length > 0 && <section class="im-bloc" id="s-etats" aria-labelledby="s-etats-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-etats-titre"><b>{numero('etats')}</b>États</h2>
+        <ul class="doc-list">{etats.map((e) => <li>{e}</li>)}</ul>
+      </section>}
+
+      {a11y.length > 0 && <section class="im-bloc" id="s-a11y" aria-labelledby="s-a11y-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-a11y-titre"><b>{numero('a11y')}</b>Accessibilité</h2>
+        <ul class="doc-list">{a11y.map((e) => <li>{e}</li>)}</ul>
+      </section>}
+
+      <section class="im-bloc" id="s-js" aria-labelledby="s-js-titre">
+        <h2 class="im-bloc__titre doc-h2" id="s-js-titre"><b>{numero('js')}</b>JavaScript requis</h2>
+        <p class="doc-text">{piece.js ?? 'aucun'}</p>
+      </section>
+
+      <nav class="im-voisines" aria-label="Pièces voisines">
+        {precedente ? <a class="im-voisines__lien" href={precedente.href} rel="prev"><span class="im-voisines__sens">Pièce précédente</span><span class="im-voisines__nom">{precedente.titre}</span></a> : <span></span>}
+        {suivante ? <a class="im-voisines__lien im-voisines__lien--suite" href={suivante.href} rel="next"><span class="im-voisines__sens">Pièce suivante</span><span class="im-voisines__nom">{suivante.titre}</span></a> : <span></span>}
+      </nav>
+    </div>
+  </div>
+
+  <script>
+    import '../../immersif/aimants.js';
+  </script>
 </DocLayout>

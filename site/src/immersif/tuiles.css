@@ -1,0 +1,82 @@
+/* Grille immobile des tuiles (docs/ARCHITECTURE.md §16.4, décisions M7 à M9), reprise de la maquette immersive.
+   Chargée par Tuiles.astro après chopa.css. Préfixe im- : rien ici ne fait partie de la bibliothèque.
+   Palette : seuls les jetons --ch-* (noir, blancs, gris, un orange). Coins carrés. Aucun mode de fusion. */
+
+/* ---------- Page /composants/ : la mise en page pleine n'a pas de marge, la grille apporte la sienne ---------- */
+.im-grille-page { box-sizing: border-box; max-width: 1456px; margin: 0 auto; padding: 48px 28px 72px; }
+@media (max-width: 719px) { .im-grille-page { padding: 32px 16px 56px; } }
+
+/* ---------- Familles et grille ---------- */
+.im-pieces { max-width: 1400px; margin: 0 auto; padding: 0 0 48px; }
+.im-pieces:focus { outline: none; }
+.im-famille { margin-top: 56px; scroll-margin-top: 80px; }
+.im-famille:first-child { margin-top: 24px; }
+.im-famille__titre { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0 0 20px; padding-top: 16px; border-top: 1px solid var(--ch-line); font-family: var(--ch-mono); font-size: 13px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-fg); }
+.im-famille__num { color: var(--ch-acc-text); }
+.im-famille__compte { margin-left: auto; color: var(--ch-mute); }
+.im-tuiles { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 232px), 1fr)); gap: 16px; }
+
+/* ---------- Tuile ---------- */
+.im-tuile, .im-tuile3d { position: relative; box-sizing: border-box; display: flex; flex-direction: column; aspect-ratio: 1; min-width: 0; min-height: 0; background: var(--ch-card); border: 1px solid var(--ch-line); scroll-margin: 120px 0; }
+.im-tuile__apercu { position: relative; flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 18px; overflow: hidden; pointer-events: none; text-align: left; }
+.im-tuile__apercu > * { max-width: 100%; }
+.im-tuile__pied { display: flex; align-items: center; gap: 10px; min-height: 52px; margin: 0; padding: 0 14px; border-top: 1px solid var(--ch-line); background: var(--ch-card); }
+.im-tuile__num { flex: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; color: var(--ch-mute); }
+.im-tuile__lien { min-width: 0; font-size: 15px; font-weight: 600; line-height: 1.2; text-decoration: none; color: var(--ch-fg); }
+/* Le lien couvre toute la tuile (zone de clic) ; l'anneau de focus est posé sur la tuile entière. */
+.im-tuile__lien::after { content: ""; position: absolute; inset: -1px; z-index: 1; }
+.im-tuile__lien:focus-visible { outline: none; }
+.im-tuile__lien:focus-visible::after { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.im-tuile:hover { border-color: var(--ch-acc); }
+.im-tuile:hover .im-tuile__lien { color: var(--ch-acc-text); }
+/* Grille immobile : les miniatures ne s'animent pas (bandes, indicateurs de chargement, squelettes). */
+.im-tuile__apercu, .im-tuile__apercu *, .im-tuile__apercu *::before, .im-tuile__apercu *::after { animation: none !important; }
+
+/* Réductions des miniatures : la racine du fichier porte im-zNN ; elle ne dessine rien (display: contents),
+   ses enfants sont réduits par la propriété zoom, qui porte la mise en page et pas seulement le dessin. */
+.im-z50, .im-z60, .im-z70, .im-z80 { display: contents; }
+.im-z50 > * { zoom: .5; }
+.im-z60 > * { zoom: .6; }
+.im-z70 > * { zoom: .7; }
+.im-z80 > * { zoom: .8; }
+
+/* ---------- Petits décors des miniatures, en jetons seulement ---------- */
+.im-plein, .im-tuile__apercu .ch-field, .im-tuile__apercu .ch-fieldset, .im-tuile__apercu .ch-search, .im-tuile__apercu .ch-alert, .im-tuile__apercu .ch-toast { width: 100%; }
+.im-schema { box-sizing: border-box; width: 100%; height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 10px; border: 1px dashed var(--ch-mute); }
+.im-schema__in { flex: 1; margin: 0 18%; padding: 8px; background: var(--ch-bg2); border: 1px solid var(--ch-line); }
+.im-cases { width: 100%; }
+.im-case { display: block; min-height: 34px; background: var(--ch-bg2); border: 1px solid var(--ch-line); }
+.im-cases-v { width: 100%; }
+.im-case--carre { width: 44px; height: 44px; min-height: 0; }
+.im-cases .im-case:nth-child(4n+1), .im-cases-v .im-case:first-child { background: var(--ch-acc); border-color: var(--ch-acc); }
+.im-photo { display: block; width: 100%; aspect-ratio: 1; background: var(--ch-bg2); border: 1px solid var(--ch-line); position: relative; }
+.im-photo::after { content: ""; position: absolute; left: 18%; bottom: 18%; width: 32%; height: 32%; background: var(--ch-line); }
+.im-photo--16x9 { aspect-ratio: 16 / 9; }
+.im-galerie { width: 100%; }
+.im-tuile__apercu .ch-band__item { font-size: 40px; }
+.im-section { width: 100%; padding: 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); }
+.im-tabs .ch-tabs__list { display: flex; }
+.im-tabs .ch-tabs__panel { display: block; padding-top: 10px; }
+.im-statique { position: static; inset: auto; display: flex; flex-direction: column; width: 100%; height: auto; max-height: none; margin: 0; transform: none; }
+.im-skip-vu.ch-skip { position: static; width: auto; height: auto; min-height: 44px; padding: 0 24px; overflow: visible; clip-path: none; }
+.im-tooltip-vu { margin-top: 44px; }
+.im-tooltip-vu .ch-tooltip__bubble { display: block; }
+.im-page { box-sizing: border-box; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 12px; border: 1px solid var(--ch-line); background: var(--ch-bg); }
+.im-page .ch-t-h3 { font-size: 18px; }
+.im-icones { display: grid; grid-template-columns: repeat(4, 32px); gap: 14px 18px; color: var(--ch-fg); }
+.im-icones .ch-icon { width: 24px; height: 24px; }
+.im-icones .ch-icon:nth-child(5n+1) { color: var(--ch-acc-text); }
+.im-marque-tuile { font-size: 120px; }
+.im-grain-tuile { box-sizing: border-box; width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 10px; border: 1px solid var(--ch-line);
+  background-color: var(--ch-bg2);
+  background-image: linear-gradient(90deg, var(--ch-line) 2px, transparent 2px), linear-gradient(var(--ch-line) 2px, transparent 2px);
+  background-size: 7px 9px, 11px 5px; }
+.im-grain-tuile .ch-label { padding: 2px 6px; background: var(--ch-bg); }
+
+/* ---------- Index des familles (ancres de la page /composants/) ---------- */
+.im-ancres { border-bottom: 1px solid var(--ch-line); background: var(--ch-bg); }
+.im-ancres__liste { list-style: none; margin: 0 -10px; padding: 0; display: flex; flex-wrap: wrap; gap: 0 4px; }
+.im-ancres__lien { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; padding: 0 10px; white-space: nowrap; text-decoration: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-soft); border-bottom: 2px solid transparent; }
+.im-ancres__lien:hover { color: var(--ch-fg); }
+.im-ancres__lien:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: -4px; }
+.im-ancres__num { color: var(--ch-acc-text); }

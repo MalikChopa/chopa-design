@@ -1,13 +1,19 @@
 ---
-// Gabarit de toutes les pages de la doc. Écrit à J1b-1 ; les jalons suivants n'y touchent pas :
-// navigation et recherche sont générées des fiches (data/) et de la liste de pages (lib/pieces.mjs).
+// Gabarit de toutes les pages de la doc. Écrit à J1b-1 ; retouché une seule fois, au jalon I0 de la doc immersive
+// (docs/ARCHITECTURE.md §16.5) : inscription des transitions + tête commune en ligne, mise en page pleine (prop `plein`),
+// fente `barre`, bouton « Version calme », socle CSS et scripts du curseur, du titre vivant et de la version calme.
+// Navigation et recherche sont générées des fiches (data/) et de la liste de pages (lib/pieces.mjs).
 import '../doc.css';
+import '../immersif/socle.css';
 import ThemeSwitch from './ThemeSwitch.astro';
 import { parFamille, pagesNav } from '../lib/pieces.mjs';
 // Le script de thème est en ligne dans <head> (sans defer) : source unique, src/js/chopa-theme.js.
 import themeScript from '../../../src/js/chopa-theme.js?raw';
-interface Props { title: string }
-const { title } = Astro.props;
+// Tête commune de la doc immersive (écouteurs de transition et drapeaux calme / mouvement réduit), en ligne, sans defer.
+import teteScript from '../immersif/tete.js?raw';
+// plein : mise en page sans barre latérale (pages de pièce) ; le menu natif de la barre la remplace.
+interface Props { title: string; plein?: boolean }
+const { title, plein = false } = Astro.props;
 const chemin = Astro.url.pathname;
 const courant = (href: string) => (chemin === href ? 'page' : undefined);
 ---
@@ -17,14 +23,31 @@ const courant = (href: string) => (chemin === href ? 'page' : undefined);
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title} · Chopa Design</title>
+    <style is:inline>@view-transition { navigation: auto; }</style>
+    <script is:inline set:html={teteScript}></script>
     <link rel="stylesheet" href="/chopa/chopa.css" />
     <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
     <script is:inline set:html={themeScript}></script>
+    <slot name="head" />
   </head>
   <body>
     <a class="doc-skip" href="#contenu">Aller au contenu</a>
-    <header class="doc-bar">
+    <header class:list={['doc-bar', plein && 'doc-bar--plein']}>
       <a class="doc-brand" href="/" aria-label="Chopa Design, accueil">CHOPA<span class="doc-dot" aria-hidden="true"></span></a>
+      <slot name="barre" />
+      {plein && (
+        <details class="doc-menu">
+          <summary class="doc-menu__toggle">Menu</summary>
+          <nav class="doc-menu__panel" aria-label="Navigation de la documentation">
+            <ul>
+              {pagesNav.map((p) => (
+                <li>{p.lien ? <a href={p.chemin} aria-current={courant(p.chemin)}>{p.titre}</a> : <span class="doc-nav__soon">{p.titre} <small>à venir</small></span>}</li>
+              ))}
+              <li><a href="/composants/" aria-current={courant('/composants/')}>Toutes les pièces</a></li>
+            </ul>
+          </nav>
+        </details>
+      )}
       <div class="doc-search" data-doc-search hidden>
         <form role="search" class="doc-search__form" onsubmit="return false">
           <label class="doc-search__label" for="doc-q">Rechercher une pièce</label>
@@ -33,10 +56,13 @@ const courant = (href: string) => (chemin === href ? 'page' : undefined);
         <ul class="doc-search__results" id="doc-resultats" hidden></ul>
         <p class="doc-sr" id="doc-statut" role="status"></p>
       </div>
-      <ThemeSwitch />
+      <div class="doc-bar__outils">
+        <ThemeSwitch />
+        <button type="button" class="doc-calme" data-im-calme aria-pressed="false" hidden>Version calme</button>
+      </div>
     </header>
-    <div class="doc-shell">
-      <details class="doc-nav" open>
+    <div class:list={['doc-shell', plein && 'doc-shell--plein']}>
+      {!plein && <details class="doc-nav" open>
         <summary class="doc-nav__toggle">Navigation</summary>
         <nav aria-label="Navigation de la documentation">
           <ul class="doc-nav__list">
@@ -59,12 +85,17 @@ const courant = (href: string) => (chemin === href ? 'page' : undefined);
             ))}
           </ul>
         </nav>
-      </details>
-      <main class="doc-main" id="contenu" tabindex="-1"><slot /></main>
+      </details>}
+      <main class:list={['doc-main', plein && 'doc-main--plein']} id="contenu" tabindex="-1"><slot /></main>
     </div>
     <footer class="doc-footer">
       <p>Chopa Design · bibliothèque privée · polices Inter Tight et IBM Plex Mono (licence SIL OFL 1.1)</p>
     </footer>
+    <script>
+      import '../immersif/curseur.js';
+      import '../immersif/vivant.js';
+      import '../immersif/calme.js';
+    </script>
     <script is:inline>
       (function () {
         // Navigation : repliée sur petit écran (ouverte sans JavaScript).

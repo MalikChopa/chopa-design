@@ -11,7 +11,8 @@
     "check": "npm test && npm run test:browser"
   },
   "dependencies": {
-    "astro": "7.4.12"
+    "astro": "7.4.12",
+    "three": "0.187.0"
   },
   "devDependencies": {
     "axe-core": "4.14.0",

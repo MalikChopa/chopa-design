@@ -1,0 +1,46 @@
+/* Page de pièce de la doc immersive (I3, docs/ARCHITECTURE.md §16.3 M3), reprise de la maquette (bouton.html).
+   En-tête de pièce (nommé « im-piece » pour la transition avec la tuile du mur), corps en deux colonnes dès 1 000 px,
+   pièces voisines. Jetons --ch-* seulement ; coins carrés ; aucun mode de fusion. Préfixe im- : rien ici n'est dans la bibliothèque.
+   Chargé par pages/composants/[slug].astro, après doc.css et socle.css. */
+
+/* ---------- En-tête de pièce ---------- */
+.im-piece-hero { box-sizing: border-box; min-height: min(64vh, 640px); display: flex; flex-direction: column; justify-content: flex-end; padding: 40px 24px 40px; background: var(--ch-card); border-bottom: 1px solid var(--ch-line); view-transition-name: im-piece; }
+.im-piece-hero__in { box-sizing: border-box; width: 100%; max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 32px 48px; }
+.im-piece-hero__texte { flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 24px; }
+.im-piece-hero__fil { margin: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.im-piece-hero__fil a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ch-soft); text-decoration: none; }
+.im-piece-hero__fil a:hover { color: var(--ch-acc-text); }
+.im-piece-hero__fil a:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.im-piece-hero__num { color: var(--ch-acc-text); }
+.im-piece-hero__titre { margin: 0; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: clamp(40px, 9vw, 150px); line-height: .86; letter-spacing: var(--ch-display-track); text-transform: uppercase; overflow-wrap: anywhere; }
+.im-piece-hero__but { max-width: 720px; margin: 0; font-size: 20px; color: var(--ch-soft); }
+.im-piece-hero__actions { display: flex; flex-wrap: wrap; gap: 20px 36px; align-items: center; }
+/* La tuile en grand : la même que sur le mur, agrandie ; décor seulement (inert, aria-hidden dans le HTML). */
+.im-piece-hero__tuile { display: block; flex: 0 0 auto; width: 232px; aspect-ratio: 1; zoom: 1.5; margin: 0; pointer-events: none; }
+@media (max-width: 719px) {
+  .im-piece-hero { min-height: 0; padding: 24px 16px 32px; }
+  .im-piece-hero__tuile { zoom: 1; width: 232px; max-width: 100%; }
+}
+
+/* ---------- Corps : sommaire à gauche dès 1 000 px ---------- */
+.im-corps { box-sizing: border-box; max-width: 1400px; margin: 0 auto; padding: 56px 24px 48px; display: grid; gap: 48px; }
+@media (min-width: 1000px) { .im-corps { grid-template-columns: 220px minmax(0, 1fr); } .im-corps__toc { position: sticky; top: 24px; align-self: start; } }
+@media (max-width: 719px) { .im-corps { padding: 32px 16px 32px; gap: 32px; } }
+.im-corps__main { min-width: 0; display: flex; flex-direction: column; gap: 56px; }
+.im-bloc { display: flex; flex-direction: column; gap: 20px; scroll-margin-top: 24px; }
+.im-bloc > * { margin-top: 0; margin-bottom: 0; }
+.im-bloc .doc-variant { margin: 0; }
+.im-bloc__titre.doc-h2 { margin: 0; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: clamp(28px, 4vw, 52px); line-height: .92; letter-spacing: var(--ch-display-track); text-transform: uppercase; overflow-wrap: anywhere; }
+.im-bloc__titre b { margin-right: 14px; font-family: var(--ch-mono); font-weight: 400; font-size: 13px; letter-spacing: .12em; vertical-align: top; color: var(--ch-acc-text); }
+.im-bloc .doc-example { margin: 0 0 24px; }
+.im-bloc .doc-variant:last-child .doc-example { margin-bottom: 0; }
+
+/* ---------- Pièces voisines ---------- */
+.im-voisines { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); }
+.im-voisines__lien { box-sizing: border-box; display: flex; flex-direction: column; gap: 6px; min-height: 44px; padding: 20px; color: var(--ch-fg); text-decoration: none; border: 1px solid var(--ch-line); }
+.im-voisines__lien:hover { border-color: var(--ch-acc); }
+.im-voisines__lien:hover .im-voisines__nom { color: var(--ch-acc-text); }
+.im-voisines__lien:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.im-voisines__lien--suite { text-align: right; }
+.im-voisines__sens { font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+.im-voisines__nom { font-size: 22px; font-weight: 600; }

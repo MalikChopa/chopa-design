@@ -1,0 +1,58 @@
+/* Accueil « Mur en orbite » (I2, docs/ARCHITECTURE.md §16.3 M1, §16.5 M10, §16.6 M13). Repris de la maquette immersive
+   (maquette/immersif/immersif.css), adapté à la doc. Chargé par pages/index.astro après chopa.css et tuiles.css.
+   Préfixe im- : rien ici ne fait partie de la bibliothèque. Palette : seuls les jetons --ch-* ; coins carrés ; aucun mode de fusion.
+   Texte posé en 3D : toujours sur une plaque opaque (--ch-bg ou --ch-card) ; les particules du canevas passent derrière. */
+
+/* ---------- Grille (page de base, aussi sans JavaScript) ---------- */
+.im-hero__titre { margin: 8px 0 28px; font-size: clamp(56px, 11.5vw, 190px); line-height: .86; overflow-wrap: anywhere; }
+.im-intro { max-width: 1016px; margin-bottom: 40px; }
+.im-statut { margin: 0 0 24px; padding: 10px 14px; background: var(--ch-bg); border-left: 2px solid var(--ch-acc); color: var(--ch-soft); }
+.im-statut:empty { display: none; }
+.im-licence { margin: 8px 0 0; color: var(--ch-mute); }
+.im-licence a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ch-soft); }
+.im-licence a:hover { color: var(--ch-fg); }
+.im-licence a:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.im-ancres__lien[aria-current="true"] { color: var(--ch-fg); border-bottom-color: var(--ch-acc-text); }
+
+/* ---------- Mode « mur » (classe posée par mode.js avant le premier rendu) ---------- */
+.im-scene, .im-defile, .im-aide, .im-jauge { display: none; }
+.im-mur .im-scene { display: block; position: fixed; inset: 0; z-index: 1; overflow: hidden; background: var(--ch-bg); touch-action: pan-y; user-select: none; -webkit-user-select: none; view-transition-name: im-piece; }
+.im-mur .im-defile { display: block; }
+.im-scene__fond { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.im-scene__3d { position: absolute; inset: 0; }
+/* La grille reste dans le document (lecteur d'écran, Tab) mais hors de la vue : le mur la montre. L'introduction aussi
+   (mur.js lui pose « inert » : rien de focalisable n'est caché) ; le h1 reste lisible, hors de la vue. */
+.im-mur .im-grille-page { max-width: none; margin: 0; padding: 0; }
+.im-mur .im-hero__titre, .im-mur .im-intro, .im-mur .im-pieces, .im-mur .im-statut, .im-mur .doc-footer {
+  position: fixed; top: 0; left: 0; width: 1px; height: 1px; margin: 0; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+/* Aperçus de la grille masqués par visibility (et non display: none) : ils gardent leur boîte, et les contrôles du banc qui lisent
+   les pièces de la page (retours.mjs : mot « Info » d'une alerte) les voient comme sur /composants/. Rien n'est peint ni animé. */
+.im-mur .im-pieces .im-tuile__apercu { visibility: hidden; }
+.im-mur .doc-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 20; background: var(--ch-bg); }
+.im-mur .im-ancres { position: fixed; left: 0; right: 0; bottom: 0; z-index: 20; border-top: 1px solid var(--ch-line); border-bottom: 0; }
+.im-mur .im-ancres__liste { margin: 0 auto; padding: 0 16px; max-width: 1400px; flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; }
+.im-mur .im-jauge { display: block; position: fixed; left: 0; right: 0; bottom: 45px; z-index: 21; height: 2px; background: var(--ch-line); }
+.im-jauge__barre { display: block; width: 100%; height: 100%; background: var(--ch-acc); transform-origin: 0 50%; transform: scaleX(0); }
+.im-mur .im-aide { display: block; position: fixed; right: 24px; bottom: 64px; z-index: 20; margin: 0; padding: 8px 12px; background: var(--ch-bg); border: 1px solid var(--ch-line); color: var(--ch-soft); }
+.im-mur .im-licence { position: fixed; left: 24px; bottom: 64px; z-index: 20; margin: 0; padding: 0 12px; background: var(--ch-bg); border: 1px solid var(--ch-line); }
+
+/* ---------- Objets de la scène 3D (clones décoratifs, le calque entier est aria-hidden) ---------- */
+.im-tuile3d { width: 260px; height: 260px; cursor: pointer; transition: border-color .2s; }
+.im-tuile3d .im-tuile__lien { pointer-events: none; }
+.im-tuile3d .im-tuile__lien::after { content: none; }
+.im-tuile3d.is-survol { border-color: var(--ch-acc); }
+.im-tuile3d.is-survol .im-tuile__lien { color: var(--ch-acc-text); }
+.im-tuile3d.is-focus { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+/* Aperçu du clone : mêmes règles que .im-tuile__apercu (tuiles.css), sans la coupure des animations de la grille. */
+.im-ap3d { position: relative; flex: 1 1 auto; min-height: 0; min-width: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px; padding: 18px; overflow: hidden; pointer-events: none; text-align: left; }
+.im-ap3d > * { max-width: 100%; }
+.im-ap3d .ch-field, .im-ap3d .ch-fieldset, .im-ap3d .ch-search, .im-ap3d .ch-alert, .im-ap3d .ch-toast { width: 100%; }
+.im-ap3d .ch-band__item { font-size: 40px; }
+.im-mot { display: flex; align-items: baseline; transform-style: preserve-3d; white-space: nowrap; pointer-events: none; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: 300px; line-height: .8; letter-spacing: var(--ch-display-track); text-transform: uppercase; color: var(--ch-fg); }
+.im-mot__l { display: inline-block; }
+.im-mot__point { display: inline-block; width: .34em; height: .34em; margin-left: .14em; background: var(--ch-acc); }
+.im-etiquette { box-sizing: border-box; white-space: nowrap; pointer-events: none; padding: 8px 12px; background: var(--ch-bg); border-left: 2px solid var(--ch-acc); font-family: var(--ch-mono); font-size: 15px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-fg); }
+.im-etiquette b { font-weight: 400; color: var(--ch-acc-text); margin-right: 10px; }
+.im-etiquette span { color: var(--ch-mute); margin-left: 10px; }
+.im-legende { box-sizing: border-box; width: 760px; pointer-events: none; padding: 14px 18px; background: var(--ch-bg); font-size: 22px; line-height: 1.4; color: var(--ch-soft); }
+.im-legende .ch-label { display: block; margin-top: 10px; font-size: 13px; }

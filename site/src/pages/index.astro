@@ -1,31 +1,67 @@
 ---
+// Accueil « / » : le mur en orbite (docs/ARCHITECTURE.md §16.3 M1, §16.5 M10, §16.6 M13). Écrit une seule fois, au jalon I2.
+// La grille des 72 tuiles est la page de base (HTML, sans JavaScript) ; mode.js décide du mur avant le premier rendu,
+// mur.js (module, traité par Astro) charge la scène 3D à la demande. L'introduction d'avant reste là, au-dessus des familles.
+// Contrainte du banc (00-core, fiches) : l'aperçu et le bloc de code de button/primary, le lien chopa.css, le script de
+// thème sans defer, et un lien /composants/<slug>/ par fiche (ceux des tuiles).
 import DocLayout from '../components/DocLayout.astro';
 import Example from '../components/Example.astro';
+import Tuiles from '../components/Tuiles.astro';
 import { pieces, pagesNav } from '../lib/pieces.mjs';
+import { familles, total } from '../immersif/donnees-mur.mjs';
+import modeScript from '../immersif/mode.js?raw';
+import '../immersif/mur.css';
 const suite = pagesNav.filter((p) => ['/installation/', '/jetons/', '/theme/'].includes(p.chemin));
 ---
-<DocLayout title="Accueil">
-  <h1 class="doc-h1">Chopa Design</h1>
-  <p class="doc-lead">Une bibliothèque de pièces visuelles : un fichier <code>chopa.css</code> à copier dans un site, trois thèmes (sombre, clair, chaud), des coins carrés partout et un seul orange. Chaque pièce est montrée ici en direct, avec son code à copier.</p>
+<DocLayout title="Accueil" plein>
+  <script slot="head" is:inline set:html={modeScript}></script>
+  <div class="im-grille-page im-accueil">
+    <a class="ch-skip" href="#pieces">Aller aux pièces</a>
+    <h1 class="doc-h1 im-hero__titre" data-im-vivant>Chopa Design</h1>
+    <p class="im-statut ch-label" role="status" data-im-statut></p>
+    <div class="im-intro" data-im-intro>
+      <p class="doc-lead">Une bibliothèque de pièces visuelles : un fichier <code>chopa.css</code> à copier dans un site, trois thèmes (sombre, clair, chaud), des coins carrés partout et un seul orange. Chaque pièce est montrée ici en direct, avec son code à copier.</p>
 
-  <h2 class="doc-h2">Par où commencer</h2>
-  <ul class="doc-cards">
-    {suite.map((p) => (
-      <li>{p.lien ? <a href={p.chemin}><strong>{p.titre}</strong><span>{p.but}</span></a> : <span><strong>{p.titre}</strong><span>{p.but}</span></span>}</li>
-    ))}
-    <li><a href="/composants/"><strong>Composants</strong><span>{pieces.length === 0 ? 'Les pièces arrivent famille par famille' : `${pieces.length} pièce${pieces.length > 1 ? 's' : ''}, par famille`}</span></a></li>
-  </ul>
+      <h2 class="doc-h2">Par où commencer</h2>
+      <ul class="doc-cards">
+        {suite.map((p) => (
+          <li>{p.lien ? <a href={p.chemin}><strong>{p.titre}</strong><span>{p.but}</span></a> : <span><strong>{p.titre}</strong><span>{p.but}</span></span>}</li>
+        ))}
+        <li><a href="/composants/"><strong>Composants</strong><span>{pieces.length === 0 ? 'Les pièces arrivent famille par famille' : `${pieces.length} pièce${pieces.length > 1 ? 's' : ''}, par famille`}</span></a></li>
+      </ul>
 
-  <h2 class="doc-h2">Un exemple en direct</h2>
-  <p class="doc-text">Le bouton ci-dessous est du HTML ordinaire avec deux classes. Change de thème avec les boutons du haut de la page : l'aperçu suit, le code reste le même.</p>
-  <Example file="button/primary" />
-  <Example file="button/secondary" />
-  <Example file="button/ghost" />
+      <h2 class="doc-h2">Un exemple en direct</h2>
+      <p class="doc-text">Le bouton ci-dessous est du HTML ordinaire avec deux classes. Change de thème avec les boutons du haut de la page : l'aperçu suit, le code reste le même.</p>
+      <Example file="button/primary" />
+      <Example file="button/secondary" />
+      <Example file="button/ghost" />
 
-  <h2 class="doc-h2">Ce que la bibliothèque garantit</h2>
-  <ul class="doc-list">
-    <li>Chaque texte atteint au moins 4,5 : 1 de contraste dans les trois thèmes, recalculé à chaque jeton ajouté.</li>
-    <li>Le focus est visible, les cibles tactiles font au moins 44 px, le mouvement respecte <code>prefers-reduced-motion</code>.</li>
-    <li>Le HTML natif passe d'abord ; un <code>chopa.js</code> facultatif comble seulement ce que le navigateur ne fait pas.</li>
-  </ul>
+      <h2 class="doc-h2">Ce que la bibliothèque garantit</h2>
+      <ul class="doc-list">
+        <li>Chaque texte atteint au moins 4,5 : 1 de contraste dans les trois thèmes, recalculé à chaque jeton ajouté.</li>
+        <li>Le focus est visible, les cibles tactiles font au moins 44 px, le mouvement respecte <code>prefers-reduced-motion</code>.</li>
+        <li>Le HTML natif passe d'abord ; un <code>chopa.js</code> facultatif comble seulement ce que le navigateur ne fait pas.</li>
+      </ul>
+
+      <h2 class="doc-h2">Les pièces</h2>
+      <p class="doc-text">{total} tuiles en {familles.length} familles : chaque tuile est la vraie pièce, et son lien ouvre sa page. Sur un grand écran, le mur les montre en 3D ; le bouton « Version calme » de la barre les remet à plat.</p>
+    </div>
+    <nav class="im-ancres" aria-label="Familles de pièces">
+      <ol class="im-ancres__liste">
+        {familles.map((f) => <li><a class="im-ancres__lien" href={`#famille-${f.ancre}`}><span class="im-ancres__num" aria-hidden="true">{f.num}</span> {f.nom}</a></li>)}
+      </ol>
+    </nav>
+    <Tuiles mur />
+    <p class="im-licence ch-label">Mur en 3D : <a href="/licences/three.txt">three.js (MIT)</a></p>
+    <div class="im-scene" aria-hidden="true">
+      <canvas class="im-scene__fond"></canvas>
+      <div class="im-scene__3d"></div>
+    </div>
+    <p class="im-aide ch-label" aria-hidden="true">Défile ou glisse · survole · clique pour plonger</p>
+    <div class="im-jauge" aria-hidden="true"><span class="im-jauge__barre"></span></div>
+    <div class="im-defile" aria-hidden="true"></div>
+  </div>
+  <script>
+    import '../immersif/mur.js';
+  </script>
 </DocLayout>

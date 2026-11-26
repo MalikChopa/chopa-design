@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chopa Design · le mur des pièces (maquette immersive)</title>
+<meta name="description" content="Maquette immersive de la bibliothèque Chopa : un mur de <!--TOTAL--> pièces vivantes en orbite.">
+<!-- Page générée par outils/generer.mjs depuis outils/index.gabarit.html : modifier le gabarit, puis relancer. -->
+<script>
+/* Décision du mode avant le premier rendu (sinon la transition de page capterait la grille) : le mur seulement si
+   le mouvement n'est pas réduit, l'écran assez grand, la 3D CSS disponible et la version calme non demandée. */
+(function () {
+  var r = document.documentElement, calme = false;
+  try { calme = localStorage.getItem('im-calme') === '1'; } catch (e) {}
+  /* WebGL ne dessine rien ici : sa présence sert d'indice d'accélération matérielle (72 calques 3D à composer). */
+  var gl = false;
+  try { var c = document.createElement('canvas'), x = c.getContext('webgl') || c.getContext('experimental-webgl'); gl = Boolean(x);
+    if (x && x.getExtension('WEBGL_lose_context')) x.getExtension('WEBGL_lose_context').loseContext(); } catch (e) {}
+  window.__imWebgl = gl;
+  var ok = window.matchMedia && !matchMedia('(prefers-reduced-motion: reduce)').matches
+    && matchMedia('(min-width: 900px) and (min-height: 560px)').matches
+    && window.CSS && CSS.supports('transform-style', 'preserve-3d') && gl && !calme;
+  if (ok) r.classList.add('im-mur');
+  /* Filet : si le module du mur ne s'est jamais lancé (modules ou cartes d'import absents), la grille revient. */
+  addEventListener('load', function () { setTimeout(function () { if (!window.__imMur) r.classList.remove('im-mur'); }, 1500); });
+})();
+</script>
+<script src="transitions.js"></script>
+<script src="chopa/chopa-theme.js"></script>
+<link rel="stylesheet" href="chopa/chopa.css">
+<link rel="stylesheet" href="immersif.css">
+<script type="importmap">{ "imports": { "three": "./vendor/three.core.js" } }</script>
+<script type="module" src="mur.js" onerror="document.documentElement.classList.remove('im-mur')"></script>
+<script src="curseur.js" defer></script>
+</head>
+<body class="im-body">
+<a class="ch-skip" href="#pieces">Aller aux pièces</a>
+<header class="im-barre">
+  <div class="im-barre__gauche">
+    <a class="im-barre__marque ch-wordmark" href="index.html">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span><span class="im-sr"> Design, accueil</span></a>
+    <span class="im-barre__titre ch-label">Design system · <!--TOTAL--> pièces · maquette</span>
+  </div>
+  <div class="im-barre__droite">
+    <div class="im-seg" role="group" aria-label="Thème">
+      <button class="im-seg__btn" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+      <button class="im-seg__btn" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+      <button class="im-seg__btn" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+    </div>
+    <div class="im-seg" data-im-calme-boite hidden>
+      <button class="im-seg__btn" type="button" data-im-calme aria-pressed="false">Version calme</button>
+    </div>
+  </div>
+</header>
+<nav class="im-familles" aria-label="Familles de pièces">
+<ol class="im-familles__liste">
+<!--FAMILLES-->
+</ol>
+</nav>
+<main id="contenu">
+  <div class="im-hero">
+    <h1 class="im-hero__titre"><span class="ch-wordmark im-geant">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span></span><span class="im-sr"> Design : le mur des pièces</span></h1>
+    <p class="im-hero__texte">La bibliothèque de l'identité Chopa : <!--TOTAL--> pièces vivantes en <!--NB-FAMILLES--> familles. Chaque tuile est la vraie pièce, en HTML et chopa.css ; ouvre-la pour lire sa page et copier son code.</p>
+    <p class="im-hero__aide ch-label">Version calme : la grille immobile, chaque tuile est un lien.</p>
+  </div>
+  <div class="im-pieces" id="pieces" tabindex="-1">
+    <h2 class="im-sr">Les pièces, famille par famille</h2>
+<!--TUILES-->
+  </div>
+</main>
+<div class="im-scene" aria-hidden="true">
+  <canvas class="im-scene__fond"></canvas>
+  <div class="im-scene__3d"></div>
+</div>
+<p class="im-aide ch-label" aria-hidden="true">Défile ou glisse · survole · clique pour plonger</p>
+<div class="im-jauge" aria-hidden="true"><span class="im-jauge__barre"></span></div>
+<div class="im-defile" aria-hidden="true"></div>
+</body>
+</html>

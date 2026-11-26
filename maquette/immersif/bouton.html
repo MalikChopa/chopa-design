@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bouton · Chopa Design (maquette immersive)</title>
+<!-- Page de pièce de la maquette immersive (brief 31). Contenu tiré de site/src/data/button.mjs et de ses exemples. -->
+<script src="transitions.js"></script>
+<script src="chopa/chopa-theme.js"></script>
+<link rel="stylesheet" href="chopa/chopa.css">
+<link rel="stylesheet" href="immersif.css">
+<script type="module" src="page.js"></script>
+<script src="curseur.js" defer></script>
+</head>
+<body class="im-body">
+<a class="ch-skip" href="#contenu">Aller au contenu</a>
+<header class="im-barre">
+  <div class="im-barre__gauche">
+    <a class="im-barre__marque ch-wordmark" href="index.html">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span><span class="im-sr"> Design, accueil</span></a>
+    <a class="im-retour" href="index.html#p-button"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-arrow"></use></svg>Retour au mur</a>
+  </div>
+  <div class="im-barre__droite">
+    <div class="im-seg" role="group" aria-label="Thème">
+      <button class="im-seg__btn" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+      <button class="im-seg__btn" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+      <button class="im-seg__btn" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+    </div>
+  </div>
+</header>
+<main id="contenu" tabindex="-1">
+  <section class="im-piece-hero" aria-labelledby="titre">
+    <div class="im-piece-hero__in">
+      <p class="im-piece-hero__fil ch-label"><a href="index.html#p-button">Base et formulaires</a> · 02·01 · présente dans la planche</p>
+      <h1 class="im-vivant" id="titre" data-im-vivant>Bouton</h1>
+      <p class="im-piece-hero__but">Déclencher une action (&lt;button&gt;) ou ouvrir une page (&lt;a&gt;), avec trois niveaux d'importance.</p>
+      <div class="im-piece-hero__demo">
+        <button class="ch-btn ch-btn--primary" type="button">Me contacter</button>
+        <button class="ch-btn ch-btn--secondary" type="button">Voir les projets</button>
+        <button class="ch-btn ch-btn--ghost" type="button">En savoir plus</button>
+      </div>
+    </div>
+  </section>
+
+  <div class="im-corps">
+    <nav class="ch-toc im-corps__toc" aria-label="Sur cette page">
+      <p class="ch-toc__title">Sur cette page</p>
+      <ol class="ch-toc__list">
+        <li><a class="ch-toc__link" href="#quand">Quand l'employer</a></li>
+        <li><a class="ch-toc__link" href="#variantes">Variantes</a></li>
+        <li><a class="ch-toc__link" href="#themes">Dans les trois thèmes</a></li>
+        <li><a class="ch-toc__link" href="#etats">États</a></li>
+        <li><a class="ch-toc__link" href="#a11y">Accessibilité</a></li>
+        <li><a class="ch-toc__link" href="#js">JavaScript requis</a></li>
+      </ol>
+    </nav>
+
+    <div class="im-corps__main">
+      <section class="im-bloc" id="quand" aria-labelledby="t-quand">
+        <h2 class="im-bloc__titre" id="t-quand"><b>01</b>Quand l'employer</h2>
+        <p>Principal pour l'action la plus importante de la page (une seule par zone), secondaire pour les actions de second plan, discret pour les actions légères. Pour changer de page, un lien habillé en bouton ; pour une action, un vrai &lt;button&gt;. Un bouton qui ne montre qu'une icône est un bouton icône.</p>
+      </section>
+
+      <section class="im-bloc" id="variantes" aria-labelledby="t-variantes">
+        <h2 class="im-bloc__titre" id="t-variantes"><b>02</b>Variantes</h2>
+
+        <article class="im-variante" aria-labelledby="v1">
+          <div class="im-variante__tete"><h3 id="v1">Principal</h3><p>ch-btn ch-btn--primary : fond d'accent, texte on-acc. Au survol, fond et bordure en fg, texte en bg.</p></div>
+          <div class="im-variante__demo"><button class="ch-btn ch-btn--primary" type="button">Me contacter</button></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Principal</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;button class="ch-btn ch-btn--primary" type="button"&gt;Me contacter&lt;/button&gt;</code></pre></div>
+        </article>
+
+        <article class="im-variante" aria-labelledby="v2">
+          <div class="im-variante__tete"><h3 id="v2">Secondaire</h3><p>ch-btn--secondary : bordure d'accent, texte acc-text. Au survol, fond d'accent.</p></div>
+          <div class="im-variante__demo"><button class="ch-btn ch-btn--secondary" type="button">Voir les projets</button></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Secondaire</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;button class="ch-btn ch-btn--secondary" type="button"&gt;Voir les projets&lt;/button&gt;</code></pre></div>
+        </article>
+
+        <article class="im-variante" aria-labelledby="v3">
+          <div class="im-variante__tete"><h3 id="v3">Discret et désactivé</h3><p>ch-btn--ghost : texte seul, filet d'accent qui se déroule au survol ; sa zone de clic fait 44 px de haut même sans cadre. Un bouton neutre désactivé est montré avec lui.</p></div>
+          <div class="im-variante__demo"><button class="ch-btn ch-btn--ghost" type="button">En savoir plus</button><button class="ch-btn" type="button" disabled>Indisponible</button></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Discret et désactivé</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;button class="ch-btn ch-btn--ghost" type="button"&gt;En savoir plus&lt;/button&gt;
+&lt;button class="ch-btn" type="button" disabled&gt;Indisponible&lt;/button&gt;</code></pre></div>
+        </article>
+
+        <article class="im-variante" aria-labelledby="v4">
+          <div class="im-variante__tete"><h3 id="v4">Désactivé, trois variantes</h3><p>L'attribut disabled donne le même rendu aux trois variantes : bordure line, texte mute, curseur « interdit ». Le contraste reste de 4,5 : 1 au moins (pas d'opacité).</p></div>
+          <div class="im-variante__demo"><button class="ch-btn ch-btn--primary" type="button" disabled>Lancer la partie</button><button class="ch-btn ch-btn--secondary" type="button" disabled>Charger la sauvegarde</button><button class="ch-btn ch-btn--ghost" type="button" disabled>Options</button></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Désactivé</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;div class="ch-row"&gt;
+  &lt;button class="ch-btn ch-btn--primary" type="button" disabled&gt;Lancer la partie&lt;/button&gt;
+  &lt;button class="ch-btn ch-btn--secondary" type="button" disabled&gt;Charger la sauvegarde&lt;/button&gt;
+  &lt;button class="ch-btn ch-btn--ghost" type="button" disabled&gt;Options&lt;/button&gt;
+&lt;/div&gt;</code></pre></div>
+        </article>
+
+        <article class="im-variante" aria-labelledby="v5">
+          <div class="im-variante__tete"><h3 id="v5">Avec une icône</h3><p>Un glyphe du sprite (ch-icon, aria-hidden) à côté du texte : le texte reste le nom du bouton.</p></div>
+          <div class="im-variante__demo"><button class="ch-btn ch-btn--primary" type="button">Lire l'épisode <svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-arrow"></use></svg></button><button class="ch-btn ch-btn--secondary" type="button"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-plus"></use></svg> Ajouter à la liste</button></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Avec une icône</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;button class="ch-btn ch-btn--primary" type="button"&gt;Lire l'épisode
+  &lt;svg class="ch-icon" aria-hidden="true" focusable="false"&gt;&lt;use href="chopa/chopa-icons.svg#ch-i-arrow"&gt;&lt;/use&gt;&lt;/svg&gt;
+&lt;/button&gt;</code></pre></div>
+        </article>
+
+        <article class="im-variante" aria-labelledby="v6">
+          <div class="im-variante__tete"><h3 id="v6">Lien en bouton</h3><p>ch-btn sur un &lt;a href&gt; : même aspect, même hauteur de 44 px.</p></div>
+          <div class="im-variante__demo"><a class="ch-btn ch-btn--primary" href="#carnet">Ouvrir le carnet</a><a class="ch-btn ch-btn--ghost" href="#journal">Journal de bord</a></div>
+          <div class="ch-code"><div class="ch-code__bar"><button class="ch-code__copy" type="button" data-im-copier><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="chopa/chopa-icons.svg#ch-i-copy"></use></svg><span data-im-etat>Copier</span><span class="im-sr"> le code : Lien en bouton</span></button></div><pre class="ch-code__pre" tabindex="0"><code>&lt;a class="ch-btn ch-btn--primary" href="#carnet"&gt;Ouvrir le carnet&lt;/a&gt;
+&lt;a class="ch-btn ch-btn--ghost" href="#journal"&gt;Journal de bord&lt;/a&gt;</code></pre></div>
+        </article>
+      </section>
+
+      <section class="im-bloc" id="themes" aria-labelledby="t-themes">
+        <h2 class="im-bloc__titre" id="t-themes"><b>03</b>Dans les trois thèmes</h2>
+        <div class="im-trois">
+          <div data-ch-theme="sombre"><p class="ch-label">Sombre</p><button class="ch-btn ch-btn--primary" type="button">Me contacter</button><button class="ch-btn ch-btn--secondary" type="button">Voir les projets</button></div>
+          <div data-ch-theme="clair"><p class="ch-label">Clair</p><button class="ch-btn ch-btn--primary" type="button">Me contacter</button><button class="ch-btn ch-btn--secondary" type="button">Voir les projets</button></div>
+          <div data-ch-theme="chaud"><p class="ch-label">Chaud</p><button class="ch-btn ch-btn--primary" type="button">Me contacter</button><button class="ch-btn ch-btn--secondary" type="button">Voir les projets</button></div>
+        </div>
+      </section>
+
+      <section class="im-bloc" id="etats" aria-labelledby="t-etats">
+        <h2 class="im-bloc__titre" id="t-etats"><b>04</b>États</h2>
+        <ul>
+          <li>Repos, survol (couleurs de la planche), focus visible (contour de 2 px, décalé de 3 px), désactivé (attribut disabled).</li>
+          <li>Le survol et le focus sont mesurés par tests/parity/button.json (thèmes sombre, clair et chaud), pas par une image : un exemple statique ne peut pas les montrer.</li>
+        </ul>
+      </section>
+
+      <section class="im-bloc" id="a11y" aria-labelledby="t-a11y">
+        <h2 class="im-bloc__titre" id="t-a11y"><b>05</b>Accessibilité</h2>
+        <ul>
+          <li>Un vrai &lt;button&gt; ou un &lt;a href&gt; : Entrée et Espace (bouton), Entrée (lien) marchent sans script.</li>
+          <li>Cible d'au moins 44 px de haut ; le bouton discret agrandit sa zone par un ::before invisible.</li>
+          <li>Le texte du bouton est son nom ; ne jamais le remplacer par une icône sans aria-label (voir Bouton icône).</li>
+          <li>Désactivé : texte mute sur bg, bg2 ou card, 4,5 : 1 au moins dans les trois thèmes.</li>
+        </ul>
+      </section>
+
+      <section class="im-bloc" id="js" aria-labelledby="t-js">
+        <h2 class="im-bloc__titre" id="t-js"><b>06</b>JavaScript requis</h2>
+        <p>Aucun. Dans cette maquette, l'aimant des boutons vient de page.js (effet de la doc, pas de la pièce).</p>
+      </section>
+    </div>
+  </div>
+
+  <nav class="im-suite" aria-label="Pièces voisines">
+    <a href="piece.html?p=texte"><span class="ch-label">Précédente · 01·09</span><b>Texte</b></a>
+    <a href="piece.html?p=button-icon"><span class="ch-label">Suivante · 02·02</span><b>Bouton icône</b></a>
+  </nav>
+</main>
+<p class="im-sr" aria-live="polite" data-im-annonce></p>
+</body>
+</html>

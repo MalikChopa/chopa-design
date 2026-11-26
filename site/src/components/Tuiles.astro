@@ -1,0 +1,27 @@
+---
+// Grille immobile des tuiles (docs/ARCHITECTURE.md §16.4, décision M9). Une <section> par famille (h2 + compte),
+// une <ul role="list"> de tuiles ; chaque tuile = aperçu décoratif (inert, aria-hidden) + lien nommé par le titre.
+// Prop `mur` : faux (défaut) = les 5 familles des fiches (page /composants/) ; vrai = les 7 familles du mur (accueil, I2).
+// Une tuile sans fichier fait échouer la construction (donnees-mur.mjs). Style : immersif/tuiles.css.
+import '../immersif/tuiles.css';
+import { familles } from '../immersif/donnees-mur.mjs';
+interface Props { mur?: boolean }
+const { mur = false } = Astro.props;
+const groupes = familles.filter((f) => mur || !f.propre);
+const pluriel = (n: number) => `${n} pièce${n > 1 ? 's' : ''}`;
+---
+<div class="im-pieces" id="pieces" tabindex="-1">
+  {groupes.map((f) => (
+    <section class="im-famille" id={`famille-${f.ancre}`} data-famille={f.num} aria-labelledby={`t-${f.ancre}`}>
+      <h2 class="im-famille__titre" id={`t-${f.ancre}`}><span class="im-famille__num" aria-hidden="true">{f.num}</span> {f.nom} <span class="im-famille__compte">{pluriel(f.pieces.length)}</span></h2>
+      <ul class="im-tuiles" role="list">
+        {f.pieces.map((p) => (
+          <li class="im-tuile" id={`p-${p.slug}`} data-slug={p.slug} data-famille={f.num}>
+            <div class="im-tuile__apercu" inert aria-hidden="true" set:html={p.html} />
+            <p class="im-tuile__pied"><span class="im-tuile__num" aria-hidden="true">{p.num}</span><a class="im-tuile__lien" href={p.href}>{p.titre}</a></p>
+          </li>
+        ))}
+      </ul>
+    </section>
+  ))}
+</div>
