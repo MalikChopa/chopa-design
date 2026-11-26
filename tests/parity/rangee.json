@@ -1,0 +1,15 @@
+{
+  "slug": "rangee",
+  "piece": "Rangée (ch-row)",
+  "note": "Planche : .row. Les enfants sont des boutons de la planche et leurs équivalents Chopa : on compare la racine en entier, les enfants par leur boîte (position et taille).",
+  "cases": [
+    { "id": "row", "widths": [1280, 420],
+      "ch": "<div class=\"ch-row\"><button class=\"ch-btn ch-btn--primary\" type=\"button\">Me contacter</button><button class=\"ch-btn ch-btn--secondary\" type=\"button\">Voir les projets</button><button class=\"ch-btn ch-btn--ghost\" type=\"button\">En savoir plus</button></div>",
+      "board": "<div class=\"row\"><button class=\"btn btn-primary\" type=\"button\">Me contacter</button><button class=\"btn btn-secondary\" type=\"button\">Voir les projets</button><button class=\"btn btn-ghost\" type=\"button\">En savoir plus</button></div>",
+      "pairs": [
+        { "id": "racine", "ch": ".ch-row", "board": ".row" },
+        { "id": "enfant-1", "ch": ".ch-row > :nth-child(1)", "board": ".row > :nth-child(1)", "only": ["width", "height", "display", "align-self", "flex-grow", "flex-shrink"] },
+        { "id": "enfant-3", "ch": ".ch-row > :nth-child(3)", "board": ".row > :nth-child(3)", "ignore": [ { "target": "::before", "reason": "zone de clic 44 px du bouton fantôme (ajout voulu de Chopa)" } ], "only": ["width", "height", "display", "align-self", "flex-grow", "flex-shrink"] }
+      ] }
+  ]
+}

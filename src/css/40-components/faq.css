@@ -1,0 +1,6 @@
+/* FAQ (pièce 47) : construite sur l'accordéon. ch-faq (div) > details.ch-accordion__item [name] > summary.ch-accordion__summary (la question)
+   + div.ch-accordion__panel (la réponse). Mêmes classes d'éléments que l'accordéon ; ch-faq ajoute la largeur de lecture (--ch-measure)
+   et des questions plus grandes. Exclusive (même `name` sur tous les details) ou libre (sans `name`) : au choix de l'auteur.
+   Couleurs : celles de l'accordéon (fg, soft sur bg, bg2, card). */
+.ch-faq { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: var(--ch-measure); border-bottom: 1px solid var(--ch-line); }
+.ch-faq > .ch-accordion__item > .ch-accordion__summary { font-size: 17px; font-weight: 600; }

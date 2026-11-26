@@ -1,0 +1,45 @@
+---
+// Un exemple = un fichier .html brut, lu une fois, rendu deux fois : aperçu vivant et code.
+// Coloration : Shiki, thème `css-variables` ; les couleurs viennent de doc.css (variables --astro-code-*, par thème).
+import { Code } from 'astro:components';
+
+interface Props { file: string; theme?: string; code?: boolean }
+const { file, theme, code: avecCode = true } = Astro.props;
+
+const all = import.meta.glob('../examples/**/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const source = all[`../examples/${file}.html`];
+if (source === undefined) throw new Error(`Example : fichier introuvable : ${file}`);
+const code = source.trim();
+
+// Copies par thème (Diapason, 2026-11-15) : sur la page d'une pièce, le premier exemple est rendu une fois de plus
+// par thème. Chaque copie suffixe ses id, les références à ces id (for, aria-*, popovertarget, list, form, headers,
+// href="#…", data-ch-*="#…") et ses attributs name (groupes de radios, details exclusifs) : les id restent uniques
+// dans la page et chaque copie fonctionne seule. Les repères (nav, aside, search, section, form, header, footer, main,
+// ou un role de repère) nommés par aria-label reçoivent « (thème …) » ; un nav, aside ou search sans nom en reçoit un :
+// un repère par rôle et par nom, sans retirer le <nav> du code à copier. Le code affiché reste l'exemple tel quel.
+const REFS = ['for', 'form', 'list', 'headers', 'popovertarget', 'commandfor', 'aria-controls', 'aria-describedby',
+  'aria-labelledby', 'aria-owns', 'aria-details', 'aria-errormessage', 'aria-activedescendant', 'aria-flowto'];
+const REPERES = /^<(nav|aside|search|section|form|header|footer|main)\b|\srole="(navigation|search|region|complementary|form|banner|contentinfo|main)"/i;
+function isoler(html: string, s: string, nomTheme: string) {
+  const ids = new Set([...html.matchAll(/<[a-zA-Z][^>]*\sid="([^"]+)"/g)].map((m) => m[1]));
+  const jetons = (v: string) => v.split(/(\s+)/).map((t) => (ids.has(t) ? t + s : t)).join('');
+  return html.replace(/<[a-zA-Z][^>]*>/g, (balise) => {
+    const repere = REPERES.test(balise);
+    let b = balise.replace(/(\s)([\w:-]+)="([^"]*)"/g, (m, sp, nom, val) => {
+      const n = nom.toLowerCase();
+      if (n === 'id' || n === 'name') return `${sp}${nom}="${val}${s}"`;
+      if (REFS.includes(n)) return `${sp}${nom}="${jetons(val)}"`;
+      if (n === 'aria-label' && repere) return `${sp}${nom}="${val} (thème ${nomTheme})"`;
+      if ((n === 'href' || n.startsWith('data-ch-')) && val.startsWith('#') && ids.has(val.slice(1))) return `${sp}${nom}="${val}${s}"`;
+      return m;
+    });
+    if (/^<(nav|aside|search)\b/i.test(b) && !/\saria-label(ledby)?="/i.test(b)) b = b.replace(/^<(\w+)/, `<$1 aria-label="Aperçu, thème ${nomTheme}"`);
+    return b;
+  });
+}
+const apercu = theme ? isoler(code, `--${theme}`, theme) : code;
+---
+<figure class="doc-example">
+  <div class="doc-example__preview" data-ch-theme={theme} set:html={apercu} />
+  {avecCode && <div class="doc-example__code"><Code code={code} lang="html" theme="css-variables" /></div>}
+</figure>

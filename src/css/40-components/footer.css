@@ -1,0 +1,28 @@
+/* Pied de page (pièce 30) : footer > ch-footer__inner > ch-footer__brand (nom + texte) + nav.ch-footer__nav (nommé) > ch-footer__col (ch-footer__title + ul.ch-footer__list > li > a.ch-footer__link),
+   puis ch-footer__legal (mentions, texte mute). Colonnes : grille qui s'adapte (minimum 160 px) ; une seule colonne sous 640 px DE LARGEUR DU PIED DE PAGE (requête de conteneur, comme l'en-tête :
+   le pied de page se montre aussi dans une colonne étroite d'un grand écran, où la fenêtre ne dit rien de sa largeur).
+   Liens : 44 px de haut (ligne entière). --compact : une seule rangée, sans colonnes.
+   Couleurs : titre de colonne mute ; lien soft (survol fg) ; nom fg ; mentions mute ; sur bg, bg2, card ; filet line. */
+.ch-footer { box-sizing: border-box; margin: 0; padding: var(--ch-s6) 0 var(--ch-s5); display: block; width: 100%; container-type: inline-size; border-top: 1px solid var(--ch-line); color: var(--ch-fg); }
+.ch-footer__inner { box-sizing: border-box; margin: 0 auto; padding: 0 28px; max-width: var(--ch-wrap-max); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--ch-s6); }
+.ch-footer__brand { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ch-s2); min-width: 0; }
+.ch-footer__name { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-display); font-size: 18px; font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .9; text-transform: uppercase; color: var(--ch-fg); }
+.ch-footer__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 36ch; font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-soft); }
+.ch-footer__nav { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--ch-s5) var(--ch-s5); min-width: 0; }
+.ch-footer__col { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+.ch-footer__title { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-footer__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; }
+.ch-footer__list > li { margin: 0; padding: 0; }
+.ch-footer__link { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; min-height: var(--ch-hit); font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); transition: color var(--ch-t-fast); }
+.ch-footer__link:hover { color: var(--ch-fg); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.ch-footer__legal { box-sizing: border-box; margin: var(--ch-s6) auto 0; padding: var(--ch-s4) 28px 0; max-width: var(--ch-wrap-max); border-top: 1px solid var(--ch-line); font-family: var(--ch-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; line-height: 1.6; color: var(--ch-mute); }
+.ch-footer--compact .ch-footer__inner { grid-template-columns: minmax(0, 1fr); gap: var(--ch-s3); }
+.ch-footer--compact .ch-footer__nav { display: flex; flex-wrap: wrap; gap: 0 var(--ch-s5); }
+.ch-footer--compact .ch-footer__list { display: flex; flex-wrap: wrap; gap: 0 var(--ch-s5); }
+@container (max-width: 800px) {
+  .ch-footer__inner { grid-template-columns: minmax(0, 1fr); padding: 0 16px; }
+  .ch-footer__legal { padding-left: 16px; padding-right: 16px; }
+}
+@container (max-width: 640px) {
+  .ch-footer__nav { grid-template-columns: minmax(0, 1fr); }
+}

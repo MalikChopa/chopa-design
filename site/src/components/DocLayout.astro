@@ -1,0 +1,111 @@
+---
+// Gabarit de toutes les pages de la doc. Écrit à J1b-1 ; les jalons suivants n'y touchent pas :
+// navigation et recherche sont générées des fiches (data/) et de la liste de pages (lib/pieces.mjs).
+import '../doc.css';
+import ThemeSwitch from './ThemeSwitch.astro';
+import { parFamille, pagesNav } from '../lib/pieces.mjs';
+// Le script de thème est en ligne dans <head> (sans defer) : source unique, src/js/chopa-theme.js.
+import themeScript from '../../../src/js/chopa-theme.js?raw';
+interface Props { title: string }
+const { title } = Astro.props;
+const chemin = Astro.url.pathname;
+const courant = (href: string) => (chemin === href ? 'page' : undefined);
+---
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title} · Chopa Design</title>
+    <link rel="stylesheet" href="/chopa/chopa.css" />
+    <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+    <script is:inline set:html={themeScript}></script>
+  </head>
+  <body>
+    <a class="doc-skip" href="#contenu">Aller au contenu</a>
+    <header class="doc-bar">
+      <a class="doc-brand" href="/" aria-label="Chopa Design, accueil">CHOPA<span class="doc-dot" aria-hidden="true"></span></a>
+      <div class="doc-search" data-doc-search hidden>
+        <form role="search" class="doc-search__form" onsubmit="return false">
+          <label class="doc-search__label" for="doc-q">Rechercher une pièce</label>
+          <input class="doc-search__input" id="doc-q" type="search" placeholder="Rechercher une pièce" autocomplete="off" aria-controls="doc-resultats" />
+        </form>
+        <ul class="doc-search__results" id="doc-resultats" hidden></ul>
+        <p class="doc-sr" id="doc-statut" role="status"></p>
+      </div>
+      <ThemeSwitch />
+    </header>
+    <div class="doc-shell">
+      <details class="doc-nav" open>
+        <summary class="doc-nav__toggle">Navigation</summary>
+        <nav aria-label="Navigation de la documentation">
+          <ul class="doc-nav__list">
+            {pagesNav.slice(0, 2).map((p) => (
+              <li>{p.lien ? <a href={p.chemin} aria-current={courant(p.chemin)}>{p.titre}</a> : <span class="doc-nav__soon">{p.titre} <small>à venir</small></span>}</li>
+            ))}
+            <li>
+              <a href="/composants/" aria-current={courant('/composants/')}>Composants</a>
+              {parFamille.length === 0 ? <p class="doc-nav__empty">Aucune pièce pour l'instant.</p> : parFamille.map((g) => (
+                <div class="doc-nav__group">
+                  <p class="doc-nav__family">{g.famille}</p>
+                  <ul>
+                    {g.pieces.map((p) => <li><a href={`/composants/${p.slug}/`} aria-current={courant(`/composants/${p.slug}/`)}>{p.titre}</a></li>)}
+                  </ul>
+                </div>
+              ))}
+            </li>
+            {pagesNav.slice(2).map((p) => (
+              <li>{p.lien ? <a href={p.chemin} aria-current={courant(p.chemin)}>{p.titre}</a> : <span class="doc-nav__soon">{p.titre} <small>à venir</small></span>}</li>
+            ))}
+          </ul>
+        </nav>
+      </details>
+      <main class="doc-main" id="contenu" tabindex="-1"><slot /></main>
+    </div>
+    <footer class="doc-footer">
+      <p>Chopa Design · bibliothèque privée · polices Inter Tight et IBM Plex Mono (licence SIL OFL 1.1)</p>
+    </footer>
+    <script is:inline>
+      (function () {
+        // Navigation : repliée sur petit écran (ouverte sans JavaScript).
+        var nav = document.querySelector('.doc-nav');
+        if (nav && window.matchMedia('(max-width: 899px)').matches) nav.removeAttribute('open');
+        // Recherche : filtre local sur /recherche.json (titre, famille, but, classes), chargé au premier focus.
+        var box = document.querySelector('[data-doc-search]');
+        if (!box) return;
+        box.hidden = false;
+        var input = box.querySelector('input'), list = box.querySelector('ul'), status = box.querySelector('[role=status]'), items = null;
+        var norm = function (s) { return String(s).normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+        function load() {
+          if (items) return Promise.resolve(items);
+          return fetch('/recherche.json').then(function (r) { return r.json(); }).then(function (d) {
+            items = d.map(function (x) { x.hay = norm([x.titre, x.famille, x.but, x.classes.join(' ')].join(' ')); return x; });
+            return items;
+          });
+        }
+        function show() {
+          var words = norm(input.value).split(/\s+/).filter(Boolean);
+          list.textContent = '';
+          if (!words.length) { list.hidden = true; status.textContent = ''; return; }
+          var hits = items.filter(function (x) { return words.every(function (w) { return x.hay.indexOf(w) >= 0; }); }).slice(0, 8);
+          hits.forEach(function (x) {
+            var li = document.createElement('li'), a = document.createElement('a'), f = document.createElement('small');
+            a.href = x.url; a.textContent = x.titre; f.textContent = x.famille;
+            li.appendChild(a); li.appendChild(f); list.appendChild(li);
+          });
+          if (!hits.length) { var n = document.createElement('li'); n.textContent = 'Aucun résultat'; list.appendChild(n); }
+          list.hidden = false;
+          status.textContent = hits.length + ' résultat' + (hits.length > 1 ? 's' : '');
+        }
+        input.addEventListener('focus', function () { load(); });
+        input.addEventListener('input', function () { load().then(show); });
+        box.addEventListener('keydown', function (e) {
+          var links = Array.prototype.slice.call(list.querySelectorAll('a')), i = links.indexOf(document.activeElement);
+          if (e.key === 'Escape') { input.value = ''; list.hidden = true; status.textContent = ''; input.focus(); }
+          else if (e.key === 'ArrowDown' && links.length) { e.preventDefault(); links[Math.min(i + 1, links.length - 1)].focus(); }
+          else if (e.key === 'ArrowUp' && i >= 0) { e.preventDefault(); (i === 0 ? input : links[i - 1]).focus(); }
+        });
+      })();
+    </script>
+  </body>
+</html>

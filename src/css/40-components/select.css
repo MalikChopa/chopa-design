@@ -1,0 +1,8 @@
+/* Liste déroulante (pièce 12) : <select> natif. Planche : .field select (repos). Le survol et le focus changent la
+   bordure comme ch-input (la planche n'a pas ces états pour le select : ajout voulu, voir tests/parity/select.json). */
+.ch-select { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; transition: border-color var(--ch-t-fast); }
+.ch-select:hover { border-color: var(--ch-mute); }
+.ch-select:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-select[aria-invalid="true"], .ch-field.is-error .ch-select,
+.ch-select[aria-invalid="true"]:hover, .ch-field.is-error .ch-select:hover { border-color: var(--ch-acc); }
+.ch-select:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; }

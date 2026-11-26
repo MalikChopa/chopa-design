@@ -1,0 +1,95 @@
+{
+  "slug": "input",
+  "piece": "Champ texte (ch-field, ch-input)",
+  "note": "Planche : .field, .field .label, .field input, .field .help, .field.is-error. Le balisage est écrit ici (les exemples de la doc portent des identifiants et des aria-describedby que la planche n'a pas). Les contrôles désactivé et lecture seule n'existent pas dans la planche : ils sont couverts par la palette (exemples input/desactive et input/lecture-seule) et par les mesures du journal J2b.",
+  "cases": [
+    {
+      "id": "defaut",
+      "ch": "<label class=\"ch-field\"><span class=\"ch-label\">Adresse e-mail</span><input class=\"ch-input\" type=\"email\" placeholder=\"nom@exemple.fr\"><span class=\"ch-field__help\">On ne la partage jamais.</span></label>",
+      "board": "<label class=\"field\"><span class=\"label\">Adresse e-mail</span><input type=\"email\" placeholder=\"nom@exemple.fr\"><span class=\"help\">On ne la partage jamais.</span></label>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "champ",
+          "ch": ".ch-field",
+          "board": ".field",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "libelle",
+          "ch": ".ch-field .ch-label",
+          "board": ".field .label",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "saisie",
+          "ch": ".ch-input",
+          "board": ".field input",
+          "states": [
+            "rest",
+            "hover",
+            "focus"
+          ],
+          "pseudos": [
+            "::before",
+            "::after",
+            "::placeholder"
+          ]
+        },
+        {
+          "id": "aide",
+          "ch": ".ch-field__help",
+          "board": ".field .help",
+          "states": [
+            "rest"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "erreur",
+      "ch": "<label class=\"ch-field is-error\"><span class=\"ch-label\">Site actuel</span><input class=\"ch-input\" type=\"url\" value=\"exemple\" aria-invalid=\"true\"><span class=\"ch-field__help\">Ce n'est pas une adresse web valide.</span></label>",
+      "board": "<label class=\"field is-error\"><span class=\"label\">Site actuel</span><input type=\"url\" value=\"exemple\" aria-invalid=\"true\"><span class=\"help\">Ce n'est pas une adresse web valide.</span></label>",
+      "pairs": [
+        {
+          "id": "champ-erreur",
+          "ch": ".ch-field",
+          "board": ".field",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "saisie-erreur",
+          "ch": ".ch-input",
+          "board": ".field input",
+          "states": [
+            "rest",
+            "hover",
+            "focus"
+          ],
+          "pseudos": [
+            "::before",
+            "::after",
+            "::placeholder"
+          ]
+        },
+        {
+          "id": "aide-erreur",
+          "ch": ".ch-field__help",
+          "board": ".field .help",
+          "states": [
+            "rest"
+          ]
+        }
+      ]
+    }
+  ]
+}

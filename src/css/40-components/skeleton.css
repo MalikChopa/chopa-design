@@ -1,0 +1,13 @@
+/* Squelette (pièce 57) : blocs gris pendant un chargement. Chaque bloc est aria-hidden="true" ; la région en cours de chargement porte aria-busy="true"
+   (le contenu réel remplace les blocs, puis aria-busy est retiré). Variantes : base (bloc libre, hauteur donnée par l'hôte ou 16 px),
+   --line (une ligne de texte), --title (ligne plus haute et plus courte), --media (image 16:9). Toujours carré : 0, jamais var(--ch-radius).
+   Reflet : un dégradé line / bg2 qui glisse. Mouvement réduit : bloc uni line, sans reflet. Aucun texte : pas de paire de contraste. */
+.ch-skeleton { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; min-height: 16px; border: 0; border-radius: 0; background-color: var(--ch-line);
+  background-image: linear-gradient(90deg, var(--ch-line) 0, var(--ch-bg2) 50%, var(--ch-line) 100%); background-size: 200% 100%; background-repeat: no-repeat; animation: ch-skeleton-shimmer 1.6s linear infinite; }
+.ch-skeleton--line { height: 14px; min-height: 0; }
+.ch-skeleton--title { height: 26px; min-height: 0; width: 60%; }
+.ch-skeleton--media { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+@keyframes ch-skeleton-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ch-skeleton { animation: none; background-image: none; }
+}

@@ -1,0 +1,28 @@
+/* Carte (pièce 32) : ch-card (article) > ch-card__top (ch-label + ch-card__title, puis une pastille ou un badge) + ch-card__body + ch-card__foot.
+   Planche : .card, .c-top, .card h3, .c-body, .c-foot.
+   --media : une image (ch-card__media) en tête, bord à bord. --horizontal : image et texte côte à côte (le texte dans ch-card__main) ;
+   la rangée passe à la ligne d'elle-même quand la carte est étroite (flex-wrap, sans requête de média : la carte est montrée dans des colonnes
+   de toutes largeurs). --link : UN SEUL lien (ch-card__link, dans le titre) étendu sur toute la carte par un ::after ; c'est le seul arrêt de Tab,
+   la zone de clic est la boîte de la carte ; aucun autre élément interactif dans une carte --link.
+   Couleurs : fg (titre), soft (texte), mute (étiquette) sur card ; bordure line, survol d'une carte --link : mute. Aucun nouveau jeton. */
+.ch-card { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; min-width: 0; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-card__top { box-sizing: border-box; margin: 0; display: flex; justify-content: space-between; gap: var(--ch-s3); padding: var(--ch-s5); align-items: start; }
+.ch-card__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-card__body { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s5) var(--ch-s5); color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-card__foot { box-sizing: border-box; margin: 0; display: flex; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); flex-wrap: wrap; }
+
+/* Image en tête. */
+.ch-card--media > .ch-card__media { box-sizing: border-box; display: block; width: 100%; height: auto; margin: 0; padding: 0; aspect-ratio: 16 / 9; object-fit: cover; background: var(--ch-bg2); border: 0; border-bottom: 1px solid var(--ch-line); border-radius: 0; }
+
+/* Image à côté du texte : les deux blocs se rangent côte à côte tant qu'il y a la place, puis l'un sous l'autre. */
+.ch-card--horizontal { flex-direction: row; flex-wrap: wrap; }
+.ch-card--horizontal > .ch-card__main { box-sizing: border-box; margin: 0; padding: 0; flex: 2 1 260px; min-width: 0; display: flex; flex-direction: column; }
+.ch-card--horizontal.ch-card--media > .ch-card__media { flex: 1 1 200px; width: auto; min-width: 0; min-height: 160px; aspect-ratio: auto; border-bottom: 0; box-shadow: 1px 1px 0 var(--ch-line); }
+
+/* Carte-lien : le lien est dans le titre, son ::after couvre toute la carte. */
+.ch-card--link { position: relative; transition: border-color var(--ch-t-fast); }
+.ch-card--link:hover { border-color: var(--ch-mute); }
+.ch-card--link:has(.ch-card__link:focus-visible) { border-color: var(--ch-acc-text); }
+.ch-card__link { color: inherit; text-decoration: none; }
+.ch-card__link::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+.ch-card--link:hover .ch-card__link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }

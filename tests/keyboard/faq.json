@@ -1,0 +1,233 @@
+{
+  "slug": "faq",
+  "cases": [
+    {
+      "id": "exclusif",
+      "example": "faq/defaut",
+      "tabOrder": [
+        ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+        ".ch-accordion__item:nth-child(2) > .ch-accordion__summary",
+        ".ch-accordion__item:nth-child(3) > .ch-accordion__summary",
+        ".ch-accordion__item:nth-child(4) > .ch-accordion__summary"
+      ],
+      "steps": [
+        {
+          "wait": 10,
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": false
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(2) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(2) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": false
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(3)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(3) > .ch-accordion__summary"
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(3) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": false
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": false
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(3)",
+                "name": "open",
+                "value": true
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "libre",
+      "example": "faq/libre",
+      "tabOrder": [
+        ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+        ".ch-accordion__item:nth-child(2) > .ch-accordion__summary",
+        ".ch-accordion__item:nth-child(3) > .ch-accordion__summary"
+      ],
+      "steps": [
+        {
+          "wait": 10,
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(1) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(3)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(2) > .ch-accordion__summary"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(3) > .ch-accordion__summary"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(3) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(3)",
+                "name": "open",
+                "value": true
+              }
+            ]
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-accordion__item:nth-child(3) > .ch-accordion__summary",
+            "prop": [
+              {
+                "sel": ".ch-accordion__item:nth-child(1)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(2)",
+                "name": "open",
+                "value": true
+              },
+              {
+                "sel": ".ch-accordion__item:nth-child(3)",
+                "name": "open",
+                "value": false
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

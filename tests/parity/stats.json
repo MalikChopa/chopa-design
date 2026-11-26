@@ -1,0 +1,68 @@
+{
+  "slug": "stats",
+  "piece": "Chiffres clés (ch-stats, pièce 45)",
+  "note": "Planche : .mini .m-stats, .m-stat, .m-stat .label, .m-stat .v, .v small. Le balisage est écrit ici (les étiquettes de la planche sont du vocabulaire interdit par tests/denylist.txt) avec les classes de la planche. La planche place .m-stats dans .mini (filet de 1 px autour) : côté Chopa le bloc est posé dans un ch-card (même filet, même largeur utile), seuls .ch-stats et ses parties sont comparés. Le terme dt est en ligne comme le span .label de la planche. Ajouts de Chopa non comparés : --2 et --4 (colonnes), --down (tendance à la baisse), ch-stats__sr (mots masqués visuellement), absents de la planche ; ils sont couverts par palette et par axe. Écarts déclarés (ignoreProps) : (1) racine : min-width, min-height, min-inline-size, min-block-size (auto côté Chopa, 0 côté planche) : le bloc de Chopa est posé dans un ch-card, qui est un conteneur flex, ce que la planche (.mini en bloc) n'est pas ; l'écart vient du support de test, pas de la pièce ; (2) valeur et tendance : overflow-wrap (anywhere côté Chopa, normal côté planche) : ajout voulu, un grand nombre ne doit pas déborder de sa colonne.",
+  "cases": [
+    {
+      "id": "trois-colonnes",
+      "ch": "<div class=\"ch-card\"><dl class=\"ch-stats\"><div class=\"ch-stats__item\"><dt class=\"ch-stats__label\">Séances</dt><dd class=\"ch-stats__value\">5<small class=\"ch-stats__trend\">↑ 2</small></dd></div><div class=\"ch-stats__item\"><dt class=\"ch-stats__label\">Parties jouées</dt><dd class=\"ch-stats__value\">12</dd></div><div class=\"ch-stats__item\"><dt class=\"ch-stats__label\">Niveaux finis</dt><dd class=\"ch-stats__value\">1</dd></div></dl></div>",
+      "board": "<div class=\"mini\"><div class=\"m-stats\"><div class=\"m-stat\"><span class=\"label\">Séances</span><div class=\"v\">5<small>↑ 2</small></div></div><div class=\"m-stat\"><span class=\"label\">Parties jouées</span><div class=\"v\">12</div></div><div class=\"m-stat\"><span class=\"label\">Niveaux finis</span><div class=\"v\">1</div></div></div></div>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "racine",
+          "ch": ".ch-stats",
+          "board": ".m-stats",
+          "ignoreProps": [
+            "min-width",
+            "min-height",
+            "min-inline-size",
+            "min-block-size"
+          ]
+        },
+        {
+          "id": "premiere",
+          "ch": ".ch-stats__item:nth-child(1)",
+          "board": ".m-stat:nth-child(1)"
+        },
+        {
+          "id": "derniere",
+          "ch": ".ch-stats__item:nth-child(3)",
+          "board": ".m-stat:nth-child(3)"
+        },
+        {
+          "id": "etiquette",
+          "ch": ".ch-stats__item:nth-child(1) .ch-stats__label",
+          "board": ".m-stat:nth-child(1) .label"
+        },
+        {
+          "id": "valeur",
+          "ch": ".ch-stats__item:nth-child(1) .ch-stats__value",
+          "board": ".m-stat:nth-child(1) .v",
+          "ignoreProps": [
+            "overflow-wrap"
+          ]
+        },
+        {
+          "id": "valeur-sans-tendance",
+          "ch": ".ch-stats__item:nth-child(2) .ch-stats__value",
+          "board": ".m-stat:nth-child(2) .v",
+          "ignoreProps": [
+            "overflow-wrap"
+          ]
+        },
+        {
+          "id": "tendance",
+          "ch": ".ch-stats__trend",
+          "board": ".v small",
+          "ignoreProps": [
+            "overflow-wrap"
+          ]
+        }
+      ]
+    }
+  ]
+}

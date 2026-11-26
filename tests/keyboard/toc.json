@@ -1,0 +1,26 @@
+{
+  "slug": "toc",
+  "cases": [
+    {
+      "id": "ancres-au-clavier",
+      "example": "toc/defaut",
+      "js": true,
+      "tabOrder": [
+        ".ch-toc__list > li:nth-child(1) .ch-toc__link",
+        ".ch-toc__list > li:nth-child(2) .ch-toc__link",
+        ".ch-toc__list > li:nth-child(3) .ch-toc__link"
+      ]
+    },
+    {
+      "id": "reperes",
+      "example": "toc/repere",
+      "js": true,
+      "tabOrder": [
+        ".ch-toc__list > li:nth-child(1) .ch-toc__link",
+        ".ch-toc__list > li:nth-child(2) .ch-toc__link",
+        ".ch-toc__list > li:nth-child(3) .ch-toc__link",
+        ".ch-toc__list > li:nth-child(4) .ch-toc__link"
+      ]
+    }
+  ]
+}

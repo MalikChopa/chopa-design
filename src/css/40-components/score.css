@@ -1,0 +1,6 @@
+/* Pastille de score (pièce 49) : span.ch-score (nombre), --cold (froide). Planche : .score, .score.cold (parité : tests/parity/score.json).
+   Le nombre est l'information ; la couleur n'est qu'un renfort. Quand le nombre seul n'est pas clair, posez role="img" et aria-label
+   (« Score 87 sur 100 ») : le lecteur d'écran lit la phrase, pas « 87 ».
+   Couleurs : fg sur acc-dim (filet acc) ; --cold : mute sur bg, bg2, card (filet line). */
+.ch-score { box-sizing: border-box; margin: 0; display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 8px; border: 1px solid var(--ch-acc); border-radius: var(--ch-radius); background: var(--ch-acc-dim); font-family: var(--ch-mono); font-size: 16px; font-variant-numeric: tabular-nums; color: var(--ch-fg); }
+.ch-score--cold { border-color: var(--ch-line); background: none; color: var(--ch-mute); }

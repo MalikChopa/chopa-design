@@ -1,0 +1,237 @@
+---
+// Comparaison des jeux d'icônes (J8a). Jeu retenu par l'utilisateur le 2026-11-16 : Carbon 11.91.0 (désormais dans src/icons/carbon/).
+// Aucun tracé n'est écrit ici : les SVG viennent de site/src/icones-candidats/ (maison = les 15 glyphes provisoires d'avant le choix)
+// et de site/src/icones-candidats/ (lus en texte brut au build). Chaque jeu est normalisé en un <symbol> à l'intérieur de la page
+// (id ci-<jeu>-<nom>) pour que les glyphes suivent `currentColor` et donc le thème. Le sprite de la bibliothèque, lui, n'est pas touché.
+import DocLayout from '../components/DocLayout.astro';
+
+const NOMS = ['chevron-up', 'chevron-down', 'chevron-left', 'chevron-right', 'close', 'check', 'arrow', 'search', 'sort', 'plus', 'minus', 'info', 'alert', 'menu', 'copy'];
+const THEMES = ['sombre', 'clair', 'chaud'];
+const TAILLES = [16, 20, 24];
+
+const lire = (glob: Record<string, string>, dossier: string) =>
+  Object.fromEntries(NOMS.map((n) => {
+    const brut = glob[`${dossier}/${n}.svg`];
+    if (typeof brut !== 'string') throw new Error(`glyphe manquant : ${dossier}/${n}.svg`);
+    return [n, brut];
+  }));
+
+const maison = lire(import.meta.glob('../icones-candidats/maison/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>, '../icones-candidats/maison');
+const carbon = lire(import.meta.glob('../icones-candidats/carbon/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>, '../icones-candidats/carbon');
+const material = lire(import.meta.glob('../icones-candidats/material/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>, '../icones-candidats/material');
+const lucide = lire(import.meta.glob('../icones-candidats/lucide/*.svg', { query: '?raw', import: 'default', eager: true }) as Record<string, string>, '../icones-candidats/lucide');
+const licences = import.meta.glob('../icones-candidats/*/LICENSE', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+
+// Normalisation : on garde le viewBox, on retire width, height, class, fill et stroke de l'élément <svg> et les commentaires,
+// puis on enveloppe le dessin dans un <g> qui impose la couleur : remplissage = currentColor (Carbon, Material),
+// trait = currentColor (Lucide, maison, dont le <g> est déjà écrit dans le fichier).
+type Mode = 'plein' | 'trait' | 'tel';
+const symbole = (id: string, brut: string, mode: Mode) => {
+  const m = brut.match(/<svg\b([^>]*)>([\s\S]*?)<\/svg>/);
+  if (!m) throw new Error(`SVG illisible : ${id}`);
+  const vb = (m[1].match(/viewBox="([^"]+)"/) || [])[1];
+  const dessin = m[2].replace(/<!--[\s\S]*?-->/g, '').replace(/\s+/g, ' ').trim();
+  const g = mode === 'plein'
+    ? `<g fill="currentColor" stroke="none">${dessin}</g>`
+    : mode === 'trait'
+      ? `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${dessin}</g>`
+      : dessin;
+  return `<symbol id="${id}" viewBox="${vb}">${g}</symbol>`;
+};
+
+const JEUX = [
+  { id: 'maison', titre: 'Glyphes maison (anciens)', brut: maison, mode: 'tel' as Mode },
+  { id: 'carbon', titre: 'Carbon 11.91.0 (retenu)', brut: carbon, mode: 'plein' as Mode },
+  { id: 'material', titre: 'Material Symbols sharp 0.48.2', brut: material, mode: 'plein' as Mode },
+  { id: 'lucide', titre: 'Lucide 1.66.0', brut: lucide, mode: 'trait' as Mode },
+];
+const sprite = JEUX.flatMap((j) => NOMS.map((n) => symbole(`ci-${j.id}-${n}`, j.brut[n], j.mode))).join('');
+
+const FICHES = [
+  {
+    id: 'maison', titre: 'Glyphes maison (anciens)', court: 'maison',
+    paquet: 'glyphes provisoires d\'avant le choix (copie : site/src/icones-candidats/maison/)', licence: 'aucune licence tierce : dessins du projet', licenceTexte: null,
+    notes: [
+      'Trait : 24 × 24, épaisseur 2, tracé en <code>currentColor</code>, sans remplissage (déjà écrit ainsi dans les fichiers).',
+      'Bouts de trait carrés (<code>square</code>) et jointures en angle (<code>miter</code>) ; aucune courbe : les 15 glyphes sont faits de segments droits et de carrés (« info » est un carré, « search » une loupe carrée).',
+      'Prévus pour l\'identité à coins carrés ; le dessin est celui d\'un seul auteur et n\'a pas été redessiné pour 15 usages.',
+    ],
+  },
+  {
+    id: 'carbon', titre: 'Carbon 11.91.0 (retenu)', court: 'carbon',
+    paquet: '@carbon/icons 11.91.0, dossier svg/32/', licence: 'Apache-2.0', licenceTexte: 'carbon',
+    notes: [
+      'Remplissage : grille 32 × 32, contours pleins (aucun trait) ; normalisé en <code>fill="currentColor" stroke="none"</code>.',
+      'Angles droits et bouts de lignes coupés net ; 4 glyphes sur 15 ont des courbes (alert, copy, info, search), les 11 autres sont faits de segments droits.',
+      'Nom des glyphes d\'origine : chevron--up, checkmark, arrow--right, arrows--vertical, add, subtract, information, warning (voir le mapping du dossier des candidats).',
+    ],
+  },
+  {
+    id: 'material', titre: 'Material Symbols sharp 0.48.2', court: 'material',
+    paquet: '@material-symbols/svg-400 0.48.2, dossier sharp/', licence: 'Apache-2.0', licenceTexte: 'material',
+    notes: [
+      'Remplissage : grille 960 (viewBox <code>0 -960 960 960</code>), graisse 400, contours pleins ; normalisé en <code>fill="currentColor" stroke="none"</code>. Les fichiers d\'origine portent <code>width="48" height="48"</code>, retirés.',
+      'Variante « sharp » : angles vifs, bouts de lignes coupés net ; 3 glyphes sur 15 contiennent des courbes (alert, info, search : « info » et « search » sont des cercles).',
+    ],
+  },
+  {
+    id: 'lucide', titre: 'Lucide 1.66.0', court: 'lucide',
+    paquet: 'lucide-static 1.66.0, dossier icons/', licence: 'ISC', licenceTexte: 'lucide',
+    notes: [
+      'Trait : grille 24 × 24, épaisseur 2 ; normalisé en <code>fill="none" stroke="currentColor"</code>, épaisseur 2, bouts et jointures arrondis comme dans les fichiers d\'origine.',
+      'Les 15 glyphes ont des bouts de trait et des jointures arrondis ; 4 contiennent des formes courbes ou des coins arrondis (alert : triangle aux coins arrondis, copy : rectangle <code>rx="2"</code>, info et search : cercles).',
+    ],
+  },
+];
+const texte = (cle: string | null) => (cle ? licences[`../icones-candidats/${cle}/LICENSE`] ?? '' : '');
+---
+<DocLayout title="Icônes">
+  <svg class="doc-sprite" aria-hidden="true" focusable="false" set:html={sprite}></svg>
+
+  <h1 class="doc-h1 doc-h1--page">Icônes</h1>
+  <p class="doc-lead">Quinze glyphes aux noms fixes (<code>ch-i-chevron-up</code>… <code>ch-i-copy</code>). <strong>Jeu retenu le 16 novembre 2026 : Carbon 11.91.0</strong> (IBM, licence Apache-2.0, fichier <code>LICENSE-icones-carbon.txt</code> dans le dossier copié). Les exemples et gabarits l'utilisent par le sprite <code>chopa-icons.svg</code>. Cette page garde la comparaison qui a servi au choix, avec les glyphes maison d'avant et les deux autres candidats ; pour changer de jeu : <code>node scripts/icones-adopter.mjs &lt;jeu&gt;</code> (essai à blanc, puis <code>--appliquer</code>).</p>
+
+  <h2 class="doc-h2">Comment lire cette page</h2>
+  <ul class="doc-list">
+    <li>Chaque jeu est lu depuis ses fichiers SVG et <strong>normalisé sur cette page seulement</strong> : le <code>viewBox</code> est conservé, les dimensions (<code>width</code>, <code>height</code>) et la classe sont retirées, la couleur passe en <code>currentColor</code>. Les jeux à remplissage (Carbon, Material) reçoivent <code>fill="currentColor" stroke="none"</code> ; Lucide reçoit <code>fill="none" stroke="currentColor"</code> avec son trait de 2 ; les glyphes maison portent déjà leur propre trait. Les glyphes suivent donc la couleur du texte et le thème, comme dans la bibliothèque.</li>
+    <li>Le tableau montre chaque glyphe à 16, 20 et 24 px, dans les trois thèmes (sombre, clair, chaud, dans cet ordre). La bibliothèque affiche ses icônes à 20 px.</li>
+    <li>Le sprite de la bibliothèque (<code>chopa-icons.svg</code>) n'est pas modifié par cette page : le jeu retenu sera adopté ensuite par <code>node scripts/icones-adopter.mjs</code>.</li>
+  </ul>
+
+  <h2 class="doc-h2">Les quatre jeux</h2>
+  <div class="doc-ic-fiches">
+    {FICHES.map((f) => (
+      <div class="doc-ic-fiche">
+        <h3 class="doc-ic-fiche__t">{f.titre}</h3>
+        <dl class="doc-ic-fiche__dl">
+          <dt>Paquet</dt><dd>{f.paquet}</dd>
+          <dt>Licence</dt>
+          <dd>
+            {f.licence}
+            {f.licenceTexte ? <> · <a href={`#licence-${f.licenceTexte}`}>texte de la licence, plus bas sur cette page</a></> : null}
+          </dd>
+        </dl>
+        <ul class="doc-ic-fiche__notes">
+          {f.notes.map((n) => <li set:html={n} />)}
+        </ul>
+      </div>
+    ))}
+  </div>
+
+  <h2 class="doc-h2">Les 15 glyphes, jeu par jeu</h2>
+  <p class="doc-text">Chaque case montre trois cadres (thème sombre, clair, chaud), chacun avec le glyphe à 16, 20 et 24 px.</p>
+  <div class="doc-ic-scroll" role="region" aria-label="Tableau des 15 glyphes dans les quatre jeux" tabindex="0">
+    <table class="doc-ic-table">
+      <caption class="doc-sr">Les 15 glyphes dans les 4 jeux, à 16, 20 et 24 px, dans les 3 thèmes</caption>
+      <thead>
+        <tr>
+          <th scope="col">Glyphe</th>
+          {JEUX.map((j) => <th scope="col">{j.titre}</th>)}
+        </tr>
+      </thead>
+      <tbody>
+        {NOMS.map((n) => (
+          <tr>
+            <th scope="row"><code>{n}</code></th>
+            {JEUX.map((j) => (
+              <td>
+                <span class="doc-sr">{j.titre}, {n}, 16, 20 et 24 px, trois thèmes</span>
+                <div class="doc-ic-cell" aria-hidden="true">
+                  {THEMES.map((t) => (
+                    <span class="doc-ic-frame" data-ch-theme={t}>
+                      {TAILLES.map((px) => (
+                        <svg class="doc-ic" width={px} height={px} focusable="false"><use href={`#ci-${j.id}-${n}`}></use></svg>
+                      ))}
+                    </span>
+                  ))}
+                </div>
+              </td>
+            ))}
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+
+  <h2 class="doc-h2">Chaque jeu dans de vraies pièces</h2>
+  <p class="doc-text">Les pièces ci-dessous sont celles de la bibliothèque (<code>ch-btn--icon</code>, <code>ch-search</code>, <code>ch-accordion</code>), avec le glyphe du jeu. Seule exception : l'alerte est redessinée avec les mêmes jetons (filet orange à gauche, fond <code>bg2</code> ou orange atténué), car les contrôles du site exigent que chaque <code>ch-alert</code> pointe le sprite de la bibliothèque, pas un symbole de cette page. Elles suivent le thème choisi en haut de la page. La liste déroulante native (<code>ch-select</code>) dessine sa propre flèche : elle ne change pas avec le jeu ; le chevron de liste se voit donc sur le déclencheur d'un menu déroulant (<code>ch-dropdown</code>), reproduit ici par un bouton.</p>
+  {JEUX.map((j) => (
+    <div class="doc-ic-ctx">
+      <h3 class="doc-ic-ctx__t">{j.titre}</h3>
+      <div class="doc-ic-ctx__row">
+        <button class="ch-btn ch-btn--icon ch-btn--ghost" type="button" aria-label="Fermer la fenêtre"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-close`}></use></svg></button>
+        <button class="ch-btn ch-btn--icon ch-btn--secondary" type="button" aria-label="Ouvrir le menu"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-menu`}></use></svg></button>
+        <button class="ch-btn ch-btn--icon ch-btn--primary" type="button" aria-label="Copier le lien"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-copy`}></use></svg></button>
+        <button class="ch-btn ch-btn--secondary" type="button">Difficulté <svg class="ch-icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-chevron-down`}></use></svg></button>
+      </div>
+      <div class="doc-ic-alert"><svg class="ch-icon doc-ic-alert__icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-info`}></use></svg><b class="doc-ic-alert__kind">Info</b> · la sauvegarde reste compatible avec la prochaine mise à jour.</div>
+      <div class="doc-ic-alert doc-ic-alert--warn"><svg class="ch-icon doc-ic-alert__icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-alert`}></use></svg><b class="doc-ic-alert__kind">Attention</b> · le panier expire dans 10 minutes.</div>
+      <div class="ch-search">
+        <input class="ch-input" type="search" name={`q-${j.id}`} aria-label={`Rechercher une étape (${j.titre})`} placeholder="Rechercher une étape" />
+        <button class="ch-btn ch-btn--primary ch-btn--icon" type="button" aria-label="Lancer la recherche"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-search`}></use></svg></button>
+      </div>
+      <div class="ch-accordion">
+        <details class="ch-accordion__item" name={`acc-${j.id}`} open>
+          <summary class="ch-accordion__summary">Graphismes<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-chevron-down`}></use></svg></summary>
+          <div class="ch-accordion__panel">Choisis la qualité des ombres et la distance d'affichage.</div>
+        </details>
+        <details class="ch-accordion__item" name={`acc-${j.id}`}>
+          <summary class="ch-accordion__summary">Son<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href={`#ci-${j.id}-chevron-down`}></use></svg></summary>
+          <div class="ch-accordion__panel">Trois curseurs séparés : musique, effets et voix.</div>
+        </details>
+      </div>
+    </div>
+  ))}
+
+  <h2 class="doc-h2">Licences</h2>
+  <p class="doc-text">Le texte de chaque licence est <strong>affiché sur cette page</strong> (pas de fichier à télécharger) : ouvre le bloc correspondant. Le jeu retenu aura son texte copié à côté de ses icônes ; les glyphes maison n'ont pas de licence tierce.</p>
+  {FICHES.filter((f) => f.licenceTexte).map((f) => (
+    <details class="doc-ic-lic" id={`licence-${f.licenceTexte}`}>
+      <summary>Licence {f.licence} : {f.titre}</summary>
+      <pre class="doc-ic-lic__pre" tabindex="0">{texte(f.licenceTexte)}</pre>
+    </details>
+  ))}
+
+  <script is:inline>
+    (function () {
+      // Un lien vers #licence-… ouvre le bloc visé.
+      function ouvrir() {
+        var el = location.hash ? document.getElementById(location.hash.slice(1)) : null;
+        if (el && el.tagName === 'DETAILS') el.open = true;
+      }
+      ouvrir();
+      window.addEventListener('hashchange', ouvrir);
+    })();
+  </script>
+</DocLayout>
+
+<style>
+  .doc-sprite { position: absolute; width: 0; height: 0; overflow: hidden; }
+  .doc-ic-fiches { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; margin: 0 0 24px; }
+  .doc-ic-fiche { box-sizing: border-box; min-width: 0; padding: 16px; border: 1px solid var(--ch-line); background: var(--ch-card); color: var(--ch-soft); }
+  .doc-ic-fiche__t { margin: 0 0 12px; font-size: 16px; font-weight: 600; color: var(--ch-fg); }
+  .doc-ic-fiche__dl { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 12px; margin: 0 0 12px; font-size: 14px; }
+  .doc-ic-fiche__dl dt { color: var(--ch-mute); }
+  .doc-ic-fiche__dl dd { margin: 0; overflow-wrap: anywhere; }
+  .doc-ic-fiche a { color: var(--ch-acc-text); }
+  .doc-ic-fiche__notes { margin: 0; padding-left: 18px; font-size: 14px; }
+  .doc-ic-fiche__notes li { margin-bottom: 8px; }
+  .doc-ic-scroll { position: relative; max-width: 100%; margin: 0 0 24px; overflow-x: auto; border: 1px solid var(--ch-line); }
+  .doc-ic-table { border-collapse: collapse; min-width: 1100px; width: 100%; font-size: 14px; }
+  .doc-ic-table th, .doc-ic-table td { padding: 8px 10px; border-bottom: 1px solid var(--ch-line); text-align: left; vertical-align: middle; color: var(--ch-soft); }
+  .doc-ic-table thead th { color: var(--ch-fg); font-weight: 600; background: var(--ch-bg2); }
+  .doc-ic-table tbody th { font-weight: 400; white-space: nowrap; }
+  .doc-ic-cell { display: flex; gap: 6px; }
+  .doc-ic-frame { display: inline-flex; align-items: center; gap: 8px; padding: 6px 8px; border: 1px solid var(--ch-line); }
+  .doc-ic { display: block; flex: none; fill: none; stroke: none; }
+  .doc-ic-ctx { margin: 0 0 24px; padding: 16px; border: 1px solid var(--ch-line); display: flex; flex-direction: column; gap: 12px; }
+  .doc-ic-ctx__t { margin: 0; font-size: 16px; font-weight: 600; }
+  .doc-ic-ctx__row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+  .doc-ic-alert { box-sizing: border-box; padding: 16px 24px; border-left: 2px solid var(--ch-acc); background: var(--ch-bg2); color: var(--ch-soft); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+  .doc-ic-alert--warn { background: var(--ch-acc-dim); }
+  .doc-ic-alert__icon { margin-right: 8px; color: var(--ch-fg); }
+  .doc-ic-alert__kind { color: var(--ch-fg); font-weight: 600; }
+  .doc-ic-lic { margin: 0 0 16px; border: 1px solid var(--ch-line); }
+  .doc-ic-lic summary { padding: 12px 16px; min-height: 20px; cursor: pointer; color: var(--ch-fg); }
+  .doc-ic-lic__pre { box-sizing: border-box; max-height: 360px; margin: 0; padding: 16px; overflow: auto; border-top: 1px solid var(--ch-line); background: var(--ch-bg2); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 12px; white-space: pre-wrap; overflow-wrap: anywhere; }
+</style>

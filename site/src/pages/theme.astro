@@ -1,0 +1,114 @@
+---
+// Page « créer ton thème » (J1c, docs/ARCHITECTURE.md section 3). Les couleurs de base des 3 thèmes et les réglages par
+// défaut sont lus dans dist-lib/chopa.css au build (comme la page des jetons) et passés au script en JSON ; tout le
+// calcul est dans theme-maker/maker.mjs, partagé avec scripts/static/theme-maker.mjs.
+import { readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import DocLayout from '../components/DocLayout.astro';
+import '../theme-maker/theme-maker.css';
+import { baseFromCss, THEMES } from '../theme-maker/maker.mjs';
+
+const out = process.env.CH_OUT ? resolve(process.env.CH_OUT) : process.cwd();
+const css = readFileSync(join(out, 'dist-lib', 'chopa.css'), 'utf8');
+const base = baseFromCss(css);
+const d = base.defaults;
+
+// Aperçu : ce qui existe dans chopa.css au moment du build. Une variante absente du CSS n'est pas montrée.
+const a = (cls: string) => new RegExp(`\\.${cls}(?![\\w-])`).test(css);
+const boutons = [
+  { cls: 'ch-btn--primary', label: 'Principal', attrs: {} },
+  { cls: 'ch-btn--secondary', label: 'Secondaire', attrs: {} },
+  { cls: 'ch-btn--ghost', label: 'Discret', attrs: {} },
+  { cls: 'ch-btn', label: 'Désactivé', attrs: { disabled: true } },
+].filter((b) => a(b.cls) && a('ch-btn'));
+
+const champs = [
+  { id: 'acc', label: 'Accent (hex)', value: d.acc, help: 'Le seul orange de Chopa est #ff5a1f ; ici, n\'importe quel accent : 3 ou 6 chiffres, par exemple #2563eb.' },
+  { id: 'radius', label: 'Arrondi', value: d.radius, help: '0 (coins carrés, défaut) ou une longueur : 8px, 0.5rem. Toute autre valeur que 0 est un écart assumé.' },
+  { id: 'sans', label: 'Police du texte (--ch-sans)', value: d.sans, wide: true, help: 'Une pile de polices CSS. Ton site charge lui-même ses @font-face : l\'aperçu montre la police seulement si elle est installée.' },
+  { id: 'display', label: 'Police des titres (--ch-display)', value: d.display, wide: true, help: '« var(--ch-sans) » reprend la police du texte.' },
+  { id: 'mono', label: 'Police mono (--ch-mono)', value: d.mono, wide: true, help: 'Boutons, étiquettes et code.' },
+];
+---
+<DocLayout title="Créer ton thème">
+  <h1 class="doc-h1 doc-h1--page">Créer ton thème</h1>
+  <p class="doc-lead">Choisis un accent, des polices et un arrondi : la page recalcule les contrastes dans les 3 thèmes, ajuste <code>--ch-acc-text</code>, <code>--ch-on-acc</code> et <code>--ch-dim-pct</code> jusqu'à ce que toutes les paires autorisées atteignent 4,5 : 1, et te donne la feuille à poser après <code>chopa.css</code>. Rien ne quitte ton navigateur.</p>
+  <noscript><p class="doc-text">Cette page calcule dans le navigateur : elle demande JavaScript.</p></noscript>
+  <script type="application/json" id="doc-tm-base" set:html={JSON.stringify(base)}></script>
+
+  <h2 class="doc-h2" id="reglages">Réglages</h2>
+  <form class="doc-tm-form" aria-labelledby="reglages" onsubmit="return false" novalidate>
+    {champs.map((c) => (
+      <div class:list={['doc-tm-field', c.wide && 'doc-tm-field--wide']}>
+        <label class="doc-tm-label" for={`doc-tm-${c.id}`}>{c.label}</label>
+        <input class="doc-tm-input" id={`doc-tm-${c.id}`} name={c.id} type="text" value={c.value} autocomplete="off" spellcheck="false" aria-invalid="false" aria-describedby={`doc-tm-help-${c.id} doc-tm-err-${c.id}`} />
+        <p class="doc-tm-help" id={`doc-tm-help-${c.id}`}>{c.help}</p>
+        <p class="doc-tm-error" id={`doc-tm-err-${c.id}`} hidden></p>
+      </div>
+    ))}
+  </form>
+  <div class="doc-tm-actions">
+    <button class="ch-btn ch-btn--secondary" type="button" id="doc-tm-reset">Valeurs de chopa.css</button>
+    <button class="ch-btn ch-btn--secondary" type="button" data-tm-acc="#2563eb">Essayer le bleu</button>
+    <button class="ch-btn ch-btn--secondary" type="button" data-tm-acc="#ffd400">Essayer le jaune</button>
+    <button class="ch-btn ch-btn--secondary" type="button" data-tm-acc="#757575">Essayer un accent refusé</button>
+  </div>
+
+  <div class="doc-tm-verdict" id="doc-tm-verdict" role="status" aria-live="polite">
+    <p id="doc-tm-verdict-text">Calcul en cours…</p>
+    <ul id="doc-tm-verdict-list" hidden></ul>
+  </div>
+  <p class="doc-text" id="doc-tm-assumed" hidden>Écart assumé : un arrondi autre que 0 sort des coins carrés de Chopa. La palette stricte (noir, blanc, gris, un orange) et les coins carrés ne valent que pour les 3 thèmes Chopa ; ton site reste libre de ses choix tant que les contrastes tiennent.</p>
+
+  <h2 class="doc-h2">Aperçu dans les 3 thèmes</h2>
+  <p class="doc-lead">Les réglages ne s'appliquent qu'à ces trois cadres : les couleurs et le thème de la documentation ne changent pas. Pièces montrées, celles qui existent dans <code>chopa.css</code> à la construction : {boutons.length ? <>le bouton (<code>ch-btn</code>, {boutons.length} états)</> : 'aucune'}, plus deux échantillons de rôles (lien d'accent, teinte d'accent) qui ne sont pas des composants.</p>
+  <div class="doc-tm-frames">
+    {THEMES.map((t) => (
+      <section class="doc-tm-frame" data-ch-theme={t} aria-labelledby={`doc-tm-frame-${t}`}>
+        <h3 class="doc-tm-frame__title" id={`doc-tm-frame-${t}`}>Thème {t}</h3>
+        <p class="doc-tm-frame__display">Titre d'essai</p>
+        <p class="doc-tm-frame__body">Un texte courant, avec <span class="doc-tm-frame__link">un lien d'accent</span> dans la phrase.</p>
+        <code class="doc-tm-frame__mono">--ch-mono : 0123456789</code>
+        <div class="doc-tm-frame__row">
+          {boutons.map((b) => <button class={`ch-btn ${b.cls === 'ch-btn' ? '' : b.cls}`.trim()} type="button" disabled={b.attrs.disabled}>{b.label}</button>)}
+        </div>
+        <p class="doc-tm-frame__tint">Teinte d'accent (<code>--ch-acc-dim</code>) sous un texte courant.</p>
+      </section>
+    ))}
+  </div>
+
+  <h2 class="doc-h2">Réglages calculés</h2>
+  <div class="doc-tm-scroll">
+    <table class="doc-tm-table">
+      <thead><tr><th scope="col">Thème</th><th scope="col"><code>--ch-acc-text</code></th><th scope="col"><code>--ch-on-acc</code></th><th scope="col"><code>--ch-dim-pct</code></th></tr></thead>
+      <tbody id="doc-tm-settings"></tbody>
+    </table>
+  </div>
+
+  <h2 class="doc-h2">Paires autorisées</h2>
+  <p class="doc-lead">Les paires de la section 9 de l'architecture : <code>fg</code>, <code>soft</code>, <code>mute</code>, <code>acc-text</code> sur les 3 surfaces ; <code>fg</code>, <code>soft</code>, <code>mute</code> sur la teinte d'accent ; <code>on-acc</code> sur l'accent ; le focus. <code>acc-text</code> sur la teinte d'accent est interdit.</p>
+  {THEMES.map((t) => (
+    <details class="doc-tm-details">
+      <summary data-tm-summary={t}>Thème {t}</summary>
+      <div class="doc-tm-scroll">
+        <table class="doc-tm-table">
+          <thead><tr><th scope="col">Paire</th><th scope="col">Contraste</th><th scope="col">Seuil</th><th scope="col">Résultat</th></tr></thead>
+          <tbody data-tm-pairs={t}></tbody>
+        </table>
+      </div>
+    </details>
+  ))}
+
+  <h2 class="doc-h2" id="sortie">Sortie</h2>
+  <p class="doc-lead">À coller dans la feuille de ton site, après <code>chopa.css</code> : un bloc <code>:root</code> pour l'accent, l'arrondi et les polices, puis un bloc par thème pour les valeurs calculées. Les surfaces restent celles des 3 thèmes ; <code>--ch-focus</code> et <code>--ch-acc-dim</code> suivent seuls.</p>
+  <pre class="doc-tm-pre doc-tm-pre--vide" id="doc-tm-out" tabindex="0" aria-label="Feuille de réglages générée">Calcul en cours…</pre>
+  <div class="doc-tm-actions">
+    <button class="ch-btn ch-btn--primary" type="button" id="doc-tm-copy">Copier la sortie</button>
+    <span id="doc-tm-copy-status" role="status" aria-live="polite" class="doc-text"></span>
+  </div>
+
+  <script>
+    import { init } from '../theme-maker/client.mjs';
+    init();
+  </script>
+</DocLayout>

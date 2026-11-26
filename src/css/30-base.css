@@ -1,0 +1,39 @@
+/* Base : remise à zéro, focus, mouvement réduit.
+   La remise à zéro ne vise que l'élément qui porte une classe ch-, jamais ses descendants : un descendant sans
+   classe ch- reste à l'hôte. Les quatre formes couvrent le début de l'attribut class et un ch- précédé d'une
+   espace, d'une tabulation (\9 ) ou d'un saut de ligne (\A ). :where() garde une spécificité nulle : chaque
+   composant déclare lui-même margin, padding et box-sizing de ses éléments et parties. */
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]):where(button, input, select, textarea) {
+  font: inherit;
+}
+/* L'attribut hidden l'emporte sur l'affichage d'une pièce (.ch-btn[hidden] restait visible : testeur n° 2), sauf dans une
+   pièce dont le module a échoué ([data-ch-failed]) : là, tout le contenu doit rester visible (section 5). */
+:is([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])[hidden]:not([data-ch-failed] *) { display: none !important; }
+/* Focus visible sur les éléments ch-* et leurs descendants focalisables. */
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]):focus-visible,
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) :focus-visible {
+  outline: 2px solid var(--ch-focus); outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]),
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) :where(*),
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])::before,
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])::after {
+    transition-duration: .01ms !important; animation: none !important;
+  }
+}
+
+/* Texte (pièce 1) : échelle de la planche (.t-giant, .t-h2, .t-h3, .t-body, .t-small, .t-mono, .label).
+   Chaque classe déclare elle-même marge, remplissage et boîte : un h1 ou un p de l'hôte ne les modifie pas.
+   Couleurs : fg (hérité), soft, mute sur bg, bg2, card (paires autorisées). */
+.ch-t-giant, .ch-t-h2, .ch-t-h3, .ch-t-body, .ch-t-small, .ch-t-mono, .ch-label { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-t-giant { font-family: var(--ch-display); font-size: clamp(44px, 8vw, 120px); line-height: .86; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); overflow-wrap: anywhere; }
+.ch-t-h2 { font-family: var(--ch-display); font-size: clamp(30px, 4.5vw, 60px); line-height: .9; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); overflow-wrap: anywhere; }
+.ch-t-h3 { font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-t-body { font-family: var(--ch-sans); font-size: 17px; line-height: 1.5; color: var(--ch-soft); max-width: 620px; }
+.ch-t-small { font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-mute); }
+.ch-t-mono { font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; }
+.ch-label { font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }

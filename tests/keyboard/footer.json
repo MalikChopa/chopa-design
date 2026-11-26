@@ -1,0 +1,27 @@
+{
+  "slug": "footer",
+  "cases": [
+    {
+      "id": "colonnes",
+      "example": "footer/defaut",
+      "tabOrder": [
+        ".ch-footer__col:nth-child(1) li:nth-child(1) a",
+        ".ch-footer__col:nth-child(1) li:nth-child(2) a",
+        ".ch-footer__col:nth-child(1) li:nth-child(3) a",
+        ".ch-footer__col:nth-child(2) li:nth-child(1) a",
+        ".ch-footer__col:nth-child(2) li:nth-child(2) a",
+        ".ch-footer__col:nth-child(3) li:nth-child(1) a",
+        ".ch-footer__col:nth-child(3) li:nth-child(2) a"
+      ]
+    },
+    {
+      "id": "compact",
+      "example": "footer/compact",
+      "tabOrder": [
+        "li:nth-child(1) a",
+        "li:nth-child(2) a",
+        "li:nth-child(3) a"
+      ]
+    }
+  ]
+}

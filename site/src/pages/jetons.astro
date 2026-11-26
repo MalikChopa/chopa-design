@@ -1,0 +1,112 @@
+---
+// Page des jetons. Tout ce qui est chiffré (valeurs, contrastes) est lu ou calculé au build depuis
+// dist-lib/chopa.css (npm run build construit le CSS avant Astro) : rien n'est tapé à la main.
+import { readFileSync } from 'node:fs';
+import { join, resolve } from 'node:path';
+import DocLayout from '../components/DocLayout.astro';
+import ThemeTokens from '../components/ThemeTokens.astro';
+import { THEMES, themeColors, resolvedTokens } from '../../../src/lib/css-tokens.mjs';
+import { allowedPairs, forbiddenPairs } from '../../../src/lib/pairs.mjs';
+
+// Même règle que scripts/lib/paths.mjs : CH_OUT redirige les sorties, sinon le dossier courant (la racine du dépôt).
+const out = process.env.CH_OUT ? resolve(process.env.CH_OUT) : process.cwd();
+const css = readFileSync(join(out, 'dist-lib', 'chopa.css'), 'utf8');
+const themes = THEMES.map((t) => { const tc = themeColors(css, t); return { ...tc, pairs: allowedPairs(tc), forbidden: forbiddenPairs(tc) }; });
+const tok = resolvedTokens(css, 'sombre');
+const f2 = (n: number) => n.toFixed(2).replace('.', ',');
+const spacing = Array.from({ length: 9 }, (_, i) => ({ name: `--ch-s${i + 1}`, n: i + 1, value: tok[`ch-s${i + 1}`] }));
+const other = ['hit', 'measure', 'wrap-max', 'z-bar', 'z-overlay'].map((k) => ({ name: `--ch-${k}`, value: tok[`ch-${k}`] }));
+const fonts = ['sans', 'display', 'mono'].map((k) => ({ name: `--ch-${k}`, value: tok[`ch-${k}`] }));
+const forbidden = themes.flatMap((t) => t.forbidden.map((f) => ({ ...f, theme: t.theme })));
+---
+<DocLayout title="Jetons">
+  <h1 class="doc-h1">Jetons</h1>
+  <p class="doc-lead">Deux niveaux : des primitives (<code>--ch-p-*</code>, valeurs brutes, jamais lues par un composant) et des rôles (<code>--ch-*</code>, posés par thème). Les valeurs et les contrastes ci-dessous sont lus dans <code>chopa.css</code> à la construction du site.</p>
+
+  <h2 class="doc-h2">Couleurs par thème</h2>
+  <p class="doc-lead">Chaque cadre porte son propre <code>data-ch-theme</code> : les pastilles sont vivantes. Texte courant : au moins 4,5 : 1 ; focus : au moins 3 : 1.</p>
+  {themes.map((t) => <ThemeTokens theme={t.theme} colors={t.colors} dimPct={t.dimPct} pairs={t.pairs} />)}
+
+  <h2 class="doc-h2">Paires interdites</h2>
+  <p class="doc-lead">Tout ce qui n'est pas dans les tableaux ci-dessus est interdit. Un cas précis est mesuré ici : le texte d'accent sur la teinte d'accent.</p>
+  <table class="jetons-table">
+    <thead><tr><th scope="col">Thème</th><th scope="col">Texte</th><th scope="col">Fond</th><th scope="col">Contraste</th></tr></thead>
+    <tbody>
+      {forbidden.map((f) => (
+        <tr><td>{f.theme}</td><td><code>{f.text}</code></td><td><code>{f.on}</code> sur <code>{f.surface}</code></td><td>{f2(f.ratio)} : 1</td></tr>
+      ))}
+    </tbody>
+  </table>
+  <p class="doc-lead">{forbidden[0]?.raison}.</p>
+
+  <h2 class="doc-h2">Re-thémer un site</h2>
+  <p class="doc-lead">Réglages, à poser après <code>chopa.css</code>. Les surfaces restent celles des 3 thèmes ; <code>--ch-focus</code> et <code>--ch-acc-dim</code> suivent seuls.</p>
+  <table class="jetons-table">
+    <thead><tr><th scope="col">Jeton</th><th scope="col">Rôle</th><th scope="col">Comment le régler</th></tr></thead>
+    <tbody>
+      <tr><td><code>--ch-acc</code></td><td>accent, pour les fonds</td><td>un seul, le même dans les 3 thèmes</td></tr>
+      <tr><td><code>--ch-acc-text</code></td><td>accent en texte et en lien</td><td>par thème, calculé (jamais un simple <code>var(--ch-acc)</code>)</td></tr>
+      <tr><td><code>--ch-on-acc</code></td><td>texte posé sur l'accent</td><td>calculé : encre ou papier, le meilleur, au moins 4,5 : 1</td></tr>
+      <tr><td><code>--ch-dim-pct</code></td><td>force de la teinte <code>--ch-acc-dim</code></td><td>par thème, calculé : abaissé jusqu'à ce que <code>fg</code>, <code>soft</code> et <code>mute</code> passent</td></tr>
+      <tr><td><code>--ch-radius</code></td><td>arrondi</td><td><code>0</code> par défaut ; toute autre valeur est un écart assumé</td></tr>
+    </tbody>
+  </table>
+  <p class="doc-lead">Les polices (<code>--ch-sans</code>, <code>--ch-display</code>, <code>--ch-mono</code>) se règlent aussi, le site chargeant ses <code>@font-face</code>.</p>
+
+  <h2 class="doc-h2">Espacement</h2>
+  <ul class="jetons-space">
+    {spacing.map((s) => (
+      <li><code>{s.name}</code> <span class="jetons-val">{s.value}</span><span class="jetons-bar" style={`width: var(--ch-s${s.n})`}></span></li>
+    ))}
+  </ul>
+
+  <h2 class="doc-h2">Typographie</h2>
+  <ul class="jetons-fonts">
+    {fonts.map((f) => <li><code>{f.name}</code> <span class="jetons-val">{f.value}</span></li>)}
+    <li><code>--ch-display-weight</code> <span class="jetons-val">{tok['ch-display-weight']}</span></li>
+    <li><code>--ch-display-track</code> <span class="jetons-val">{tok['ch-display-track']}</span></li>
+  </ul>
+  <p class="jetons-giant">Titre d'exemple</p>
+  <p class="jetons-body">Texte courant d'exemple, en Inter Tight : une phrase neutre pour juger la lecture à la taille de base.</p>
+  <p class="jetons-mono">Étiquette en mono</p>
+  <p class="doc-lead">Échelle de la planche de style (maquette) : titre géant <code>clamp(44px, 8vw, 120px)</code>, titre 2 <code>clamp(30px, 4.5vw, 60px)</code>, titre 3 22 px, texte 17 px, petit 14 px, mono 12 px. Ces tailles deviennent les classes <code>ch-t-*</code> au jalon J1b-2 ; elles ne sont pas encore des jetons.</p>
+
+  <h2 class="doc-h2">Mouvement</h2>
+  <table class="jetons-table">
+    <thead><tr><th scope="col">Jeton</th><th scope="col">Valeur</th></tr></thead>
+    <tbody>
+      <tr><td><code>--ch-t-fast</code></td><td>{tok['ch-t-fast']}</td></tr>
+      <tr><td><code>--ch-t-panel</code></td><td>{tok['ch-t-panel']}</td></tr>
+    </tbody>
+  </table>
+  <p class="jetons-motion"><span class="jetons-motion__box">Survol : <code>--ch-t-fast</code></span></p>
+  <p class="doc-lead">Avec <code>prefers-reduced-motion: reduce</code>, cet exemple ne bouge plus.</p>
+
+  <h2 class="doc-h2">Forme</h2>
+  <p class="doc-lead"><code>--ch-radius</code> vaut <code>{tok['ch-radius']}</code> : coins carrés partout. Seule exception approuvée : le bouton radio.</p>
+  <p class="jetons-radius"><span class="jetons-radius__box">Carré</span></p>
+
+  <h2 class="doc-h2">Autres jetons</h2>
+  <table class="jetons-table">
+    <thead><tr><th scope="col">Jeton</th><th scope="col">Valeur</th></tr></thead>
+    <tbody>{other.map((o) => <tr><td><code>{o.name}</code></td><td>{o.value}</td></tr>)}</tbody>
+  </table>
+</DocLayout>
+<style>
+  .jetons-table { width: 100%; margin: 0 0 16px; border-collapse: collapse; font-size: 14px; }
+  .jetons-table th { padding: 6px 8px; text-align: left; font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); border-bottom: 1px solid var(--ch-line); }
+  .jetons-table td { padding: 6px 8px; border-bottom: 1px solid var(--ch-line); }
+  code { font-family: var(--ch-mono); font-size: 12px; }
+  .jetons-val { font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+  .jetons-space, .jetons-fonts { margin: 0 0 16px; padding: 0; list-style: none; }
+  .jetons-space li { display: grid; grid-template-columns: 110px 70px 1fr; align-items: center; gap: 8px; padding: 4px 0; }
+  .jetons-fonts li { padding: 4px 0; }
+  .jetons-bar { display: block; height: 12px; background: var(--ch-acc); }
+  .jetons-giant { margin: 16px 0 0; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: clamp(44px, 8vw, 120px); line-height: .86; letter-spacing: var(--ch-display-track); text-transform: uppercase; }
+  .jetons-body { max-width: var(--ch-measure); font-size: 17px; color: var(--ch-soft); }
+  .jetons-mono { font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+  .jetons-motion__box { display: inline-block; padding: 12px 20px; border: 1px solid var(--ch-line); transition: background var(--ch-t-fast), color var(--ch-t-fast); }
+  .jetons-motion__box:hover { background: var(--ch-acc); color: var(--ch-on-acc); }
+  .jetons-radius__box { display: inline-block; padding: 24px 32px; border: 1px solid var(--ch-fg); border-radius: var(--ch-radius); }
+  @media (prefers-reduced-motion: reduce) { .jetons-motion__box { transition: none; } }
+</style>

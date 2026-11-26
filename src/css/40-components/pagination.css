@@ -1,0 +1,17 @@
+/* Pagination (pièce 26) : nav (nommé) > ch-pagination__list (ul) > li > ch-pagination__link (a, ou span si désactivé) ; ch-pagination__gap = « … ».
+   États : courant = aria-current="page" (fond acc, texte on-acc) ; désactivé = aria-disabled="true" sur un <span> (pas un lien, pas un arrêt de Tab),
+   texte mute, bordure en tirets, curseur interdit, pas de survol : jamais la couleur seule.
+   Précédent / suivant : glyphe chevron + texte (ch-pagination__label) ; le texte se masque visuellement sous 640 px, il reste lu.
+   Cible : 44 x 44 px au moins.
+   Couleurs : lien fg sur bg/bg2/card (bordure line) ; survol bordure acc-text ; courant on-acc sur acc ; désactivé et points mute. */
+.ch-pagination { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-pagination__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s2); }
+.ch-pagination__list > li { box-sizing: border-box; margin: 0; padding: 0; display: flex; }
+.ch-pagination__link { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s3); display: inline-flex; align-items: center; justify-content: center; gap: var(--ch-s2); min-width: var(--ch-hit); min-height: var(--ch-hit); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ch-fg); background: none; transition: border-color var(--ch-t-fast), background var(--ch-t-fast), color var(--ch-t-fast); }
+a.ch-pagination__link:hover { border-color: var(--ch-acc-text); }
+.ch-pagination__link[aria-current="page"] { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-pagination__link[aria-disabled="true"] { border-style: dashed; color: var(--ch-mute); cursor: not-allowed; }
+.ch-pagination__gap { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; min-width: var(--ch-hit); min-height: var(--ch-hit); font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+@media (max-width: 640px) {
+  .ch-pagination__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}

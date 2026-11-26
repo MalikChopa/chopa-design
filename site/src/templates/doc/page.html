@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Installer et lancer Tuilage</title>
+  <meta name="description" content="Gabarit de page de documentation : colonne latérale, sommaire qui suit le défilement, onglets d'installation, blocs de code à copier, tableau d'options, alerte et liens précédent et suivant.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/doc/accueil/">Tuilage</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/doc/accueil/">Accueil</a>
+        <a href="/gabarits/doc/page/" aria-current="page">Installer et lancer</a>
+        <a href="/gabarits/doc/page/#options">Options</a>
+      </nav>
+      <div class="ch-row ch-row--nowrap" role="group" aria-label="Thème de la page">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+      <div class="ch-wrap">
+        <div class="ch-stack ch-stack--s6">
+          <nav class="ch-breadcrumb" aria-label="Fil d'Ariane">
+            <ol class="ch-breadcrumb__list">
+              <li class="ch-breadcrumb__item"><a class="ch-breadcrumb__link" href="/gabarits/doc/accueil/">Documentation</a></li>
+              <li class="ch-breadcrumb__item"><span aria-current="page">Installer et lancer</span></li>
+            </ol>
+          </nav>
+          <div class="ch-grid ch-grid--sidebar">
+            <aside class="ch-sidebar" aria-label="Barre latérale de la documentation">
+              <details class="ch-sidebar__details" open>
+                <summary class="ch-sidebar__summary">Documentation</summary>
+                <nav class="ch-sidebar__nav" aria-label="Sections de la documentation">
+                  <div class="ch-sidebar__group">
+                    <p class="ch-sidebar__title">Premiers pas</p>
+                    <ul class="ch-sidebar__list">
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/accueil/">Accueil</a></li>
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/page/" aria-current="page">Installer et lancer</a></li>
+                    </ul>
+                  </div>
+                  <div class="ch-sidebar__group">
+                    <p class="ch-sidebar__title">Guides</p>
+                    <ul class="ch-sidebar__list">
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/accueil/#demarrage">Démarrage rapide</a></li>
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/accueil/#sections">Les sections</a></li>
+                    </ul>
+                  </div>
+                  <div class="ch-sidebar__group">
+                    <p class="ch-sidebar__title">Référence</p>
+                    <ul class="ch-sidebar__list">
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/page/#options">Options</a></li>
+                      <li><a class="ch-sidebar__link" href="/gabarits/doc/page/#depannage">Dépannage</a></li>
+                    </ul>
+                  </div>
+                </nav>
+              </details>
+            </aside>
+            <div class="ch-stack ch-stack--s6">
+              <header class="ch-stack ch-stack--s3">
+                <p class="ch-label">Premiers pas</p>
+                <h1 class="ch-t-h2">Installer et lancer Tuilage</h1>
+                <p class="ch-t-body">De l'installation à la première carte découpée, en cinq minutes et trois commandes.</p>
+              </header>
+              <nav class="ch-toc" aria-label="Sommaire de la page" data-ch-toc>
+                <p class="ch-toc__title">Sur cette page</p>
+                <ol class="ch-toc__list">
+                  <li><a class="ch-toc__link" href="#prerequis">Avant de commencer</a></li>
+                  <li><a class="ch-toc__link" href="#installer">Installer Tuilage</a></li>
+                  <li><a class="ch-toc__link" href="#lancer">Découper une première carte</a></li>
+                  <li><a class="ch-toc__link" href="#options">Options</a></li>
+                  <li><a class="ch-toc__link" href="#depannage">Dépannage</a></li>
+                </ol>
+              </nav>
+              <article class="ch-prose">
+                <h2 id="prerequis">Avant de commencer</h2>
+                <p>Tuilage lit une image (PNG ou JPEG) et la découpe en carrés réguliers, les <em>tuiles</em>, que le jeu recharge au fil du déplacement. Il faut :</p>
+                <ul>
+                  <li>un terminal, quel que soit le système ;</li>
+                  <li>environ <strong>50 Mo</strong> d'espace libre ;</li>
+                  <li>une image source d'au moins 1 024 pixels de large.</li>
+                </ul>
+              </article>
+              <article class="ch-prose">
+                <h2 id="installer">Installer Tuilage</h2>
+                <p>Choisis ton système ; chaque onglet donne la commande à copier.</p>
+              </article>
+              <div class="ch-tabs" data-ch-tabs>
+                <div class="ch-tabs__list">
+                  <button class="ch-tabs__tab" type="button">macOS</button>
+                  <button class="ch-tabs__tab" type="button">Linux</button>
+                  <button class="ch-tabs__tab" type="button">Windows</button>
+                </div>
+                <div class="ch-tabs__panel">
+                  <h3 class="ch-tabs__heading">macOS</h3>
+                  <p>Avec Homebrew :</p>
+                  <div class="ch-code" data-ch-copy>
+<pre class="ch-code__pre" tabindex="0"><code>brew install tuilage</code></pre>
+</div>
+                </div>
+                <div class="ch-tabs__panel">
+                  <h3 class="ch-tabs__heading">Linux</h3>
+                  <p>Sur Debian et dérivés :</p>
+                  <div class="ch-code" data-ch-copy>
+<pre class="ch-code__pre" tabindex="0"><code>sudo apt install tuilage</code></pre>
+</div>
+                </div>
+                <div class="ch-tabs__panel">
+                  <h3 class="ch-tabs__heading">Windows</h3>
+                  <p>Avec le gestionnaire de paquets intégré :</p>
+                  <div class="ch-code" data-ch-copy>
+<pre class="ch-code__pre" tabindex="0"><code>winget install tuilage</code></pre>
+</div>
+                </div>
+              </div>
+              <article class="ch-prose">
+                <p>Vérifie l'installation avec <code>tuilage --version</code> : elle doit afficher <code>2.1.0</code>.</p>
+                <h2 id="lancer">Découper une première carte</h2>
+                <p>Place ta carte dans un dossier, ouvre un terminal dans ce dossier, puis lance :</p>
+                <div class="ch-code" data-ch-copy>
+<pre class="ch-code__pre" tabindex="0"><code>tuilage decouper carte.png --taille 256 --sortie tuiles/</code></pre>
+</div>
+                <p>Tuilage écrit une ligne par tuile. Pour l'interrompre en route, appuie sur <span class="ch-kbd__combo"><kbd class="ch-kbd">Ctrl</kbd><span class="ch-kbd__plus">+</span><kbd class="ch-kbd">C</kbd></span> ; les tuiles déjà écrites restent en place.</p>
+                <p>Pour ouvrir l'aperçu une fois le découpage terminé, appuie sur <kbd class="ch-kbd">Espace</kbd>, puis sur <kbd class="ch-kbd">Échap</kbd> pour le fermer.</p>
+                <h3>Vérifier le résultat</h3>
+                <p>Le dossier <code>tuiles/</code> contient une image par case, nommée <code>x-y.png</code>, et un fichier <code>index.json</code> que le jeu lit au démarrage.</p>
+                <h2 id="options">Options</h2>
+                <p>Les options se placent après le nom de l'image, dans n'importe quel ordre.</p>
+                <div class="ch-prose__scroll" role="region" aria-label="Tableau des options de la commande decouper" tabindex="0">
+                  <table>
+                    <caption>Options de la commande <code>tuilage decouper</code></caption>
+                    <thead>
+                      <tr><th scope="col">Option</th><th scope="col">Par défaut</th><th scope="col">Effet</th></tr>
+                    </thead>
+                    <tbody>
+                      <tr><th scope="row"><code>--taille</code></th><td>256</td><td>Côté d'une tuile, en pixels.</td></tr>
+                      <tr><th scope="row"><code>--sortie</code></th><td>tuiles/</td><td>Dossier où écrire les tuiles.</td></tr>
+                      <tr><th scope="row"><code>--marge</code></th><td>0</td><td>Pixels recopiés de chaque côté pour éviter les coutures.</td></tr>
+                      <tr><th scope="row"><code>--format</code></th><td>png</td><td>Format des tuiles : png ou webp.</td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </article>
+              <article class="ch-prose">
+                <h2 id="depannage">Dépannage</h2>
+                <div class="ch-alert ch-alert--warn"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-alert"></use></svg><b class="ch-alert__kind">Attention</b> · si le dossier de sortie existe déjà, Tuilage refuse d'écrire pour ne rien écraser. Choisis un autre dossier ou ajoute <code>--remplacer</code>.</div>
+                  <h3>« Image trop petite »</h3>
+                  <p>L'image source fait moins de 1 024 pixels de large. Agrandis-la dans ton éditeur, ou passe une taille de tuile plus petite avec <code>--taille 128</code>.</p>
+                  <h3>Des coutures entre les tuiles</h3>
+                  <p>Le jeu applique un filtre qui mélange les bords. Ajoute deux pixels de marge pour les masquer :</p>
+                  <div class="ch-code" data-ch-copy>
+<pre class="ch-code__pre" tabindex="0"><code>tuilage decouper carte.png --marge 2</code></pre>
+</div>
+                  <h3>La commande est introuvable</h3>
+                  <p>Ferme puis rouvre le terminal : le chemin d'installation n'est lu qu'au démarrage. Si cela ne suffit pas, relance l'installation de l'onglet correspondant à ton système, plus haut sur cette page.</p>
+              </article>
+              <div class="ch-row ch-row--between">
+                <a class="ch-btn ch-btn--ghost" href="/gabarits/doc/accueil/"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-left"></use></svg> Accueil de la documentation</a>
+                <a class="ch-btn ch-btn--secondary" href="/gabarits/doc/accueil/#demarrage">Démarrage rapide <svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-arrow"></use></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <footer class="ch-footer">
+    <div class="ch-footer__inner">
+      <div class="ch-footer__brand">
+        <p class="ch-footer__name">Tuilage</p>
+        <p class="ch-footer__text">Un petit outil en ligne de commande qui découpe une grande carte en tuiles pour un jeu ou un mod (outil fictif).</p>
+      </div>
+      <nav class="ch-footer__nav" aria-label="Pied de page">
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Documentation</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/doc/accueil/">Accueil de la doc</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/doc/accueil/#demarrage">Démarrage rapide</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/doc/accueil/#sections">Les sections</a></li>
+          </ul>
+        </div>
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Aide</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/doc/page/">Installer et lancer</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/doc/page/#options">Options</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/doc/page/#depannage">Dépannage</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Tuilage est un outil fictif : cette documentation n'existe que pour montrer le gabarit.</p>
+  </footer>
+</body>
+</html>

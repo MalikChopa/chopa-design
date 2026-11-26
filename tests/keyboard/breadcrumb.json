@@ -1,0 +1,23 @@
+{
+  "slug": "breadcrumb",
+  "cases": [
+    {
+      "id": "page-courante-en-texte",
+      "example": "breadcrumb/defaut",
+      "tabOrder": [
+        ".ch-breadcrumb__item:nth-child(1) a",
+        ".ch-breadcrumb__item:nth-child(2) a",
+        ".ch-breadcrumb__item:nth-child(3) a"
+      ]
+    },
+    {
+      "id": "page-courante-en-lien",
+      "example": "breadcrumb/lien-courant",
+      "tabOrder": [
+        ".ch-breadcrumb__item:nth-child(1) a",
+        ".ch-breadcrumb__item:nth-child(2) a",
+        ".ch-breadcrumb__item:nth-child(3) a[aria-current=\"page\"]"
+      ]
+    }
+  ]
+}

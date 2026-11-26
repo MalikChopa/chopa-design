@@ -1,0 +1,70 @@
+{
+  "slug": "button",
+  "cases": [
+    {
+      "id": "tab-entree-espace",
+      "example": "button/primary",
+      "tabOrder": [
+        "button"
+      ],
+      "setup": [
+        {
+          "sel": "button",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "button",
+            "count": {
+              "clic": 1
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": "button",
+            "count": {
+              "clic": 2
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "liens",
+      "example": "button/lien",
+      "tabOrder": [
+        "a[href=\"#carnet\"]",
+        "a[href=\"#journal\"]"
+      ],
+      "setup": [
+        {
+          "sel": "a",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "a[href=\"#carnet\"]",
+            "count": {
+              "clic": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactives-sautes",
+      "example": "button/desactive",
+      "tabOrder": []
+    }
+  ]
+}

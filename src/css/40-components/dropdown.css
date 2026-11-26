@@ -1,0 +1,15 @@
+/* Menu déroulant (pièce 24) : ch-dropdown > bouton[popovertarget] + ch-dropdown__panel[popover] > ch-dropdown__item (button ou a).
+   Sans JavaScript : popover natif, ouvert à sa place par défaut (centré dans la fenêtre, jamais plus large qu'elle), lisible.
+   Avec chopa.js : le module pose top et left (en pixels, sous le bouton) et data-ch-placed. Sans popover : repli par hidden,
+   panneau placé sous le bouton (data-ch-fallback). Le panneau ne déclare pas `display` : le popover fermé reste masqué par le navigateur.
+   `ch-dropdown--ouvert` montre le menu ouvert dans le flux (illustration, sans popover).
+   Couleurs : fg sur card ; survol et focus : fg sur acc-dim (composé sur card), plus un filet de 2 px acc-text à gauche. Bordure line. */
+.ch-dropdown { box-sizing: border-box; margin: 0; padding: 0; display: inline-block; position: relative; }
+.ch-dropdown__panel { box-sizing: border-box; margin: auto; padding: var(--ch-s1) 0; min-width: 200px; max-width: calc(100vw - 32px); max-height: calc(100vh - 32px); overflow: auto; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); transition: none; }
+.ch-dropdown__panel[data-ch-placed] { inset: auto; margin: 0; }
+.ch-dropdown__panel[data-ch-fallback] { position: absolute; top: 100%; left: 0; margin: var(--ch-s1) 0 0; z-index: var(--ch-z-overlay); }
+.ch-dropdown__item { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: flex; align-items: center; width: 100%; min-height: var(--ch-hit); background: none; border: 0; border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-align: left; text-decoration: none; color: var(--ch-fg); cursor: pointer; }
+.ch-dropdown__item:hover, .ch-dropdown__item:focus-visible { background: var(--ch-acc-dim); box-shadow: inset 2px 0 0 var(--ch-acc-text); }
+.ch-dropdown__item:focus-visible { outline-offset: -2px; }
+.ch-dropdown--ouvert { display: inline-flex; flex-direction: column; align-items: flex-start; }
+.ch-dropdown--ouvert .ch-dropdown__panel { display: block; position: static; margin: var(--ch-s1) 0 0; }

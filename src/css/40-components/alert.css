@@ -1,0 +1,12 @@
+/* Alerte (pièce 55) : bandeau en flux. Parité avec .note de la planche (filet de 2 px à gauche, fond bg2, remplissage s4 s5, 15 px, soft ;
+   .note b = ch-alert__kind : fg, 600). Le marquage ajoute un glyphe du sprite (ch-icon ch-alert__icon) devant le mot.
+   Variantes : --info (= la planche), --warn (fond acc-dim), --error (fond acc-dim, cadre acc de 2 px). Chaque alerte porte un glyphe ET un mot
+   (« Info », « Attention », « Erreur ») : elle se lit sans couleur. Aucun role dans le code à copier : on ne pose role="alert" (erreur)
+   ou role="status" que sur une alerte insérée après le chargement de la page.
+   Couleurs : soft (texte), fg (mot, glyphe) sur bg2 ; soft, fg sur acc-dim (composé sur bg, bg2, card) : paires autorisées. */
+.ch-alert { box-sizing: border-box; margin: 0; padding: var(--ch-s4) var(--ch-s5); border: 0; border-left: 2px solid var(--ch-acc); border-radius: 0; background: var(--ch-bg2); color: var(--ch-soft); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.ch-alert--info { border-left-color: var(--ch-acc); }
+.ch-alert--warn { background: var(--ch-acc-dim); }
+.ch-alert--error { background: var(--ch-acc-dim); border: 2px solid var(--ch-acc); }
+.ch-alert__icon { margin-right: var(--ch-s2); color: var(--ch-fg); }
+.ch-alert__kind { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }

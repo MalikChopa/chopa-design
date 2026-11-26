@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boutique : fiche produit</title>
+  <meta name="description" content="Fiche produit d'une boutique de céramiques : fil d'Ariane, galerie, prix, quantité, ajout au panier avec notification, onglets de détails et tiroir du panier.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/boutique/liste/">Atelier Brume</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/boutique/liste/">Boutique</a>
+        <a href="/gabarits/boutique/produit/" aria-current="page">Bol Brume</a>
+      </nav>
+      <div class="ch-row" role="group" aria-label="Thème">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+    <div class="ch-wrap">
+      <div class="ch-stack ch-stack--s6">
+        <nav class="ch-breadcrumb" aria-label="Fil d'Ariane">
+          <ol class="ch-breadcrumb__list">
+            <li class="ch-breadcrumb__item"><a class="ch-breadcrumb__link" href="/gabarits/boutique/liste/">Boutique</a></li>
+            <li class="ch-breadcrumb__item"><a class="ch-breadcrumb__link" href="/gabarits/boutique/liste/">Céramique</a></li>
+            <li class="ch-breadcrumb__item"><span aria-current="page">Bol Brume</span></li>
+          </ol>
+        </nav>
+
+        <div class="ch-grid ch-grid--2-1">
+          <div class="ch-stack ch-stack--s3">
+            <figure class="ch-figure ch-figure--4x3">
+              <img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="1280" height="960" alt="Le bol Brume, grès gris, image grise de remplacement">
+              <figcaption class="ch-figure__caption">Le bol Brume, émail gris cendre.</figcaption>
+            </figure>
+            <ul class="ch-gallery ch-gallery--3" role="list">
+              <li class="ch-gallery__item">
+                <figure class="ch-figure ch-figure--4x3">
+                  <img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="480" alt="Le bol Brume vu de dessus">
+                  <figcaption class="ch-figure__caption">De dessus</figcaption>
+                </figure>
+              </li>
+              <li class="ch-gallery__item">
+                <figure class="ch-figure ch-figure--4x3">
+                  <img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 6h16v3H0z' fill='%232b2b29'/%3E%3Cpath d='M0 6.2h16' stroke='%235c5c58' stroke-width='.2'/%3E%3C/svg%3E" width="640" height="480" alt="Le bol Brume posé sur une table">
+                  <figcaption class="ch-figure__caption">Sur la table</figcaption>
+                </figure>
+              </li>
+              <li class="ch-gallery__item">
+                <figure class="ch-figure ch-figure--4x3">
+                  <img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='11' cy='3.5' r='1.6' fill='%235c5c58'/%3E%3Cpath d='M0 9 3 6 6 8 9 5.5 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="480" alt="Le bol Brume en gros plan, émail gris">
+                  <figcaption class="ch-figure__caption">L'émail</figcaption>
+                </figure>
+              </li>
+            </ul>
+          </div>
+
+          <div class="ch-stack ch-stack--s4">
+            <div class="ch-stack ch-stack--s2">
+              <p class="ch-label">Céramique</p>
+              <h1 class="ch-t-h2">Bol Brume</h1>
+              <div class="ch-row">
+                <span class="ch-t-h3">24&#160;€</span>
+                <span class="ch-badge ch-badge--solid">Nouveau</span>
+                <span class="ch-badge ch-badge--outline">En stock : 7</span>
+              </div>
+            </div>
+            <p class="ch-t-body">Un bol en grès émaillé, tourné à la main dans un petit atelier. Chaque pièce est unique : l'émail gris cendre varie d'un bol à l'autre.</p>
+
+            <form class="ch-stack ch-stack--s3" action="#">
+              <label class="ch-field">
+                <span class="ch-field__label">Quantité</span>
+                <input class="ch-input" type="number" name="quantite" min="1" max="7" value="1" inputmode="numeric">
+                <span class="ch-field__help">Sept exemplaires disponibles.</span>
+              </label>
+              <div class="ch-row">
+                <button class="ch-btn ch-btn--primary" type="button" data-ch-toast="Bol Brume ajouté au panier." data-ch-needs-js>Ajouter au panier</button>
+                <button class="ch-btn ch-btn--secondary" type="button" data-ch-dialog-open="#panier" data-ch-needs-js>Voir le panier</button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div class="ch-tabs" data-ch-tabs>
+          <div class="ch-tabs__list">
+            <button class="ch-tabs__tab" type="button">Description</button>
+            <button class="ch-tabs__tab" type="button">Entretien</button>
+            <button class="ch-tabs__tab" type="button">Livraison</button>
+          </div>
+          <div class="ch-tabs__panel">
+            <h2 class="ch-tabs__heading">Description</h2>
+            <p>Grès émaillé, tourné à la main, 14 cm de diamètre, 6 cm de haut. Contenance : environ 45 cl. Assez large pour une soupe, assez petit pour un yaourt.</p>
+          </div>
+          <div class="ch-tabs__panel">
+            <h2 class="ch-tabs__heading">Entretien</h2>
+            <p>Passe au lave-vaisselle ou lave à la main avec une éponge douce. Évite les chocs thermiques.</p>
+          </div>
+          <div class="ch-tabs__panel">
+            <h2 class="ch-tabs__heading">Livraison</h2>
+            <p>Expédié sous trois jours, emballé dans du papier recyclé. Retour possible pendant quatorze jours.</p>
+          </div>
+        </div>
+
+        <p><a class="ch-btn ch-btn--ghost" href="/gabarits/boutique/liste/">Retour à la boutique</a></p>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <dialog class="ch-drawer ch-drawer--right" id="panier" aria-labelledby="panier-titre">
+    <div class="ch-drawer__head">
+      <h2 class="ch-drawer__title" id="panier-titre">Votre panier</h2>
+      <button class="ch-btn ch-btn--icon ch-btn--ghost ch-drawer__close" type="button" data-ch-dialog-close aria-label="Fermer le panier"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-close"></use></svg></button>
+    </div>
+    <div class="ch-drawer__body" tabindex="0">
+      <ul class="ch-list ch-list--rule" role="list">
+        <li><span class="ch-row ch-row--between ch-row--nowrap"><span>Bol Brume, 1 exemplaire</span><span class="ch-t-mono">24 €</span></span></li>
+        <li><span class="ch-row ch-row--between ch-row--nowrap"><span>Sachet de capucines, 2 exemplaires</span><span class="ch-t-mono">8 €</span></span></li>
+        <li><span class="ch-row ch-row--between ch-row--nowrap"><span>Livraison</span><span class="ch-t-mono">5 €</span></span></li>
+      </ul>
+    </div>
+    <div class="ch-drawer__foot">
+      <button class="ch-btn ch-btn--ghost" type="button" data-ch-dialog-close>Continuer mes achats</button>
+      <button class="ch-btn ch-btn--primary" type="button" data-ch-dialog-close>Payer 37 €</button>
+    </div>
+  </dialog>
+
+  <footer class="ch-footer ch-footer--compact">
+    <div class="ch-footer__inner">
+      <nav class="ch-footer__nav" aria-label="Liens utiles">
+        <ul class="ch-footer__list">
+          <li><a class="ch-footer__link" href="/gabarits/boutique/liste/">Toute la boutique</a></li>
+          <li><a class="ch-footer__link" href="/gabarits/boutique/produit/">Le bol Brume</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Atelier Brume, céramiques, graines et jeux de société inventés. Boutique fictive : rien ne se vend ici.</p>
+  </footer>
+</body>
+</html>

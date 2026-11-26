@@ -1,0 +1,3 @@
+/* Icône (pièces 7 à 15, 15 glyphes) : <svg class="ch-icon" aria-hidden="true" focusable="false"><use href=".../chopa-icons.svg#ch-i-nom"></use></svg>.
+   Les dessins sont dans le sprite (un symbole par glyphe ; jeu Carbon 11.91.0, choisi le 2026-11-16, formes pleines en `currentColor`) : l'icône prend la couleur du texte. */
+.ch-icon { box-sizing: border-box; margin: 0; padding: 0; display: inline-block; flex: none; width: 20px; height: 20px; vertical-align: -.3em; fill: currentColor; stroke: none; }

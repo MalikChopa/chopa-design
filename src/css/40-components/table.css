@@ -1,0 +1,29 @@
+/* Tableau (pièce 34) : ch-table__wrap (région défilante : role="region", aria-label, tabindex="0") > table.ch-table > thead th, tbody td.
+   Planche : .table, .table th, .table td, td.num, .table tr:hover td, .up, .down.
+   Les th et td n'ont pas de classe : ils sont stylés par descendance (comme ch-prose), chacun avec marge, remplissage et boîte déclarés.
+   Colonne de nombres : ch-table__num sur le th ET sur les td (alignés à droite, chiffres de largeur fixe).
+   Tendance : ch-table__up (acc-text) et ch-table__down (mute) ; jamais la couleur seule : flèche ou signe dans le texte.
+   Tri (module sort, data-ch-sort sur le table) : le module met un <button class="ch-table__sort"> dans chaque th de thead (sans bouton sans JavaScript :
+   le tableau reste lisible, non trié) ; aria-sort sur le seul en-tête trié ; le glyphe « sort » devient la moitié haute (croissant) ou basse (décroissant).
+   Le bouton couvre toute la cellule (marges négatives = le remplissage du th) : cible d'au moins 44 px de haut.
+   Couleurs : fg (cellules), mute (en-têtes), acc-text (hausse, tri), survol de ligne : fond bg2 ; filets line. */
+.ch-table__wrap { box-sizing: border-box; width: 100%; max-width: 100%; margin: 0; padding: 0; overflow-x: auto; }
+.ch-table { box-sizing: border-box; margin: 0; padding: 0; width: 100%; border-collapse: collapse; font-size: 15px; }
+.ch-table__caption { box-sizing: border-box; margin: 0; padding: 0 0 var(--ch-s2); text-align: left; font-size: 14px; color: var(--ch-mute); }
+.ch-table th { box-sizing: border-box; margin: 0; padding: 10px 12px; text-align: left; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); font-weight: 400; border-bottom: 1px solid var(--ch-line); }
+.ch-table td { box-sizing: border-box; margin: 0; padding: 14px 12px; border-bottom: 1px solid var(--ch-line); }
+.ch-table td.ch-table__num { font-family: var(--ch-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.ch-table th.ch-table__num { text-align: right; }
+.ch-table tr:hover td { background: var(--ch-bg2); }
+.ch-table__up { color: var(--ch-acc-text); }
+.ch-table__down { color: var(--ch-mute); }
+
+.ch-table__sort { box-sizing: border-box; display: flex; align-items: center; gap: var(--ch-s2); width: auto; min-height: var(--ch-hit); margin: -10px -12px; padding: 0 12px; border: 0; border-radius: var(--ch-radius); background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; text-align: inherit; cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-table__sort:hover { color: var(--ch-fg); }
+.ch-table__sort:focus-visible { outline-offset: -2px; }
+.ch-table__num .ch-table__sort { justify-content: flex-end; }
+.ch-table__sort .ch-icon { width: 16px; height: 16px; vertical-align: baseline; }
+.ch-table th[aria-sort] .ch-table__sort { color: var(--ch-fg); }
+.ch-table th[aria-sort] .ch-icon { color: var(--ch-acc-text); }
+.ch-table th[aria-sort="ascending"] .ch-icon { clip-path: inset(0 0 50% 0); }
+.ch-table th[aria-sort="descending"] .ch-icon { clip-path: inset(50% 0 0 0); }

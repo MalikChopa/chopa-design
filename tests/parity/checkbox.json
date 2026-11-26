@@ -1,0 +1,73 @@
+{
+  "slug": "checkbox",
+  "piece": "Case à cocher (ch-choice, ch-check)",
+  "note": "Planche : .check et .check input. Compare toutes les propriétés calculées au repos et au focus (contour de la base), ::before et ::after, 3 thèmes, coché et non coché. La planche n'a ni survol, ni transition, ni état indéterminé, ni désactivé, ni erreur pour la case : ces états sont couverts par la palette (exemples checkbox/*) et par tests/keyboard/checkbox.json. La planche remet les marges des champs à 0. Écart voulu et unique : flex-shrink vaut 0 sur la case (ignoreProps), 1 sur la planche ; avec 1, la case se rétrécit à 8,6 px quand le libellé est long (mesuré à 200 px de large).",
+  "cases": [
+    {
+      "id": "coche",
+      "ch": "<label class=\"ch-choice\"><input class=\"ch-check\" type=\"checkbox\" checked> J'accepte d'être recontacté</label>",
+      "board": "<label class=\"check\"><input type=\"checkbox\" checked> J'accepte d'être recontacté</label>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "etiquette",
+          "ch": ".ch-choice",
+          "board": ".check",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "case-cochee",
+          "ch": ".ch-check",
+          "board": ".check input",
+          "states": [
+            "rest",
+            "focus"
+          ],
+          "pseudos": [
+            "::before",
+            "::after"
+          ],
+          "ignoreProps": [
+            "flex-shrink"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "non-coche",
+      "ch": "<label class=\"ch-choice\"><input class=\"ch-check\" type=\"checkbox\"> Recevoir les nouveautés</label>",
+      "board": "<label class=\"check\"><input type=\"checkbox\"> Recevoir les nouveautés</label>",
+      "pairs": [
+        {
+          "id": "etiquette",
+          "ch": ".ch-choice",
+          "board": ".check",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "case-vide",
+          "ch": ".ch-check",
+          "board": ".check input",
+          "states": [
+            "rest",
+            "focus"
+          ],
+          "pseudos": [
+            "::before",
+            "::after"
+          ],
+          "ignoreProps": [
+            "flex-shrink"
+          ]
+        }
+      ]
+    }
+  ]
+}

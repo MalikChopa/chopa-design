@@ -1,0 +1,31 @@
+---
+import DocLayout from '../components/DocLayout.astro';
+import Example from '../components/Example.astro';
+import { pieces, pagesNav } from '../lib/pieces.mjs';
+const suite = pagesNav.filter((p) => ['/installation/', '/jetons/', '/theme/'].includes(p.chemin));
+---
+<DocLayout title="Accueil">
+  <h1 class="doc-h1">Chopa Design</h1>
+  <p class="doc-lead">Une bibliothèque de pièces visuelles : un fichier <code>chopa.css</code> à copier dans un site, trois thèmes (sombre, clair, chaud), des coins carrés partout et un seul orange. Chaque pièce est montrée ici en direct, avec son code à copier.</p>
+
+  <h2 class="doc-h2">Par où commencer</h2>
+  <ul class="doc-cards">
+    {suite.map((p) => (
+      <li>{p.lien ? <a href={p.chemin}><strong>{p.titre}</strong><span>{p.but}</span></a> : <span><strong>{p.titre}</strong><span>{p.but}</span></span>}</li>
+    ))}
+    <li><a href="/composants/"><strong>Composants</strong><span>{pieces.length === 0 ? 'Les pièces arrivent famille par famille' : `${pieces.length} pièce${pieces.length > 1 ? 's' : ''}, par famille`}</span></a></li>
+  </ul>
+
+  <h2 class="doc-h2">Un exemple en direct</h2>
+  <p class="doc-text">Le bouton ci-dessous est du HTML ordinaire avec deux classes. Change de thème avec les boutons du haut de la page : l'aperçu suit, le code reste le même.</p>
+  <Example file="button/primary" />
+  <Example file="button/secondary" />
+  <Example file="button/ghost" />
+
+  <h2 class="doc-h2">Ce que la bibliothèque garantit</h2>
+  <ul class="doc-list">
+    <li>Chaque texte atteint au moins 4,5 : 1 de contraste dans les trois thèmes, recalculé à chaque jeton ajouté.</li>
+    <li>Le focus est visible, les cibles tactiles font au moins 44 px, le mouvement respecte <code>prefers-reduced-motion</code>.</li>
+    <li>Le HTML natif passe d'abord ; un <code>chopa.js</code> facultatif comble seulement ce que le navigateur ne fait pas.</li>
+  </ul>
+</DocLayout>

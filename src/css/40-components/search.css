@@ -1,0 +1,6 @@
+/* Recherche (pièce 13) : <form class="ch-search" role="search"> (ou <search class="ch-search">) contenant un champ
+   type="search" (ch-input, nommé par aria-label ou un libellé) et un bouton. Le champ et le bouton se touchent. */
+.ch-search { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: stretch; width: 100%; max-width: 480px; }
+.ch-search > .ch-input { flex: 1 1 auto; min-width: 0; width: auto; border-right-width: 0; -webkit-appearance: none; appearance: none; }
+.ch-search > .ch-input::-webkit-search-cancel-button, .ch-search > .ch-input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.ch-search > .ch-btn { flex: none; }

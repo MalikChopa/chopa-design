@@ -1,0 +1,36 @@
+{
+  "slug": "button-icon",
+  "cases": [
+    {
+      "id": "ordre-et-activation",
+      "example": "button-icon/primary",
+      "tabOrder": [
+        "button:nth-child(1)",
+        "button:nth-child(2)"
+      ],
+      "setup": [
+        {
+          "sel": "button:nth-child(1)",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "button:nth-child(1)",
+            "count": {
+              "clic": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactives-sautes",
+      "example": "button-icon/desactive",
+      "tabOrder": []
+    }
+  ]
+}

@@ -1,0 +1,20 @@
+{
+  "slug": "empty",
+  "cases": [
+    {
+      "id": "action",
+      "example": "empty/playlist",
+      "tabOrder": [
+        ".ch-empty__action"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-empty__action"
+          }
+        }
+      ]
+    }
+  ]
+}

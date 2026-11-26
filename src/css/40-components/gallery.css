@@ -1,0 +1,11 @@
+/* Galerie (pièce 42) : ch-gallery (ul, role="list") > ch-gallery__item (li) > ch-figure. Colonnes : 3 (base, ou --3), --2, --4 ;
+   une seule colonne sous 800 px de fenêtre (comme ch-grid). Pas de visionneuse : l'image ne s'agrandit pas.
+   Couleurs : celles de ch-figure (légende mute sur bg, bg2, card). */
+.ch-gallery { box-sizing: border-box; margin: 0; padding: 0; width: 100%; list-style: none; display: grid; gap: var(--ch-s4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-gallery__item { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+.ch-gallery--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-gallery--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-gallery--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 800px) {
+  .ch-gallery, .ch-gallery--2, .ch-gallery--3, .ch-gallery--4 { grid-template-columns: minmax(0, 1fr); }
+}

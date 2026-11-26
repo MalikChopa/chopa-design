@@ -1,0 +1,44 @@
+{
+  "slug": "pagination",
+  "cases": [
+    {
+      "id": "milieu-de-liste",
+      "example": "pagination/defaut",
+      "tabOrder": [
+        "li:nth-child(1) a",
+        "li:nth-child(2) a",
+        "li:nth-child(4) a",
+        "li:nth-child(5) a[aria-current=\"page\"]",
+        "li:nth-child(6) a",
+        "li:nth-child(8) a",
+        "li:nth-child(9) a"
+      ]
+    },
+    {
+      "id": "premiere-page-precedent-desactive",
+      "example": "pagination/premiere",
+      "tabOrder": [
+        "li:nth-child(2) a[aria-current=\"page\"]",
+        "li:nth-child(3) a",
+        "li:nth-child(4) a",
+        "li:nth-child(5) a"
+      ],
+      "steps": [
+        {
+          "key": "Shift+Tab",
+          "expect": { "prop": { "sel": "li:nth-child(1) [aria-disabled=\"true\"]", "name": "tabIndex", "value": -1 } }
+        }
+      ]
+    },
+    {
+      "id": "derniere-page-suivant-desactive",
+      "example": "pagination/derniere",
+      "tabOrder": [
+        "li:nth-child(1) a",
+        "li:nth-child(2) a",
+        "li:nth-child(3) a",
+        "li:nth-child(4) a[aria-current=\"page\"]"
+      ]
+    }
+  ]
+}

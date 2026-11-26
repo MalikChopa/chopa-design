@@ -1,0 +1,76 @@
+{
+  "slug": "chip",
+  "cases": [
+    {
+      "id": "puces-boutons",
+      "example": "chip/defaut",
+      "tabOrder": [
+        ".ch-chip:nth-child(1)",
+        ".ch-chip:nth-child(2)",
+        ".ch-chip:nth-child(3)",
+        ".ch-chip:nth-child(4)"
+      ],
+      "setup": [
+        {
+          "sel": ".ch-chip:nth-child(2)",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-chip:nth-child(2)"
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-chip:nth-child(2)",
+            "count": {
+              "clic": 1
+            },
+            "attr": {
+              "sel": ".ch-chip:nth-child(2)",
+              "name": "aria-pressed",
+              "value": "false"
+            }
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-chip:nth-child(2)",
+            "count": {
+              "clic": 2
+            },
+            "attr": {
+              "sel": ".ch-chip:nth-child(2)",
+              "name": "aria-pressed",
+              "value": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "puces-liens",
+      "example": "chip/liens",
+      "tabOrder": [
+        "a.ch-chip:nth-child(1)",
+        "a.ch-chip:nth-child(2)",
+        "a.ch-chip:nth-child(3)"
+      ]
+    },
+    {
+      "id": "desactivee-sautee",
+      "example": "chip/etats",
+      "tabOrder": [
+        ".ch-chip:nth-child(1)",
+        ".ch-chip:nth-child(2)",
+        ".ch-chip:nth-child(4)"
+      ]
+    }
+  ]
+}

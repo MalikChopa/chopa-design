@@ -1,0 +1,13 @@
+/* Fil d'Ariane (pièce 25) : nav (nommé) > ch-breadcrumb__list (ol) > ch-breadcrumb__item (li) > ch-breadcrumb__link (a) ou texte courant.
+   Page courante : aria-current="page", soit sur un <span> (pas un arrêt de Tab), soit sur un lien. Elle se reconnaît à fg, sans soulignement
+   (les liens sont soulignés) : jamais la couleur seule.
+   Séparateur : tracé par CSS (petit trait penché, fond line), sans aucun texte généré : rien dans l'arbre d'accessibilité.
+   Cible : 44 px de haut (lien et texte courant). Passe à la ligne sur téléphone.
+   Couleurs : liens soft (survol fg), courant fg, sur bg, bg2, card ; séparateur : fond mute (non-texte). */
+.ch-breadcrumb { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-breadcrumb__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.ch-breadcrumb__item { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); }
+.ch-breadcrumb__item + .ch-breadcrumb__item::before { content: ""; flex: none; width: 1px; height: 14px; margin: 0 var(--ch-s3); background: var(--ch-mute); transform: rotate(20deg); }
+.ch-breadcrumb__link { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); color: var(--ch-soft); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color var(--ch-t-fast); }
+.ch-breadcrumb__link:hover { color: var(--ch-fg); }
+.ch-breadcrumb [aria-current="page"] { color: var(--ch-fg); text-decoration: none; }

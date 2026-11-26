@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Boutique : liste de produits</title>
+  <meta name="description" content="Liste de produits d'une boutique de céramiques, graines et jeux : filtres en puces, grille de cartes avec prix et badges, pagination.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/boutique/liste/">Atelier Brume</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/boutique/liste/" aria-current="page">Boutique</a>
+        <a href="/gabarits/boutique/produit/">Bol Brume</a>
+      </nav>
+      <div class="ch-row" role="group" aria-label="Thème">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+      <div class="ch-wrap">
+        <div class="ch-stack ch-stack--s6">
+        <div class="ch-stack ch-stack--s3">
+          <p class="ch-label">Nouveautés de novembre</p>
+          <h1 class="ch-t-h2">La boutique</h1>
+          <p class="ch-t-body">Des bols tournés à la main, des graines pour le balcon et des jeux de société pour les soirs de pluie.</p>
+        </div>
+
+        <div class="ch-grid ch-grid--sidebar">
+        <div class="ch-stack ch-stack--s3">
+          <form class="ch-search" role="search" aria-label="Boutique" action="#">
+            <input class="ch-input" type="search" name="q" aria-label="Rechercher un produit" placeholder="Bol, graines, jeu">
+            <button class="ch-btn ch-btn--icon ch-btn--primary" type="submit" aria-label="Lancer la recherche"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-search"></use></svg></button>
+          </form>
+          <div class="ch-row" role="group" aria-label="Filtrer par catégorie">
+            <button class="ch-chip" type="button" aria-pressed="true">Tout</button>
+            <button class="ch-chip" type="button" aria-pressed="false">Céramique</button>
+            <button class="ch-chip" type="button" aria-pressed="false">Graines</button>
+            <button class="ch-chip" type="button" aria-pressed="false">Jeux</button>
+          </div>
+        </div>
+
+        <div class="ch-stack ch-stack--s6">
+        <section class="ch-stack ch-stack--s4" aria-labelledby="produits">
+          <h2 class="ch-t-h3" id="produits">Six produits sur dix-huit</h2>
+          <div class="ch-grid ch-grid--3">
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="Bol en grès gris, vu de dessus, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Céramique</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Bol Brume</a></h3></div></div>
+            <p class="ch-card__body">Grès émaillé, tourné à la main, 14 cm.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">24 €</span><span class="ch-badge ch-badge--solid">Nouveau</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='8' cy='4.5' r='3' fill='%232b2b29'/%3E%3Ccircle cx='8' cy='4.5' r='1.5' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="Tasse en grès, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Céramique</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Tasse Marée</a></h3></div></div>
+            <p class="ch-card__body">Une anse large, deux cents millilitres.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">18 €</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='11' cy='3.5' r='1.6' fill='%235c5c58'/%3E%3Cpath d='M0 9 3 6 6 8 9 5.5 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="Sachet de graines, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Graines</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Sachet de capucines</a></h3></div></div>
+            <p class="ch-card__body">Une quarantaine de graines, à semer en avril.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">4 €</span><span class="ch-badge ch-badge--solid">Dernières pièces</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 3h16M0 6h16M5.3 0v9M10.6 0v9' stroke='%232b2b29' stroke-width='.15' fill='none'/%3E%3Ccircle cx='8' cy='4.5' r='1.2' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="Coffret de graines, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Graines</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Coffret du balcon</a></h3></div></div>
+            <p class="ch-card__body">Quatre variétés d'aromatiques et un guide de semis.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">16 €</span><span class="ch-badge ch-badge--solid">Nouveau</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M6 9V3h4v6z' fill='%232b2b29'/%3E%3Cpath d='M9 6h.4' stroke='%238c8c88' stroke-width='.3'/%3E%3C/svg%3E" width="640" height="360" alt="Boîte d'un jeu de société, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Jeux</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Les Gardiens du phare</a></h3></div></div>
+            <p class="ch-card__body">Jeu coopératif, 2 à 5 joueurs, 40 minutes.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">32 €</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 6h16v3H0z' fill='%232b2b29'/%3E%3Cpath d='M0 6.2h16' stroke='%235c5c58' stroke-width='.2'/%3E%3C/svg%3E" width="640" height="360" alt="Paquet de cartes, image grise de remplacement">
+            <div class="ch-card__top"><div><span class="ch-label">Jeux</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/boutique/produit/">Course des marées</a></h3></div></div>
+            <p class="ch-card__body">Jeu de cartes rapide, dès 8 ans.</p>
+            <div class="ch-card__foot"><span class="ch-t-mono">12 €</span><span class="ch-badge ch-badge--solid">Dernières pièces</span></div>
+          </article>
+          </div>
+        </section>
+
+        <nav class="ch-pagination" aria-label="Pagination des produits">
+          <ul class="ch-pagination__list">
+            <li><span class="ch-pagination__link" aria-disabled="true"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-left"></use></svg><span class="ch-pagination__label">Précédent</span></span></li>
+            <li><a class="ch-pagination__link" href="#produits" aria-label="Page 1" aria-current="page">1</a></li>
+            <li><a class="ch-pagination__link" href="#produits" aria-label="Page 2">2</a></li>
+            <li><a class="ch-pagination__link" href="#produits" aria-label="Page 3">3</a></li>
+            <li><a class="ch-pagination__link" href="#produits"><span class="ch-pagination__label">Suivant</span><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-right"></use></svg></a></li>
+          </ul>
+        </nav>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="ch-footer ch-footer--compact">
+    <div class="ch-footer__inner">
+      <nav class="ch-footer__nav" aria-label="Liens utiles">
+        <ul class="ch-footer__list">
+          <li><a class="ch-footer__link" href="/gabarits/boutique/liste/">Toute la boutique</a></li>
+          <li><a class="ch-footer__link" href="/gabarits/boutique/produit/">Le bol Brume</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Atelier Brume, céramiques, graines et jeux de société inventés. Boutique fictive : rien ne se vend ici.</p>
+  </footer>
+</body>
+</html>

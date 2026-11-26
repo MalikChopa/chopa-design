@@ -1,0 +1,21 @@
+<button class="ch-btn ch-btn--secondary" type="button" data-ch-dialog-open="#ex-filtres" data-ch-needs-js>Filtrer les recettes</button>
+<dialog class="ch-drawer ch-drawer--left" id="ex-filtres" aria-labelledby="ex-filtres-titre">
+  <div class="ch-drawer__head">
+    <h2 class="ch-drawer__title" id="ex-filtres-titre">Filtrer les recettes</h2>
+    <button class="ch-btn ch-btn--icon ch-btn--ghost ch-drawer__close" type="button" data-ch-dialog-close aria-label="Fermer les filtres"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-close"></use></svg></button>
+  </div>
+  <div class="ch-drawer__body">
+    <fieldset class="ch-fieldset">
+      <legend class="ch-fieldset__legend">Type de plat</legend>
+      <div class="ch-stack ch-stack--s2">
+        <label class="ch-choice"><input class="ch-check" type="checkbox"> Pain et viennoiseries</label>
+        <label class="ch-choice"><input class="ch-check" type="checkbox" checked> Soupes</label>
+        <label class="ch-choice"><input class="ch-check" type="checkbox"> Desserts</label>
+      </div>
+    </fieldset>
+  </div>
+  <div class="ch-drawer__foot">
+    <button class="ch-btn ch-btn--ghost" type="button" data-ch-dialog-close>Annuler</button>
+    <button class="ch-btn ch-btn--primary" type="button" data-ch-dialog-close>Voir 14 recettes</button>
+  </div>
+</dialog>

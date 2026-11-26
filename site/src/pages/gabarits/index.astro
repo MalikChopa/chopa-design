@@ -1,0 +1,30 @@
+---
+// Liste des gabarits (Diapason, 2026-11-16), lue par glob dans site/src/templates/<genre>/<page>.html : titre (<title>)
+// et but (<meta name="description">) de chaque page. Chaque gabarit s'ouvre comme une vraie page, hors de la doc.
+import DocLayout from '../../components/DocLayout.astro';
+
+const GENRES: Record<string, string> = { portfolio: 'Portfolio', jeu: 'Jeu vidéo', appli: 'Appli', boutique: 'Boutique', blog: 'Blog', doc: 'Documentation' };
+const fichiers = import.meta.glob('../../templates/*/*.html', { query: '?raw', import: 'default', eager: true }) as Record<string, string>;
+const lire = (html: string, re: RegExp) => (html.match(re)?.[1] ?? '').trim();
+const gabarits = Object.entries(fichiers).map(([f, html]) => {
+  const [, genre, page] = f.match(/templates\/([\w-]+)\/([\w-]+)\.html$/) ?? [];
+  return { genre, page, titre: lire(html, /<title>([^<]*)<\/title>/i) || page, but: lire(html, /<meta\s+name="description"\s+content="([^"]*)"/i), url: `/gabarits/${genre}/${page}/` };
+});
+const ordre = Object.keys(GENRES);
+const parGenre = [...new Set(gabarits.map((g) => g.genre))]
+  .sort((a, b) => (ordre.indexOf(a) + 1 || 99) - (ordre.indexOf(b) + 1 || 99))
+  .map((genre) => ({ genre, nom: GENRES[genre] ?? genre, pages: gabarits.filter((g) => g.genre === genre) }));
+---
+<DocLayout title="Gabarits">
+  <h1 class="doc-h1 doc-h1--page">Gabarits</h1>
+  <p class="doc-lead">Des pages complètes, faites seulement avec les pièces de la bibliothèque, au contenu fictif. Chacune s'ouvre comme une vraie page : copie son code source comme point de départ.</p>
+  {parGenre.length === 0 && <p class="doc-text">Aucun gabarit pour l'instant.</p>}
+  {parGenre.map((g) => (
+    <section>
+      <h2 class="doc-h2">{g.nom}</h2>
+      <ul class="doc-list">
+        {g.pages.map((p) => <li><a href={p.url}>{p.titre}</a>{p.but && <> : {p.but}</>}</li>)}
+      </ul>
+    </section>
+  ))}
+</DocLayout>

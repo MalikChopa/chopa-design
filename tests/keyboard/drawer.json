@@ -1,0 +1,105 @@
+{
+  "slug": "drawer",
+  "cases": [
+    {
+      "id": "gauche-ouvrir-boucler-fermer",
+      "example": "drawer/gauche",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-drawer .ch-check",
+            "matches": {
+              "sel": ".ch-drawer",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Shift+Tab",
+          "expect": {
+            "focus": ".ch-drawer__close"
+          }
+        },
+        {
+          "key": "Shift+Tab",
+          "expect": {
+            "focus": ".ch-drawer__foot .ch-btn--primary"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-drawer__close"
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[data-ch-dialog-open]",
+            "matches": {
+              "sel": ".ch-drawer",
+              "query": ":modal",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "droite-defile-et-ferme",
+      "example": "drawer/droite",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-drawer__body",
+            "matches": {
+              "sel": ".ch-drawer",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-drawer__foot .ch-btn--ghost"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-drawer__foot .ch-btn--primary"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-drawer__close"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "[data-ch-dialog-open]",
+            "matches": {
+              "sel": ".ch-drawer",
+              "query": ":modal",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

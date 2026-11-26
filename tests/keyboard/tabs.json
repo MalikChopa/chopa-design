@@ -1,0 +1,197 @@
+{
+  "slug": "tabs",
+  "cases": [
+    {
+      "id": "fleches-debut-fin",
+      "example": "tabs/defaut",
+      "js": true,
+      "tabOrder": [
+        ".ch-tabs__tab[aria-selected=true]",
+        ".ch-tabs__panel:nth-child(2)"
+      ],
+      "steps": [
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(2)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(2)",
+              "name": "aria-selected",
+              "value": "true"
+            },
+            "prop": {
+              "sel": ".ch-tabs__panel:nth-child(3)",
+              "name": "hidden",
+              "value": false
+            }
+          }
+        },
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(1)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(1)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            },
+            "prop": {
+              "sel": ".ch-tabs__panel:nth-child(2)",
+              "name": "hidden",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Home",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(1)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(1)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-tabs__panel:nth-child(4)"
+          }
+        }
+      ]
+    },
+    {
+      "id": "onglet-desactive-saute",
+      "example": "tabs/desactive",
+      "js": true,
+      "tabOrder": [
+        ".ch-tabs__tab[aria-selected=true]",
+        ".ch-tabs__panel:nth-child(2)"
+      ],
+      "steps": [
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(1)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(1)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(1)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(1)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "actif-au-depart",
+      "example": "tabs/deuxieme",
+      "js": true,
+      "tabOrder": [
+        ".ch-tabs__tab[aria-selected=true]",
+        "a.ch-btn"
+      ],
+      "steps": [
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(1)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(1)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "focus": ".ch-tabs__tab:nth-child(3)",
+            "attr": {
+              "sel": ".ch-tabs__tab:nth-child(3)",
+              "name": "aria-selected",
+              "value": "true"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

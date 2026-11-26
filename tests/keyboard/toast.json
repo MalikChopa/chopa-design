@@ -1,0 +1,34 @@
+{
+  "slug": "toast",
+  "cases": [
+    {
+      "id": "declencheurs-ordre",
+      "example": "toast/declencheurs",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-toast]:not([data-ch-toast-type]):not([data-ch-toast-action])",
+        "[data-ch-toast-type=\"warn\"]",
+        "[data-ch-toast-type=\"error\"]",
+        "[data-ch-toast-action]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "[data-ch-toast]:not([data-ch-toast-type]):not([data-ch-toast-action])"
+          }
+        }
+      ]
+    },
+    {
+      "id": "anatomie-ordre",
+      "example": "toast/anatomie",
+      "tabOrder": [
+        ".ch-toast--info .ch-toast__close",
+        ".ch-toast--warn .ch-toast__action",
+        ".ch-toast--warn .ch-toast__close",
+        ".ch-toast--error .ch-toast__close"
+      ]
+    }
+  ]
+}

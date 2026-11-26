@@ -1,0 +1,31 @@
+{
+  "slug": "textarea",
+  "cases": [
+    {
+      "id": "saisie-multiligne",
+      "example": "textarea/defaut",
+      "tabOrder": [
+        "textarea"
+      ],
+      "steps": [
+        {
+          "type": "ab",
+          "expect": {
+            "focus": "textarea"
+          }
+        },
+        {
+          "key": "Enter"
+        },
+        {
+          "type": "c",
+          "expect": {
+            "value": {
+              "textarea": "ab\nc"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

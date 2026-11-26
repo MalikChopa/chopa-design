@@ -1,0 +1,14 @@
+{
+  "slug": "notfound",
+  "cases": [
+    {
+      "id": "liens",
+      "example": "notfound/blog",
+      "tabOrder": [
+        ".ch-notfound__links li:nth-child(1) a",
+        ".ch-notfound__links li:nth-child(2) a",
+        ".ch-notfound__links li:nth-child(3) a"
+      ]
+    }
+  ]
+}

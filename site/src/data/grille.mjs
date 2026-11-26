@@ -1,0 +1,20 @@
+export default {
+  titre: 'Grille',
+  famille: 'Fondations',
+  jalon: 'J1b-2',
+  ref: 'P',
+  but: 'Répartir des éléments en 2, 3 ou 4 colonnes égales, ou en colonnes inégales (2/3 + 1/3, 1/3 + 2/3, colonne latérale), qui passent sur une seule colonne sur téléphone.',
+  quand: 'Pour une liste d\'éléments de même poids (articles, objets, produits). Pour une page à deux zones de poids différent (galerie et achat, sommaire et contenu), prendre une variante inégale ; ne pas imbriquer plus de deux niveaux.',
+  variantes: [
+    { titre: 'Deux colonnes', exemple: 'grille/deux', texte: 'ch-grid--2' },
+    { titre: 'Trois colonnes', exemple: 'grille/trois', texte: 'ch-grid--3' },
+    { titre: 'Quatre colonnes', exemple: 'grille/quatre', texte: 'ch-grid--4' },
+    { titre: 'Deux tiers et un tiers', exemple: 'grille/deux-un', texte: 'ch-grid--2-1 : le contenu principal à gauche, une colonne étroite à droite (fiche produit : galerie et achat). Sans équivalent dans la planche : la palette et le contrôle de débordement la couvrent.' },
+    { titre: 'Un tiers et deux tiers', exemple: 'grille/un-deux', texte: 'ch-grid--1-2 : l\'inverse, une colonne étroite d\'abord. Sans équivalent dans la planche.' },
+    { titre: 'Colonne latérale et contenu', exemple: 'grille/laterale', texte: 'ch-grid--sidebar : une colonne fixe de 17 rem (16 px de base : 272 px), placée en premier dans le HTML, puis le contenu en minmax(0, 1fr). Pas de position collante : une colonne plus haute que la fenêtre serait inatteignable. Sans équivalent dans la planche.' },
+  ],
+  etats: ['Sous 800 px de large, toutes les variantes passent sur une seule colonne.'],
+  a11y: ['L\'ordre du HTML reste l\'ordre de lecture : ne pas réordonner les cellules par CSS.', 'Les colonnes ne dépassent jamais la page (minmax(0, ...)).'],
+  js: 'aucun',
+  classes: ['ch-grid', 'ch-grid--2', 'ch-grid--3', 'ch-grid--4', 'ch-grid--2-1', 'ch-grid--1-2', 'ch-grid--sidebar'],
+};

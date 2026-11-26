@@ -1,0 +1,27 @@
+{
+  "slug": "sidebar",
+  "cases": [
+    {
+      "id": "liens-d-un-groupe",
+      "example": "sidebar/defaut",
+      "tabOrder": [
+        "li:nth-child(1) a",
+        "li:nth-child(2) a[aria-current=\"page\"]",
+        "li:nth-child(3) a"
+      ]
+    },
+    {
+      "id": "liens-de-trois-groupes",
+      "example": "sidebar/groupes",
+      "tabOrder": [
+        ".ch-sidebar__group:nth-child(1) li:nth-child(1) a",
+        ".ch-sidebar__group:nth-child(1) li:nth-child(2) a",
+        ".ch-sidebar__group:nth-child(2) li:nth-child(1) a[aria-current=\"page\"]",
+        ".ch-sidebar__group:nth-child(2) li:nth-child(2) a",
+        ".ch-sidebar__group:nth-child(2) li:nth-child(3) a",
+        ".ch-sidebar__group:nth-child(3) li:nth-child(1) a",
+        ".ch-sidebar__group:nth-child(3) li:nth-child(2) a"
+      ]
+    }
+  ]
+}

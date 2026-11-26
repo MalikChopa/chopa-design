@@ -1,0 +1,30 @@
+/* Barre latérale (pièce 29) : aside (nommé) > details.ch-sidebar__details[open] > summary.ch-sidebar__summary + nav.ch-sidebar__nav (nommé) > ch-sidebar__group
+   (ch-sidebar__title + ul.ch-sidebar__list > li > a.ch-sidebar__link). Aucun JavaScript.
+   REPLI « TOUJOURS OUVERTE » (le comportement de base) : le HTML porte l'attribut `open`, donc, quel que soit le navigateur et la largeur,
+   les liens sont visibles et atteignables ; le résumé est un bouton natif (Entrée, Espace) qui plie et déplie, 44 px de haut.
+   AMÉLIORATION (@supports selector(::details-content), seulement) : à partir de 800 px de fenêtre, le résumé disparaît et le contenu reste affiché
+   même si le détail a été replié (par exemple sur téléphone, avant d'élargir la fenêtre). Sans ce support rien ne change : la barre reste ouverte.
+   Lien courant : aria-current="page" : fg, filet de 2 px à gauche et gras (jamais la couleur seule).
+   Couleurs : titre de groupe mute ; lien soft (survol fg, courant fg) ; résumé fg ; filets line, acc-text ; sur bg, bg2, card. */
+.ch-sidebar { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: 280px; }
+.ch-sidebar__details { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-sidebar__summary { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s3); min-height: var(--ch-hit); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-fg); cursor: pointer; list-style: none; }
+.ch-sidebar__summary::-webkit-details-marker { display: none; }
+.ch-sidebar__summary::after { content: ""; flex: none; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform var(--ch-t-fast); }
+.ch-sidebar__details[open] > .ch-sidebar__summary::after { transform: translateY(2px) rotate(225deg); }
+.ch-sidebar__summary:hover { border-color: var(--ch-acc-text); }
+.ch-sidebar__nav { box-sizing: border-box; margin: 0; padding: var(--ch-s3) 0 0; display: flex; flex-direction: column; gap: var(--ch-s4); }
+.ch-sidebar__group { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-sidebar__title { box-sizing: border-box; margin: 0 0 var(--ch-s1); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-sidebar__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--ch-line); }
+.ch-sidebar__list > li { margin: 0; padding: 0; }
+.ch-sidebar__link { box-sizing: border-box; margin: 0 0 0 -1px; padding: 0 var(--ch-s4); display: flex; align-items: center; min-height: var(--ch-hit); border-left: 2px solid transparent; font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); }
+.ch-sidebar__link:hover { color: var(--ch-fg); }
+.ch-sidebar__link[aria-current="page"] { color: var(--ch-fg); border-left-color: var(--ch-acc-text); font-weight: 600; }
+@supports selector(::details-content) {
+  @media (min-width: 800px) {
+    .ch-sidebar__summary { display: none; }
+    .ch-sidebar__details::details-content { content-visibility: visible; display: block; }
+    .ch-sidebar__nav { padding-top: 0; }
+  }
+}

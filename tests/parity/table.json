@@ -1,0 +1,86 @@
+{
+  "slug": "table",
+  "piece": "Tableau (ch-table)",
+  "note": "Planche : .table, .table th, .table td, td.num, th.num, .table tr:hover td, .up, .down. Même données que la planche (projets fictifs), classes de la planche d'un côté, ch-table de l'autre ; comparé sans JavaScript (le tri est un module, mesuré par contenu.mjs). Repos, survol d'une ligne, 3 thèmes, 1280 et 375 px. Non comparés : ch-table__wrap (la planche n'a de .table-wrap qu'en dessous de 800 px, sans l'attribut region), ch-table__caption, le bouton de tri (module sort : contenu.mjs).",
+  "cases": [
+    {
+      "id": "tableau",
+      "ch": "<div class=\"ch-table__wrap\"><table class=\"ch-table\"><thead><tr><th>Projet</th><th>Type</th><th class=\"ch-table__num\">Visites / mois</th><th class=\"ch-table__num\">Tendance</th></tr></thead><tbody><tr><td>Atelier de céramique</td><td class=\"ch-t-small\">Site</td><td class=\"ch-table__num\">12 480</td><td class=\"ch-table__num ch-table__up\">↑ 18 %</td></tr><tr><td>Carnet de recettes</td><td class=\"ch-t-small\">Appli</td><td class=\"ch-table__num\">3 210</td><td class=\"ch-table__num ch-table__up\">↑ 4 %</td></tr><tr><td>Radio des quais</td><td class=\"ch-t-small\">Site</td><td class=\"ch-table__num\">1 905</td><td class=\"ch-table__num ch-table__down\">↓ 7 %</td></tr></tbody></table></div>",
+      "board": "<div class=\"table-wrap\"><table class=\"table\"><thead><tr><th>Projet</th><th>Type</th><th class=\"num\">Visites / mois</th><th class=\"num\">Tendance</th></tr></thead><tbody><tr><td>Atelier de céramique</td><td class=\"t-small\">Site</td><td class=\"num\">12 480</td><td class=\"num up\">↑ 18 %</td></tr><tr><td>Carnet de recettes</td><td class=\"t-small\">Appli</td><td class=\"num\">3 210</td><td class=\"num up\">↑ 4 %</td></tr><tr><td>Radio des quais</td><td class=\"t-small\">Site</td><td class=\"num\">1 905</td><td class=\"num down\">↓ 7 %</td></tr></tbody></table></div>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "tableau",
+          "ch": ".ch-table",
+          "board": ".table",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "en-tete",
+          "ch": ".ch-table th:nth-child(1)",
+          "board": ".table th:nth-child(1)",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "en-tete-nombre",
+          "ch": ".ch-table th:nth-child(3)",
+          "board": ".table th:nth-child(3)",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "cellule",
+          "ch": ".ch-table tbody tr:nth-child(1) td:nth-child(1)",
+          "board": ".table tbody tr:nth-child(1) td:nth-child(1)",
+          "states": [
+            "rest",
+            "hover"
+          ]
+        },
+        {
+          "id": "cellule-texte",
+          "ch": ".ch-table tbody tr:nth-child(1) td:nth-child(2)",
+          "board": ".table tbody tr:nth-child(1) td:nth-child(2)",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "cellule-nombre",
+          "ch": ".ch-table tbody tr:nth-child(2) td:nth-child(3)",
+          "board": ".table tbody tr:nth-child(2) td:nth-child(3)",
+          "states": [
+            "rest",
+            "hover"
+          ]
+        },
+        {
+          "id": "hausse",
+          "ch": ".ch-table tbody tr:nth-child(1) td:nth-child(4)",
+          "board": ".table tbody tr:nth-child(1) td:nth-child(4)",
+          "states": [
+            "rest",
+            "hover"
+          ]
+        },
+        {
+          "id": "baisse",
+          "ch": ".ch-table tbody tr:nth-child(3) td:nth-child(4)",
+          "board": ".table tbody tr:nth-child(3) td:nth-child(4)",
+          "states": [
+            "rest",
+            "hover"
+          ]
+        }
+      ]
+    }
+  ]
+}

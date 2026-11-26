@@ -1,0 +1,17 @@
+---
+import DocLayout from '../../components/DocLayout.astro';
+import { parFamille } from '../../lib/pieces.mjs';
+---
+<DocLayout title="Composants">
+  <h1 class="doc-h1 doc-h1--page">Composants</h1>
+  <p class="doc-lead">Chaque pièce a sa page : à quoi elle sert, ses variantes montrées en direct avec leur code, ses états et ses points d'accessibilité.</p>
+  {parFamille.length === 0 && <p class="doc-text">Aucune pièce pour l'instant : chaque fiche ajoutée dans <code>site/src/data/</code> apparaît ici.</p>}
+  {parFamille.map((g) => (
+    <section>
+      <h2 class="doc-h2">{g.famille}</h2>
+      <ul class="doc-cards">
+        {g.pieces.map((p) => <li><a href={`/composants/${p.slug}/`}><strong>{p.titre}</strong><span>{p.but}</span></a></li>)}
+      </ul>
+    </section>
+  ))}
+</DocLayout>

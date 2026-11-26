@@ -1,0 +1,36 @@
+/* Fenêtre modale (pièce 50) : <dialog class="ch-modal" aria-labelledby> > ch-modal__head (ch-modal__title + bouton ch-modal__close)
+   + ch-modal__body + ch-modal__foot. Ouverte par showModal() (module dialog de chopa.js : data-ch-dialog-open="#id" sur l'ouvreur,
+   data-ch-dialog-close sur tout bouton qui ferme). Tailles : --sm (400 px), base (560 px), --lg (800 px) ; jamais plus large que la fenêtre moins 32 px.
+   La fenêtre ne dépasse pas la hauteur de la fenêtre moins 32 px : le corps défile à l'intérieur, l'en-tête et le pied restent.
+   Défilement du fond : le module pose ch-scroll-lock sur <html> tant qu'une fenêtre modale est ouverte.
+   Sans JavaScript (pas de .ch-js) ou module en échec (data-ch-failed) : le contenu de la fenêtre s'affiche dans la page, à la suite,
+   et les boutons qui ouvrent ou ferment (data-ch-dialog-open, data-ch-dialog-close, data-ch-needs-js) sont masqués : rien n'est perdu, rien ne reste sans effet.
+   Entrée : @starting-style (opacité, léger glissement) ; pas de sortie animée (non vérifiée). Mouvement réduit : aucune transition, y compris sur le voile.
+   Couleurs : fg, soft, mute sur card ; filets line ; voile = bg à 72 % (mélange de rôles, sans autre couleur).
+   Le voile lit les jetons par héritage de l'élément : sur un navigateur qui ne les passe pas à ::backdrop, il disparaît (la fenêtre reste utilisable). */
+.ch-modal { box-sizing: border-box; margin: auto; padding: 0; width: min(560px, calc(100% - 32px)); max-width: none; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: hidden; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transform: none; transition: opacity var(--ch-t-panel), transform var(--ch-t-panel); }
+.ch-modal[open] { display: flex; flex-direction: column; }
+.ch-modal--sm { width: min(400px, calc(100% - 32px)); }
+.ch-modal--lg { width: min(800px, calc(100% - 32px)); }
+.ch-modal::backdrop { background: color-mix(in srgb, var(--ch-bg) 72%, transparent); opacity: 1; transition: opacity var(--ch-t-panel); }
+@starting-style {
+  .ch-modal[open] { opacity: 0; transform: translateY(var(--ch-s3)); }
+  .ch-modal[open]::backdrop { opacity: 0; }
+}
+.ch-modal__head { box-sizing: border-box; margin: 0; display: flex; flex: none; align-items: center; justify-content: space-between; gap: var(--ch-s4); padding: var(--ch-s3) var(--ch-s3) var(--ch-s3) var(--ch-s5); border-bottom: 1px solid var(--ch-line); }
+.ch-modal__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-modal__close { flex: none; }
+.ch-modal__body { box-sizing: border-box; margin: 0; padding: var(--ch-s5); flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-modal__foot { box-sizing: border-box; margin: 0; display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); }
+
+/* Fond non défilant tant qu'une fenêtre modale est ouverte (classe posée par le module). La gouttière évite le saut de mise en page. */
+.ch-scroll-lock { overflow: hidden; scrollbar-gutter: stable; }
+
+/* Sans JavaScript, ou module en échec : le contenu de la fenêtre est dans la page, les boutons sans effet disparaissent. */
+:root:not(.ch-js) [data-ch-needs-js], :root:not(.ch-js) [data-ch-dialog-open], :root:not(.ch-js) [data-ch-dialog-close],
+.ch-js [data-ch-needs-js][data-ch-failed], .ch-js [data-ch-dialog-open][data-ch-failed], .ch-js .ch-modal[data-ch-failed] [data-ch-dialog-close] { display: none; }
+:root:not(.ch-js) .ch-modal:not([open]), .ch-js .ch-modal[data-ch-failed]:not([open]) { display: block; position: static; width: auto; max-height: none; margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-modal, .ch-modal::backdrop { transition: none; }
+}

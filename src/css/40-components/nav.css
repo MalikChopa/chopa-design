@@ -1,0 +1,11 @@
+/* Navigation (pièce 22, partie « nav ») : ch-nav. Reprend .nav de la planche : rangée de liens en mono, 26 px d'écart,
+   soulignement fin qui se déploie au survol et sous le lien courant (aria-current="page").
+   Zone de clic : ::before invisible de 44 px de haut (ajout voulu de Chopa, mesuré à part dans tests/parity/header.json).
+   Couleurs : soft et fg (lien courant) sur bg, bg2, card. Sans mouvement réduit : la transition tombe à 0,01 ms (30-base.css). */
+.ch-nav { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 26px; font-family: var(--ch-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.ch-nav a { box-sizing: border-box; margin: 0; position: relative; padding: 4px 0; color: var(--ch-soft); text-decoration: none; }
+.ch-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--ch-fg); transition: right var(--ch-t-panel); }
+.ch-nav a:hover::after, .ch-nav a[aria-current="page"]::after { right: 0; }
+.ch-nav a[aria-current="page"] { color: var(--ch-fg); }
+@media (prefers-reduced-motion: reduce) { .ch-nav a::after { transition-duration: .01ms !important; } } /* ::after d'un lien sans classe ch- : hors de la règle de 30-base.css */
+.ch-nav a::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }

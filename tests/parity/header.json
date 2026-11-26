@@ -1,0 +1,38 @@
+{
+  "slug": "header",
+  "piece": "En-tête et navigation (ch-nav, pièce 22)",
+  "note": "Seule la partie « nav » est dans la planche (.nav, .nav a) ; ch-header est une pièce nouvelle (validée par palette et à l'œil). L'exemple header/nav est chargé tel quel côté Chopa, la planche reçoit le balisage équivalent. Pas de JavaScript : états repos, survol et focus clavier.",
+  "cases": [
+    {
+      "id": "nav",
+      "example": "header/nav",
+      "board": "<nav class=\"nav\" aria-label=\"Exemple de navigation\"><a href=\"#composants\" aria-current=\"page\">Projets</a><a href=\"#composants\">Services</a><a href=\"#composants\">À propos</a><a href=\"#composants\">Contact</a></nav>",
+      "widths": [1280, 375],
+      "pairs": [
+        { "id": "racine", "ch": ".ch-nav", "board": ".nav" },
+        {
+          "id": "courant", "ch": ".ch-nav a:nth-child(1)", "board": ".nav a:nth-child(1)", "states": ["rest", "hover", "focus"],
+          "ignore": [ { "target": "::before", "reason": "ajout voulu de Chopa : zone de clic invisible de 44 px (docs/ARCHITECTURE.md, section 2) ; la planche n'a pas de ::before. Il est mesuré à part, dans « asserts »." } ],
+          "asserts": [
+            { "target": "::before", "prop": "content", "value": "\"\"" },
+            { "target": "::before", "prop": "height", "value": "44px" },
+            { "target": "::before", "prop": "position", "value": "absolute" }
+          ]
+        },
+        {
+          "id": "lien", "ch": ".ch-nav a:nth-child(2)", "board": ".nav a:nth-child(2)", "states": ["rest", "hover", "focus"],
+          "ignore": [ { "target": "::before", "reason": "zone de clic 44 px (ajout voulu de Chopa), mesurée dans « asserts »." } ],
+          "asserts": [
+            { "target": "::before", "prop": "content", "value": "\"\"" },
+            { "target": "::before", "prop": "height", "value": "44px" },
+            { "target": "::before", "prop": "position", "value": "absolute" }
+          ]
+        },
+        {
+          "id": "dernier", "ch": ".ch-nav a:nth-child(4)", "board": ".nav a:nth-child(4)", "states": ["rest"],
+          "ignore": [ { "target": "::before", "reason": "zone de clic 44 px (ajout voulu de Chopa)." } ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "slug": "figure",
+  "cases": [
+    {
+      "id": "image-sans-arret-de-tab",
+      "example": "figure/ratios",
+      "tabOrder": []
+    }
+  ]
+}

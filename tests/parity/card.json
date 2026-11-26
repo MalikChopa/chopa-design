@@ -1,0 +1,66 @@
+{
+  "slug": "card",
+  "piece": "Carte (ch-card)",
+  "note": "Planche : .card, .c-top, .card h3, .c-body, .c-foot. Le balisage est écrit ici (le texte de la carte de la planche est du vocabulaire interdit par tests/denylist.txt) avec les classes de la planche. Pas de pastille de score en haut à droite (ch-score vient à J4b). La planche n'a ni survol ni carte-lien : --link, --media et --horizontal sont des ajouts de Chopa, couverts par la palette, par contenu.mjs (un seul lien, zone de clic) et par tests/keyboard/card.json.",
+  "cases": [
+    {
+      "id": "carte",
+      "ch": "<article class=\"ch-card\"><div class=\"ch-card__top\"><div><span class=\"ch-label\">Série · 12 photos</span><h3 class=\"ch-card__title\">Brumes de novembre</h3></div></div><p class=\"ch-card__body\">Douze vues du marais avant le lever du soleil, prises en trois matins de brouillard.</p><div class=\"ch-card__foot\"><button class=\"ch-btn ch-btn--primary\" type=\"button\">Voir la série</button><button class=\"ch-btn ch-btn--ghost\" type=\"button\">Plus tard</button></div></article>",
+      "board": "<article class=\"card\"><div class=\"c-top\"><div><span class=\"label\">Série · 12 photos</span><h3>Brumes de novembre</h3></div></div><p class=\"c-body\">Douze vues du marais avant le lever du soleil, prises en trois matins de brouillard.</p><div class=\"c-foot\"><button class=\"btn btn-primary\" type=\"button\">Voir la série</button><button class=\"btn btn-ghost\" type=\"button\">Plus tard</button></div></article>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "carte",
+          "ch": ".ch-card",
+          "board": ".card",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "haut",
+          "ch": ".ch-card__top",
+          "board": ".card .c-top",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "etiquette",
+          "ch": ".ch-card .ch-label",
+          "board": ".card .label",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "titre",
+          "ch": ".ch-card__title",
+          "board": ".card h3",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "texte",
+          "ch": ".ch-card__body",
+          "board": ".card .c-body",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "pied",
+          "ch": ".ch-card__foot",
+          "board": ".card .c-foot",
+          "states": [
+            "rest"
+          ]
+        }
+      ]
+    }
+  ]
+}

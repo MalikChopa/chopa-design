@@ -1,0 +1,11 @@
+/* Avatar (pièce 37) : TOUJOURS carré (CLAUDE.md). rayon de coin à 0 en dur (jamais la variable de rayon) sur l'élément, son image et ses pseudo-éléments :
+   un site qui règle --ch-radius n'arrondit pas l'avatar. <img class="ch-avatar" alt="…"> ou <span class="ch-avatar" role="img" aria-label="Nom">AB</span>
+   (initiales : le nom complet est le nom accessible). Tailles : --sm 32, base 40, --lg 56, --xl 80 px. Groupe : ch-avatar-group (recouvrement de 8 px).
+   Non interactif. Couleurs : fg sur bg2 (initiales), filet line. */
+.ch-avatar { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; flex: none; width: 40px; height: 40px; overflow: hidden; vertical-align: middle; object-fit: cover; border: 1px solid var(--ch-line); border-radius: 0; background: var(--ch-bg2); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 13px; letter-spacing: .04em; line-height: 1; text-transform: uppercase; }
+.ch-avatar::before, .ch-avatar::after, .ch-avatar * { border-radius: 0; }
+.ch-avatar--sm { width: 32px; height: 32px; font-size: 11px; }
+.ch-avatar--lg { width: 56px; height: 56px; font-size: 16px; }
+.ch-avatar--xl { width: 80px; height: 80px; font-size: 22px; }
+.ch-avatar-group { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; }
+.ch-avatar-group > .ch-avatar + .ch-avatar { margin-left: -8px; }

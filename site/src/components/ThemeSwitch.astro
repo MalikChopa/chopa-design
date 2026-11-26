@@ -1,0 +1,8 @@
+---
+const themes = [['sombre', 'Sombre'], ['clair', 'Clair'], ['chaud', 'Chaud']];
+---
+<div class="doc-themes" role="group" aria-label="Thème">
+  {themes.map(([id, label]) => (
+    <button type="button" data-ch-theme-set={id} aria-pressed={id === 'sombre' ? 'true' : 'false'}>{label}</button>
+  ))}
+</div>

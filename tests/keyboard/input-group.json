@@ -1,0 +1,22 @@
+{
+  "slug": "input-group",
+  "cases": [
+    {
+      "id": "saisie",
+      "example": "input-group/prefix",
+      "tabOrder": [
+        "input"
+      ],
+      "steps": [
+        {
+          "type": "atelier",
+          "expect": {
+            "value": {
+              "input": "atelier"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

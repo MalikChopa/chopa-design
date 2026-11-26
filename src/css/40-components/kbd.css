@@ -1,0 +1,5 @@
+/* Touche clavier (pièce 40) : <kbd class="ch-kbd">. Une combinaison : span.ch-kbd__combo > kbd + span.ch-kbd__plus (« + », lu par les lecteurs d'écran) + kbd.
+   Couleurs : fg sur bg2 (touche), mute (« + ») sur bg, bg2, card ; filets line. */
+.ch-kbd { box-sizing: border-box; margin: 0; padding: 2px 6px; display: inline-block; min-width: 1.75em; border: 1px solid var(--ch-line); border-bottom-width: 2px; border-radius: var(--ch-radius); background: var(--ch-bg2); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 12px; line-height: 1.4; text-align: center; }
+.ch-kbd__combo { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; gap: var(--ch-s1); }
+.ch-kbd__plus { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }

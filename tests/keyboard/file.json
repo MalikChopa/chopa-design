@@ -1,0 +1,17 @@
+{
+  "slug": "file",
+  "cases": [
+    {
+      "id": "ordre",
+      "example": "file/defaut",
+      "tabOrder": [
+        "input[type=file]"
+      ]
+    },
+    {
+      "id": "desactive-saute",
+      "example": "file/desactive",
+      "tabOrder": []
+    }
+  ]
+}

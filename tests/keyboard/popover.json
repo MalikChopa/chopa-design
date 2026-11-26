@@ -1,0 +1,104 @@
+{
+  "slug": "popover",
+  "cases": [
+    {
+      "id": "ouvrir-echap",
+      "example": "popover/defaut",
+      "js": true,
+      "tabOrder": [
+        "[popovertarget]:not([popovertargetaction])"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[popovertarget]:not([popovertargetaction])",
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "croix-au-clavier",
+      "example": "popover/defaut",
+      "js": true,
+      "tabOrder": [
+        "[popovertarget]:not([popovertargetaction])"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-popover__close"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "[popovertarget]:not([popovertargetaction])",
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "raccourcis",
+      "example": "popover/raccourcis",
+      "js": true,
+      "tabOrder": [
+        "[popovertarget]:not([popovertargetaction])"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[popovertarget]:not([popovertargetaction])",
+            "matches": {
+              "sel": ".ch-popover",
+              "query": ":popover-open",
+              "value": false
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

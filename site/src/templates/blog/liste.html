@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Carnet de sentier : les articles</title>
+  <meta name="description" content="Gabarit de blog : page d'accueil d'un blog personnel fictif, avec un article à la une, une grille de cartes datées avec badges et une pagination.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/blog/liste/">Carnet de sentier</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/blog/liste/" aria-current="page">Articles</a>
+        <a href="/gabarits/blog/article/">Dernier article</a>
+      </nav>
+      <div class="ch-row ch-row--nowrap" role="group" aria-label="Thème de la page">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section ch-section--loose">
+      <div class="ch-wrap">
+        <div class="ch-stack ch-stack--s6">
+          <header class="ch-stack ch-stack--s3">
+            <p class="ch-label">Marches, cuisine de refuge, objets faits main</p>
+            <h1 class="ch-t-giant">Carnet de sentier</h1>
+            <p class="ch-t-body">Des notes prises au bord du chemin, mises au propre le soir : ce qui a marché, ce qui a pesé, ce qui a bon goût.</p>
+          </header>
+          <section class="ch-stack ch-stack--s3" aria-labelledby="a-la-une">
+            <h2 class="ch-t-h3" id="a-la-une">À la une</h2>
+            <article class="ch-card ch-card--media ch-card--horizontal ch-card--link">
+              <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='11' cy='3.5' r='1.6' fill='%235c5c58'/%3E%3Cpath d='M0 9 3 6 6 8 9 5.5 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="Un sentier de crête sous les nuages, image grise de remplacement">
+              <div class="ch-card__main">
+                <div class="ch-card__top"><div><span class="ch-label">Voyage · 8 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Le sentier des Lanternes : quatre jours, dix kilos</a></h3></div></div>
+                <p class="ch-card__body">Quatre jours de marche entre deux refuges, un sac pesé au gramme et une soupe qui a tout sauvé.</p>
+                <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-11-12">12 novembre 2026</time><span class="ch-badge ch-badge--solid">Nouveau</span><span class="ch-badge ch-badge--outline">Carnet de route</span></div>
+              </div>
+            </article>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="ch-section ch-section--alt">
+      <div class="ch-wrap">
+        <section class="ch-stack ch-stack--s6" aria-labelledby="articles">
+          <h2 class="ch-t-h3" id="articles">Tous les articles</h2>
+          <div class="ch-grid ch-grid--3">
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='8' cy='4.5' r='3' fill='%232b2b29'/%3E%3Ccircle cx='8' cy='4.5' r='1.5' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Cuisine · 6 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">La soupe de potiron du refuge</a></h3></div></div>
+            <p class="ch-card__body">Un potiron, du cumin, et la bonne casserole : la recette que je refais chaque automne.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-11-04">4 novembre 2026</time><span class="ch-badge ch-badge--mute">Recette</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M6 9V3h4v6z' fill='%232b2b29'/%3E%3Cpath d='M9 6h.4' stroke='%238c8c88' stroke-width='.3'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Atelier · 9 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Un carnet relié à la ficelle</a></h3></div></div>
+            <p class="ch-card__body">Douze feuilles, une aiguille, de la cire d'abeille : le carnet qui supporte la pluie.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-10-21">21 octobre 2026</time><span class="ch-badge ch-badge--mute">Fait main</span><span class="ch-badge ch-badge--outline">Tutoriel</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 6h16v3H0z' fill='%232b2b29'/%3E%3Cpath d='M0 6.2h16' stroke='%235c5c58' stroke-width='.2'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Voyage · 7 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Trois nuits sur l'île de Groix</a></h3></div></div>
+            <p class="ch-card__body">Un ferry, un vélo prêté et des criques où l'on est seul à marée basse.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-10-02">2 octobre 2026</time><span class="ch-badge ch-badge--mute">Carnet de route</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Matériel · 5 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Ce que j'ai laissé à la maison</a></h3></div></div>
+            <p class="ch-card__body">Cinq objets que je n'emporte plus, et deux que je regrette parfois.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-09-15">15 septembre 2026</time><span class="ch-badge ch-badge--mute">Sac à dos</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='11' cy='3.5' r='1.6' fill='%235c5c58'/%3E%3Cpath d='M0 9 3 6 6 8 9 5.5 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Cuisine · 4 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Du pain sans four</a></h3></div></div>
+            <p class="ch-card__body">Une cocotte, un feu de braises et un levain qui a voyagé dans une chaussette.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-08-28">28 août 2026</time><span class="ch-badge ch-badge--mute">Recette</span><span class="ch-badge ch-badge--outline">Bivouac</span></div>
+          </article>
+          <article class="ch-card ch-card--media ch-card--link">
+            <img class="ch-card__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="">
+            <div class="ch-card__top"><div><span class="ch-label">Voyage · 10 min</span><h3 class="ch-card__title"><a class="ch-card__link" href="/gabarits/blog/article/">Le col oublié</a></h3></div></div>
+            <p class="ch-card__body">Un sentier absent des cartes récentes, retrouvé grâce à un vieux guide de 1974.</p>
+            <div class="ch-card__foot"><time class="ch-t-mono" datetime="2026-08-09">9 août 2026</time><span class="ch-badge ch-badge--mute">Carnet de route</span><span class="ch-badge ch-badge--outline">Archives</span></div>
+          </article>
+          </div>
+          <nav class="ch-pagination" aria-label="Pagination des articles">
+            <ul class="ch-pagination__list">
+              <li><span class="ch-pagination__link" aria-disabled="true"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-left"></use></svg><span class="ch-pagination__label">Précédent</span></span></li>
+              <li><a class="ch-pagination__link" href="#articles" aria-label="Page 1" aria-current="page">1</a></li>
+              <li><a class="ch-pagination__link" href="#articles" aria-label="Page 2">2</a></li>
+              <li><a class="ch-pagination__link" href="#articles" aria-label="Page 3">3</a></li>
+              <li><a class="ch-pagination__link" href="#articles"><span class="ch-pagination__label">Suivant</span><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-right"></use></svg></a></li>
+            </ul>
+          </nav>
+        </section>
+      </div>
+    </div>
+  </main>
+  <footer class="ch-footer">
+    <div class="ch-footer__inner">
+      <div class="ch-footer__brand">
+        <p class="ch-footer__name">Carnet de sentier</p>
+        <p class="ch-footer__text">Le carnet de Soline Varenne : marches, cuisine de refuge et objets faits à la main (blog fictif).</p>
+      </div>
+      <nav class="ch-footer__nav" aria-label="Pied de page">
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Lire</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/blog/liste/#articles">Tous les articles</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/blog/article/">Dernier article</a></li>
+          </ul>
+        </div>
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Dans l'article</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/blog/article/#preparer">Préparer le sac</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/blog/article/#soupe">La soupe du refuge</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Carnet de sentier est un blog fictif. Toutes les images de cette page sont des remplacements gris.</p>
+  </footer>
+</body>
+</html>

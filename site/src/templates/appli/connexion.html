@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Appli : connexion</title>
+  <meta name="description" content="Page de connexion d'un carnet de lecture : champs étiquetés, message d'erreur, liens d'aide. Aucune vraie authentification.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+
+  <header class="ch-header">
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/appli/tableau-de-bord/">Marque-page</a>
+      <div class="ch-row" role="group" aria-label="Thème">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+    <div class="ch-wrap ch-wrap--narrow">
+      <div class="ch-stack ch-stack--s5">
+        <div class="ch-stack ch-stack--s3">
+          <p class="ch-label">Bon retour</p>
+          <h1 class="ch-t-h2">Connexion</h1>
+          <p class="ch-t-body">Retrouve ton carnet de lecture. Cette page est une maquette : le formulaire n'envoie rien.</p>
+        </div>
+
+        <div class="ch-alert ch-alert--error" role="alert">
+          <svg class="ch-icon ch-alert__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-alert"></use></svg><b class="ch-alert__kind">Erreur</b> · l'adresse ou le mot de passe ne correspond pas. Vérifie les deux et réessaie.
+        </div>
+
+        <form class="ch-stack ch-stack--s4" action="#">
+          <label class="ch-field">
+            <span class="ch-field__label">Adresse e-mail</span>
+            <input class="ch-input" type="email" name="courriel" autocomplete="email" placeholder="nom@exemple.fr">
+          </label>
+          <label class="ch-field">
+            <span class="ch-field__label">Mot de passe</span>
+            <input class="ch-input" type="password" name="mot-de-passe" autocomplete="current-password">
+            <span class="ch-field__help">Huit caractères au moins.</span>
+          </label>
+          <label class="ch-choice"><input class="ch-check" type="checkbox" name="rester"> Rester connecté sur cet appareil</label>
+          <button class="ch-btn ch-btn--primary" type="submit">Se connecter</button>
+        </form>
+
+        <ul class="ch-list ch-list--rule" role="list">
+          <li><a href="#oubli">Mot de passe oublié ?</a></li>
+          <li><a href="/gabarits/appli/tableau-de-bord/">Continuer sans compte</a></li>
+        </ul>
+
+        <div class="ch-accordion">
+          <details class="ch-accordion__item" id="oubli" name="aide-connexion">
+            <summary class="ch-accordion__summary">Réinitialiser le mot de passe<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-down"></use></svg></summary>
+            <div class="ch-accordion__panel">Dans une vraie appli, un lien de réinitialisation serait envoyé à l'adresse du compte. Ici, rien n'est envoyé.</div>
+          </details>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+
+  <footer class="ch-footer ch-footer--compact">
+    <p class="ch-footer__legal">Marque-page, un carnet de lecture personnel. Contenu fictif.</p>
+  </footer>
+</body>
+</html>

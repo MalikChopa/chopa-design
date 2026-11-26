@@ -1,0 +1,47 @@
+/* Thèmes, par l'attribut data-ch-theme (le nom évite les collisions avec les attributs des sites hôtes).
+   Le fond et la couleur ne sont posés que par les trois sélecteurs explicites ci-dessous : un cadre local
+   portant data-ch-theme prend son thème, un élément sans cet attribut n'est pas touché.
+
+   RE-THÉMER UN SITE : réglages (les surfaces restent celles des 3 thèmes), à poser dans la feuille du site,
+   après chopa.css, thème par thème pour les trois qui en dépendent :
+     1. --ch-acc        l'accent, pour les fonds (un seul, le même dans les 3 thèmes) ;
+     2. --ch-acc-text   l'accent en texte et en lien, par thème, calculé : jamais un simple var(--ch-acc) ;
+                        un accent bleu #2563eb fait 3,65 sur --ch-card en sombre, sous 4,5 ;
+     3. --ch-on-acc     le texte posé sur l'accent, calculé : #050505 ou #f4f4f1, le meilleur (>= 4,5) ;
+     4. --ch-dim-pct    la force de la teinte d'accent (--ch-acc-dim), par thème, calculée : abaissée jusqu'à ce que
+                        fg, soft et mute restent >= 4,5 sur la teinte, quelle que soit la surface ;
+     5. --ch-radius     l'arrondi (0 par défaut ; tout autre valeur est un écart assumé).
+   Les polices (--ch-sans, --ch-display, --ch-mono) se règlent aussi, le site chargeant lui-même ses fichiers de police.
+   --ch-focus et --ch-acc-dim suivent seuls (règle en fin de fichier). src/lib/color.mjs calcule 2, 3 et 4 ;
+   scripts/static/check-contrast.mjs mesure toutes les paires autorisées (docs/ARCHITECTURE.md, section 9). */
+:root, [data-ch-theme="sombre"] {
+  --ch-bg: var(--ch-p-ink-950); --ch-bg2: var(--ch-p-ink-900); --ch-card: var(--ch-p-ink-850);
+  --ch-fg: var(--ch-p-paper-100); --ch-soft: var(--ch-p-paper-300); --ch-mute: var(--ch-p-ink-400); --ch-line: var(--ch-p-ink-800);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-500); --ch-on-acc: var(--ch-p-ink-950);
+  --ch-dim-pct: 13.3%; /* équivaut à #ff5a1f22 de la planche */
+  color-scheme: dark;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+[data-ch-theme="clair"] {
+  --ch-bg: var(--ch-p-paper-100); --ch-bg2: var(--ch-p-paper-200); --ch-card: var(--ch-p-paper-50);
+  --ch-fg: var(--ch-p-ink-950); --ch-soft: var(--ch-p-ink-700); --ch-mute: var(--ch-p-ink-600); --ch-line: var(--ch-p-paper-300);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-ink); --ch-on-acc: var(--ch-p-ink-950);
+  --ch-dim-pct: 12.2%; /* équivaut à #ff5a1f1f de la planche */
+  color-scheme: light;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+[data-ch-theme="chaud"] {
+  --ch-bg: var(--ch-p-warm-950); --ch-bg2: var(--ch-p-warm-900); --ch-card: var(--ch-p-warm-850);
+  --ch-fg: var(--ch-p-warm-100); --ch-soft: var(--ch-p-warm-300); --ch-mute: var(--ch-p-warm-400); --ch-line: var(--ch-p-warm-800);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-500); --ch-on-acc: var(--ch-p-warm-950);
+  --ch-dim-pct: 13.3%;
+  color-scheme: dark;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+/* Dérivés. Posés sur chaque élément qui porte un thème (et :root), jamais hérités d'un parent : un var() est résolu
+   là où il est déclaré, donc un cadre local data-ch-theme="clair" dans une page sombre recalcule la teinte
+   avec son propre --ch-dim-pct et son propre --ch-acc. Le thème d'un site n'a qu'à régler --ch-acc et --ch-dim-pct. */
+:root, [data-ch-theme] {
+  --ch-acc-dim: color-mix(in srgb, var(--ch-acc) var(--ch-dim-pct), transparent);
+  --ch-focus: var(--ch-acc-text);
+}

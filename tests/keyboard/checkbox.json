@@ -1,0 +1,90 @@
+{
+  "slug": "checkbox",
+  "cases": [
+    {
+      "id": "espace-bascule",
+      "example": "checkbox/defaut",
+      "tabOrder": [
+        "label:nth-child(1) input",
+        "label:nth-child(2) input"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "checked": {
+              "label:nth-child(1) input": true
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "checked": {
+              "label:nth-child(1) input": false
+            }
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "checked": {
+              "label:nth-child(1) input": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "indeterminee",
+      "example": "checkbox/indetermine",
+      "setup": [
+        {
+          "sel": "input",
+          "prop": "indeterminate",
+          "value": true
+        }
+      ],
+      "tabOrder": [
+        "label:nth-child(1) input",
+        "#ex-chk-ind-a",
+        "#ex-chk-ind-b"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "focus": "label:nth-child(1) input",
+            "checked": {
+              "label:nth-child(1) input": true
+            },
+            "prop": {
+              "sel": "label:nth-child(1) input",
+              "name": "indeterminate",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactive-saute",
+      "example": "checkbox/desactive",
+      "tabOrder": []
+    },
+    {
+      "id": "clic-etiquette",
+      "example": "checkbox/defaut",
+      "steps": [
+        {
+          "click": "label:nth-child(1)",
+          "expect": {
+            "checked": {
+              "label:nth-child(1) input": true
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

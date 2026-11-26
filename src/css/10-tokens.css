@@ -1,0 +1,32 @@
+/* Jetons à deux niveaux (docs/ARCHITECTURE.md, section 3).
+   Niveau 1, primitives --ch-p-* : les valeurs brutes, posées ici dans :root. Jamais lues par un composant
+   (check-tokens le vérifie) : seuls les thèmes (20-themes.css) les lisent.
+   Niveau 2, rôles --ch-* : posés par thème. Les jetons communs à tous les thèmes sont ci-dessous. */
+:root {
+  /* Primitives : neutres (encre et papier). Le chiffre suit la clarté (950 = presque noir, 50 = presque blanc). */
+  --ch-p-ink-950: #050505; --ch-p-ink-900: #0d0d0d; --ch-p-ink-850: #111111; --ch-p-ink-800: #262626;
+  --ch-p-ink-700: #2b2b29; --ch-p-ink-600: #5c5c58; --ch-p-ink-400: #8c8c88;
+  --ch-p-paper-300: #d6d6d2; --ch-p-paper-200: #ebebe7; --ch-p-paper-100: #f4f4f1; --ch-p-paper-50: #fbfbf9;
+  /* Primitives : famille chaude (thème « chaud »). */
+  --ch-p-warm-950: #0b0807; --ch-p-warm-900: #130f0d; --ch-p-warm-850: #19130f; --ch-p-warm-800: #2a211c;
+  --ch-p-warm-400: #a1938a; --ch-p-warm-300: #d9cec4; --ch-p-warm-100: #f3ebe3;
+  /* Primitives : l'unique orange. orange-500 pour les fonds ; orange-ink pour le texte en thème clair (>= 4,5 : 1). */
+  --ch-p-orange-500: #ff5a1f; --ch-p-orange-ink: #c23300;
+
+  /* Rôles communs : polices, espacement, mesure, forme, mouvement, plans. */
+  --ch-sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, sans-serif;
+  --ch-display: var(--ch-sans);
+  --ch-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ch-display-weight: 800;
+  --ch-display-track: -.045em;
+  --ch-s1: 4px; --ch-s2: 8px; --ch-s3: 12px; --ch-s4: 16px; --ch-s5: 24px;
+  --ch-s6: 32px; --ch-s7: 48px; --ch-s8: 72px; --ch-s9: 110px;
+  --ch-hit: 44px;          /* cible tactile minimale */
+  --ch-measure: 65ch;      /* longueur de ligne de la prose */
+  --ch-wrap-max: 1240px;   /* largeur maximale du conteneur */
+  --ch-radius: 0;
+  --ch-t-fast: .25s;
+  --ch-t-panel: .35s ease;
+  --ch-z-bar: 80;
+  --ch-z-overlay: 100;
+}

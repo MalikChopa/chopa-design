@@ -1,0 +1,108 @@
+---
+// Page « Effets » (J8b) : bande liée au défilement, titre qui apparaît, grain. Le script chopa-effects.js n'est chargé
+// que sur cette page (DocLayout ne le charge pas).
+import { Code } from 'astro:components';
+import DocLayout from '../components/DocLayout.astro';
+
+const charger = `<link rel="stylesheet" href="/chopa/chopa.css">
+<script src="/chopa/chopa.js" defer></script>
+<!-- Facultatif : les effets de cette page. Après chopa.js, avec defer. -->
+<script src="/chopa/chopa-effects.js" defer></script>`;
+const bande = `<div class="ch-band" data-ch-speed="0.4">
+  <p class="ch-band__track">
+    <span class="ch-band__item">Atelier ouvert</span>
+  </p>
+</div>
+
+<!-- Autre sens : data-ch-dir="reverse". Vitesse : data-ch-speed (1 = la vitesse du défilement). -->`;
+const titre = `<h2 class="ch-t-h2 ch-reveal">Un titre qui apparaît</h2>`;
+const grain = `<!-- Toute la page : -->
+<html lang="fr" class="ch-grain" data-ch-theme="sombre">
+
+<!-- Une zone seulement : -->
+<div class="ch-grain ch-grain--zone">…</div>`;
+---
+<DocLayout title="Effets">
+  <h1 class="doc-h1 doc-h1--page">Effets</h1>
+  <p class="doc-lead">Trois effets facultatifs, venus de la typographie en mouvement du portfolio et écrits ici de zéro : une bande de texte qui avance avec le défilement, un titre qui apparaît quand il entre dans la fenêtre, et un grain léger. Sans le script, rien ne bouge et tout le texte reste visible.</p>
+
+  <h2 class="doc-h2">Charger le script</h2>
+  <p class="doc-text">Les bandes et les titres ont besoin de <code>chopa-effects.js</code> (sans dépendance, moins de 3 Ko compressé). Il se charge avec <code>defer</code>, après <code>chopa.js</code>. Le grain, lui, est du CSS pur : il n'en a pas besoin.</p>
+  <div class="doc-example__code doc-example__code--solo"><Code code={charger} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">Bande</h2>
+  <p class="doc-text">Une ligne de texte rognée dans sa boîte. Fais défiler la page : la piste avance (ou recule, avec <code>data-ch-dir="reverse"</code>) au rythme du défilement. Un seul élément suffit : le script ajoute les copies nécessaires, cachées aux lecteurs d'écran, pour remplir la largeur. La bande ne fait jamais défiler la page de côté.</p>
+  <div class="fx-demo" data-demo="bande">
+    <div class="ch-band" data-ch-speed="0.4">
+      <p class="ch-band__track"><span class="ch-band__item">Atelier ouvert</span></p>
+    </div>
+    <div class="ch-band" data-ch-speed="0.6" data-ch-dir="reverse">
+      <p class="ch-band__track"><span class="ch-band__item">Pièces neuves</span></p>
+    </div>
+  </div>
+  <div class="doc-example__code doc-example__code--solo"><Code code={bande} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">Titre qui apparaît</h2>
+  <p class="doc-text">Ajoute <code>ch-reveal</code> à un titre. Quand il entre dans la fenêtre, il glisse de quelques pixels vers le haut et devient opaque. Un titre déjà visible au chargement ne bouge pas. Sans le script, il est visible dès le début : seul le script le met « en attente » (<code>data-ch-reveal="wait"</code>), jamais la feuille de style.</p>
+  <div class="doc-example__code doc-example__code--solo"><Code code={titre} lang="html" theme="css-variables" /></div>
+  <div class="fx-demo" data-demo="titres">
+    <p class="doc-text">Continue de défiler : les trois titres suivants apparaissent un à un.</p>
+    <div class="fx-gap" aria-hidden="true"></div>
+    <h3 class="ch-t-h2 ch-reveal">Premier titre</h3>
+    <div class="fx-gap" aria-hidden="true"></div>
+    <h3 class="ch-t-h2 ch-reveal">Deuxième titre</h3>
+    <div class="fx-gap" aria-hidden="true"></div>
+    <h3 class="ch-t-h2 ch-reveal">Troisième titre</h3>
+  </div>
+
+  <h2 class="doc-h2">Grain</h2>
+  <p class="doc-text">Une texture de bruit très légère posée sur la page. <strong>Désactivé par défaut</strong> : il n'existe que si la classe <code>ch-grain</code> est présente. Il se peint avec le rôle <code>fg</code> du thème à travers un masque de bruit, sans couleur propre, à 5 % d'opacité ; la souris le traverse (<code>pointer-events: none</code>) et il reste sous les fenêtres (<code>z-index</code> de <code>--ch-z-overlay</code> moins 10). Sur toute la page, la classe va sur <code>html</code> ou <code>body</code> ; avec <code>ch-grain--zone</code>, le calque suit une zone.</p>
+  <div class="fx-frame" id="fx-frame">
+    <div class="fx-frame__bar">
+      <button type="button" class="ch-btn ch-btn--secondary" id="fx-grain" aria-pressed="false" hidden>Grain : désactivé</button>
+    </div>
+    <div class="fx-frame__zone" id="fx-zone">
+      <p class="ch-t-h3">Zone d'essai</p>
+      <p class="ch-t-body">Le grain se voit surtout sur les grands aplats. Le texte garde son contraste : l'opacité est réglée pour rester au-dessus de 4,5 : 1 dans les trois thèmes.</p>
+    </div>
+  </div>
+  <p class="doc-text" id="fx-grain-note">Le bouton « Grain » demande JavaScript ; sans lui, ajoute la classe à la main.</p>
+  <div class="doc-example__code doc-example__code--solo"><Code code={grain} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">Mouvement réduit</h2>
+  <p class="doc-text">Quand le visiteur demande « mouvement réduit » (réglage du système), le script ne fait rien : les bandes restent immobiles, aucun titre n'est caché, aucune animation ne tourne. La feuille de style le garantit aussi de son côté (<code>transform: none</code>, titres opaques). Le grain est fixe : il ne bouge pas, il reste donc actif.</p>
+
+  <h2 class="doc-h2">Limites</h2>
+  <ul class="doc-list">
+    <li>Le coût du grain sur un téléphone n'est pas mesuré : à essayer sur l'appareil visé avant de l'activer partout.</li>
+    <li>Si le navigateur ne sait pas masquer avec une image, le grain n'apparaît pas du tout (rien n'est dessiné à moitié).</li>
+    <li>Les gabarits de pages complètes ne chargent que <code>chopa-theme.js</code> et <code>chopa.js</code> : ils n'utilisent pas ces effets.</li>
+  </ul>
+
+  <script src="/chopa/chopa-effects.js" defer></script>
+  <script is:inline>
+    (function () {
+      var b = document.getElementById('fx-grain'), z = document.getElementById('fx-zone');
+      if (!b || !z) return;
+      b.hidden = false;
+      document.getElementById('fx-grain-note').hidden = true;
+      b.addEventListener('click', function () {
+        var on = z.classList.toggle('ch-grain');
+        z.classList.toggle('ch-grain--zone', on);
+        b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        b.textContent = on ? 'Grain : activé' : 'Grain : désactivé';
+      });
+    })();
+  </script>
+</DocLayout>
+
+<style>
+  .fx-demo { margin: 0 0 24px; padding: 24px 0; border: 1px solid var(--ch-line); border-left: 0; border-right: 0; overflow: hidden; }
+  .fx-demo :global(.doc-text) { padding: 0 24px; }
+  .fx-demo :global(.ch-t-h2) { padding: 0 24px; }
+  .fx-gap { height: 30vh; }
+  .fx-frame { margin: 0 0 16px; border: 1px solid var(--ch-line); }
+  .fx-frame__bar { padding: 12px 16px; border-bottom: 1px solid var(--ch-line); }
+  .fx-frame__zone { padding: 24px; background: var(--ch-bg2); }
+  .fx-frame__zone :global(.ch-t-h3) { margin: 0 0 8px; }
+</style>

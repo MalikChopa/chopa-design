@@ -1,0 +1,10 @@
+/* Page 404 (pièce 60) : pièce de page. Sur une vraie page, la classe se pose sur <main> (un seul main par page) ; l'exemple de la doc utilise
+   un <section>, car il vit déjà dans le <main> de la doc. ch-notfound > ch-notfound__code (« 404 », décoratif : aria-hidden) + ch-notfound__title
+   (titre de niveau 1 sur une vraie page, 2 dans l'exemple) + ch-notfound__text + ch-notfound__links (liens de secours, 44 px).
+   Couleurs : fg (code, titre), soft (texte) sur bg ; acc-text (liens) sur bg : paires autorisées. */
+.ch-notfound { box-sizing: border-box; margin: 0; padding: var(--ch-s7) var(--ch-s4); min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--ch-s4); }
+.ch-notfound__code { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-display); max-width: 100%; overflow-wrap: anywhere; font-size: clamp(56px, 7vw, 140px); font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .86; color: var(--ch-fg); }
+.ch-notfound__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 28px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-notfound__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 52ch; font-family: var(--ch-sans); font-size: 17px; line-height: 1.5; color: var(--ch-soft); }
+.ch-notfound__links { box-sizing: border-box; margin: var(--ch-s2) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--ch-s2) var(--ch-s4); }
+.ch-notfound__links a { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); color: var(--ch-acc-text); font-family: var(--ch-sans); font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }

@@ -1,0 +1,20 @@
+/* Chiffres clés (pièce 45) : ch-stats (dl) > ch-stats__item (div) > dt.ch-stats__label + dd.ch-stats__value [> small.ch-stats__trend].
+   Planche : .mini .m-stats, .m-stat, .m-stat .label, .m-stat .v, .v small (parité : tests/parity/stats.json).
+   Colonnes : 3 (base, parité avec la planche), --2, --4 ; une colonne sous 800 px de fenêtre (comme la planche).
+   Tendance : flèche (↑ ↓) + nombre, jamais la couleur seule ; ↑ en acc-text, ↓ (--down) en mute. ch-stats__sr : mots lus, masqués visuellement.
+   Le terme (dt) est en ligne comme l'étiquette de la planche (un span), la valeur (dd) en bloc.
+   Couleurs : étiquette mute, valeur fg, tendance acc-text ou mute sur bg, bg2, card ; filets line. */
+.ch-stats { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--ch-line); }
+.ch-stats--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-stats--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ch-stats__item { box-sizing: border-box; margin: 0; padding: 18px 20px; border-right: 1px solid var(--ch-line); }
+.ch-stats__item:last-child { border-right: 0; }
+.ch-stats__label { box-sizing: border-box; margin: 0; padding: 0; display: inline; unicode-bidi: normal; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; line-height: 1.5; text-transform: uppercase; color: var(--ch-mute); }
+.ch-stats__value { box-sizing: border-box; margin: 8px 0 0; padding: 0; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: 40px; line-height: 1; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.ch-stats__trend { box-sizing: border-box; margin: 0 0 0 6px; padding: 0; font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--ch-acc-text); }
+.ch-stats__trend--down { color: var(--ch-mute); }
+.ch-stats__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 800px) {
+  .ch-stats, .ch-stats--2, .ch-stats--4 { grid-template-columns: minmax(0, 1fr); }
+  .ch-stats__item { border-right: 0; border-bottom: 1px solid var(--ch-line); }
+}

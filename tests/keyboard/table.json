@@ -1,0 +1,131 @@
+{
+  "slug": "table",
+  "cases": [
+    {
+      "id": "tri-au-clavier",
+      "example": "table/triable",
+      "js": true,
+      "tabOrder": [
+        ".ch-table__wrap",
+        "th:nth-child(1) .ch-table__sort",
+        "th:nth-child(2) .ch-table__sort",
+        "th:nth-child(3) .ch-table__sort",
+        "th:nth-child(4) .ch-table__sort"
+      ],
+      "steps": [
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "th:nth-child(1) .ch-table__sort"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "th:nth-child(1) .ch-table__sort",
+            "attr": [
+              {
+                "sel": "th:nth-child(1)",
+                "name": "aria-sort",
+                "value": "ascending"
+              },
+              {
+                "sel": "th:nth-child(3)",
+                "name": "aria-sort",
+                "value": null
+              }
+            ],
+            "prop": {
+              "sel": "tbody tr:nth-child(1) td:nth-child(1)",
+              "name": "textContent",
+              "value": "Ardoise"
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": "th:nth-child(1) .ch-table__sort",
+            "attr": {
+              "sel": "th:nth-child(1)",
+              "name": "aria-sort",
+              "value": "descending"
+            },
+            "prop": {
+              "sel": "tbody tr:nth-child(1) td:nth-child(1)",
+              "name": "textContent",
+              "value": "Sapin"
+            }
+          }
+        },
+        {
+          "key": "Tab"
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "th:nth-child(3) .ch-table__sort"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "th:nth-child(3) .ch-table__sort",
+            "attr": [
+              {
+                "sel": "th:nth-child(3)",
+                "name": "aria-sort",
+                "value": "ascending"
+              },
+              {
+                "sel": "th:nth-child(1)",
+                "name": "aria-sort",
+                "value": null
+              }
+            ],
+            "prop": {
+              "sel": "tbody tr:nth-child(1) td:nth-child(1)",
+              "name": "textContent",
+              "value": "Écume"
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "attr": {
+              "sel": "th:nth-child(3)",
+              "name": "aria-sort",
+              "value": "descending"
+            },
+            "prop": [
+              {
+                "sel": "tbody tr:nth-child(1) td:nth-child(1)",
+                "name": "textContent",
+                "value": "Corneille"
+              },
+              {
+                "sel": "tbody tr:nth-child(3) td:nth-child(1)",
+                "name": "textContent",
+                "value": "Brume"
+              },
+              {
+                "sel": "tbody tr:nth-child(4) td:nth-child(1)",
+                "name": "textContent",
+                "value": "Ardoise"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "tableau-sans-tri",
+      "example": "table/defaut",
+      "js": true,
+      "tabOrder": [
+        ".ch-table__wrap"
+      ]
+    }
+  ]
+}

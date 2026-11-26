@@ -1,0 +1,53 @@
+{
+  "slug": "price",
+  "cases": [
+    {
+      "id": "un-bouton-par-offre",
+      "example": "price/defaut",
+      "tabOrder": [
+        ".ch-price:nth-child(1) .ch-btn",
+        ".ch-price:nth-child(2) .ch-btn",
+        ".ch-price:nth-child(3) .ch-btn"
+      ],
+      "setup": [
+        {
+          "sel": ".ch-price:nth-child(2) .ch-btn",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "wait": 10,
+          "expect": {
+            "focus": ".ch-price:nth-child(1) .ch-btn"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-price:nth-child(2) .ch-btn"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-price:nth-child(2) .ch-btn",
+            "count": {
+              "clic": 1
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-price:nth-child(2) .ch-btn",
+            "count": {
+              "clic": 2
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

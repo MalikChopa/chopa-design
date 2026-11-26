@@ -1,0 +1,40 @@
+{
+  "slug": "select",
+  "cases": [
+    {
+      "id": "liste",
+      "example": "select/defaut",
+      "tabOrder": [
+        "select"
+      ],
+      "steps": [
+        {
+          "type": "E",
+          "expect": {
+            "focus": "select",
+            "value": {
+              "select": "Expert"
+            }
+          }
+        },
+        {
+          "wait": 1100
+        },
+        {
+          "type": "N",
+          "expect": {
+            "value": {
+              "select": "Normal"
+            }
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "select"
+          }
+        }
+      ]
+    }
+  ]
+}

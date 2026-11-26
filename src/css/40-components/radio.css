@@ -1,0 +1,11 @@
+/* Radio (pièce 17) : <input type="radio" class="ch-radio"> dans un <label class="ch-choice">, groupe dans un
+   <fieldset class="ch-fieldset"> avec sa <legend>. SEUL élément rond de la bibliothèque (CLAUDE.md, 2026-11-15) :
+   border-radius 50 % sur le contrôle et sur son point ; check-radius n'accepte 50 % que sur les sélecteurs .ch-radio.
+   Coché : fond acc, point on-acc (même logique que la case). Flèches : natif (même attribut name). Désactivé : mute. */
+.ch-radio { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 1px solid var(--ch-mute); border-radius: 50%; background: var(--ch-bg2); color: inherit; display: grid; place-items: center; cursor: pointer; }
+.ch-radio:checked { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-radio:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ch-on-acc); }
+.ch-radio[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-radio:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-radio:disabled:checked { background: none; border-color: var(--ch-mute); }
+.ch-radio:disabled:checked::after { background: var(--ch-mute); }

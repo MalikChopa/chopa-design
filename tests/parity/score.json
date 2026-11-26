@@ -1,0 +1,18 @@
+{
+  "slug": "score",
+  "piece": "Pastille de score (ch-score, pièce 49)",
+  "note": "Planche : .score et .score.cold (pastilles de la ligne « chaud, tiède, froid »). Mêmes nombres des deux côtés. Les role=\"img\" et aria-label des exemples de Chopa ne changent aucun style calculé : le cas de la planche porte aussi un aria-label sur la première pastille.",
+  "cases": [
+    {
+      "id": "pastilles",
+      "ch": "<div class=\"ch-row\"><span class=\"ch-score\" role=\"img\" aria-label=\"Score 87 sur 100\">87</span><span class=\"ch-score\">64</span><span class=\"ch-score ch-score--cold\">21</span></div>",
+      "board": "<div class=\"row\"><span class=\"score\" aria-label=\"Score 87 sur 100\">87</span><span class=\"score\">64</span><span class=\"score cold\">21</span></div>",
+      "widths": [1280, 375],
+      "pairs": [
+        { "id": "chaude", "ch": ".ch-score:nth-child(1)", "board": ".score:nth-child(1)" },
+        { "id": "tiede", "ch": ".ch-score:nth-child(2)", "board": ".score:nth-child(2)" },
+        { "id": "froide", "ch": ".ch-score--cold", "board": ".score.cold" }
+      ]
+    }
+  ]
+}

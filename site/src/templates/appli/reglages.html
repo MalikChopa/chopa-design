@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Appli : réglages</title>
+  <meta name="description" content="Réglages d'un carnet de lecture : onglets, champs de tous types avec aide et erreur, zone dangereuse avec confirmation.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/appli/tableau-de-bord/">Marque-page</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/appli/tableau-de-bord/">Tableau de bord</a>
+        <a href="/gabarits/appli/reglages/" aria-current="page">Réglages</a>
+        <a href="/gabarits/appli/connexion/">Connexion</a>
+      </nav>
+      <div class="ch-row" role="group" aria-label="Thème">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+      <div class="ch-wrap">
+        <div class="ch-grid ch-grid--sidebar">
+        <div class="ch-stack ch-stack--s3">
+          <p class="ch-label">Compte</p>
+          <h1 class="ch-t-h2">Réglages</h1>
+          <p class="ch-t-body">Ton profil et tes habitudes de lecture. Rien n'est envoyé : le formulaire ne va nulle part.</p>
+        </div>
+
+        <div class="ch-stack ch-stack--s6">
+        <form class="ch-stack ch-stack--s6" action="#">
+          <div class="ch-tabs" data-ch-tabs>
+            <div class="ch-tabs__list">
+              <button class="ch-tabs__tab" type="button">Profil</button>
+              <button class="ch-tabs__tab" type="button">Lecture</button>
+            </div>
+
+            <div class="ch-tabs__panel">
+              <h2 class="ch-tabs__heading">Profil</h2>
+              <div class="ch-stack ch-stack--s4">
+                <label class="ch-field">
+                  <span class="ch-field__label">Pseudo</span>
+                  <input class="ch-input" type="text" name="pseudo" value="Lectrice du Nord" autocomplete="off">
+                  <span class="ch-field__help">Affiché sur tes listes partagées.</span>
+                </label>
+                <div class="ch-field">
+                  <label class="ch-label" for="adresse-courriel">Adresse e-mail</label>
+                  <input class="ch-input" id="adresse-courriel" type="email" name="courriel" value="lectrice@exemple" aria-invalid="true" aria-describedby="adresse-courriel-note">
+                  <span class="ch-field__error" id="adresse-courriel-note"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-alert"></use></svg>Il manque la fin de l'adresse, par exemple .fr ou .com.</span>
+                </div>
+                <label class="ch-field">
+                  <span class="ch-field__label">Présentation</span>
+                  <textarea class="ch-textarea" name="presentation" rows="3">Je lis surtout le soir, de la poésie et des récits de voyage.</textarea>
+                </label>
+                <label class="ch-field">
+                  <span class="ch-field__label">Photo de profil</span>
+                  <input class="ch-file" type="file" name="photo" accept="image/*">
+                  <span class="ch-field__help">Une image carrée, 2 Mo au plus.</span>
+                </label>
+              </div>
+            </div>
+
+            <div class="ch-tabs__panel">
+              <h2 class="ch-tabs__heading">Lecture</h2>
+              <div class="ch-stack ch-stack--s4">
+                <label class="ch-field">
+                  <span class="ch-field__label">Langue des livres</span>
+                  <select class="ch-select" name="langue">
+                    <option>Français</option>
+                    <option>Anglais</option>
+                    <option>Espagnol</option>
+                  </select>
+                </label>
+                <fieldset class="ch-fieldset">
+                  <legend class="ch-fieldset__legend">Rythme de lecture</legend>
+                  <label class="ch-choice"><input class="ch-radio" type="radio" name="rythme" value="calme"> Tranquille, quelques pages</label>
+                  <label class="ch-choice"><input class="ch-radio" type="radio" name="rythme" value="regulier" checked> Régulier, un chapitre par soir</label>
+                  <label class="ch-choice"><input class="ch-radio" type="radio" name="rythme" value="gourmand"> Gourmand, un livre par semaine</label>
+                </fieldset>
+                <div class="ch-field">
+                  <div class="ch-row ch-row--between">
+                    <label class="ch-field__label" for="pages-par-jour">Objectif de pages par jour</label>
+                    <output class="ch-range__value" for="pages-par-jour"></output>
+                  </div>
+                  <input class="ch-range" id="pages-par-jour" name="pages" type="range" min="5" max="100" step="5" value="30" data-ch-range>
+                </div>
+                <label class="ch-choice"><input class="ch-check" type="checkbox" name="rappel" checked> Me rappeler de lire chaque soir</label>
+                <label class="ch-choice"><input class="ch-switch" type="checkbox" role="switch" name="liste-publique"> Rendre ma liste de lectures publique</label>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="ch-row">
+            <button class="ch-btn ch-btn--primary" type="submit">Enregistrer les réglages</button>
+            <a class="ch-btn ch-btn--ghost" href="/gabarits/appli/tableau-de-bord/">Retour au tableau de bord</a>
+          </div>
+        </form>
+
+        <section class="ch-stack ch-stack--s3" aria-labelledby="titre-danger">
+          <h2 class="ch-t-h3" id="titre-danger">Zone dangereuse</h2>
+          <div class="ch-alert ch-alert--warn">
+            <svg class="ch-icon ch-alert__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-alert"></use></svg><b class="ch-alert__kind">Attention</b> · effacer le carnet supprime toutes tes lectures, sans retour possible.
+          </div>
+          <div>
+            <button class="ch-btn ch-btn--secondary" type="button" data-ch-dialog-open="#confirmer-effacement" data-ch-needs-js>Effacer mon carnet</button>
+          </div>
+        </section>
+        </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <dialog class="ch-modal ch-modal--sm" id="confirmer-effacement" aria-labelledby="confirmer-effacement-titre">
+    <div class="ch-modal__head">
+      <h2 class="ch-modal__title" id="confirmer-effacement-titre">Effacer le carnet ?</h2>
+      <button class="ch-btn ch-btn--icon ch-btn--ghost ch-modal__close" type="button" data-ch-dialog-close aria-label="Fermer la fenêtre de confirmation"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-close"></use></svg></button>
+    </div>
+    <div class="ch-modal__body">
+      <p class="ch-t-body">Les 41 lectures du carnet seront supprimées. Cette action ne peut pas être annulée.</p>
+    </div>
+    <div class="ch-modal__foot">
+      <button class="ch-btn ch-btn--secondary" type="button" data-ch-dialog-close autofocus>Garder mon carnet</button>
+      <button class="ch-btn ch-btn--primary" type="button" data-ch-dialog-close>Effacer</button>
+    </div>
+  </dialog>
+
+  <footer class="ch-footer ch-footer--compact">
+    <div class="ch-footer__inner">
+      <nav class="ch-footer__nav" aria-label="Liens utiles">
+        <ul class="ch-footer__list">
+          <li><a class="ch-footer__link" href="/gabarits/appli/tableau-de-bord/">Tableau de bord</a></li>
+          <li><a class="ch-footer__link" href="/gabarits/appli/connexion/">Se déconnecter</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Marque-page, un carnet de lecture personnel. Contenu fictif.</p>
+  </footer>
+</body>
+</html>

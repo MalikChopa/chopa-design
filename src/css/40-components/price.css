@@ -1,0 +1,19 @@
+/* Prix (pièce 46) : ch-price (article) > ch-price__top (ch-price__name + badge) + ch-price__amount (ch-price__value, ch-price__currency, ch-price__period)
+   + ch-price__desc + ch-price__list (li avec glyphe check) + ch-price__foot (une action).
+   --featured : l'offre mise en avant. Jamais la couleur seule : mot « Recommandée » (badge dans le balisage), filet de 2 px (filet + ombre interne)
+   et couleur acc-text. Le prix dit la devise et la période en toutes lettres (« par mois »).
+   Couleurs : nom et montant fg, description et liste soft, période mute sur card ; badge solid on-acc sur acc ; glyphe check acc-text (non-texte) ;
+   filet line ou acc-text (--featured). Bouton : celui de ch-btn. */
+.ch-price { box-sizing: border-box; margin: 0; padding: var(--ch-s5); display: flex; flex-direction: column; gap: var(--ch-s4); min-width: 0; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-price--featured { border-color: var(--ch-acc-text); box-shadow: inset 0 0 0 1px var(--ch-acc-text); }
+.ch-price__top { box-sizing: border-box; margin: 0; padding: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ch-s3); }
+.ch-price__name { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-price__amount { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--ch-s1) var(--ch-s2); font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: 44px; line-height: 1; letter-spacing: -.03em; }
+.ch-price__value, .ch-price__currency { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-price__period { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--ch-mute); }
+.ch-price__desc { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+.ch-price__list { box-sizing: border-box; margin: 0; padding: 0; flex: 1 1 auto; list-style: none; display: flex; flex-direction: column; gap: var(--ch-s2); }
+.ch-price__list > li { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: flex-start; gap: var(--ch-s2); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+.ch-price__list .ch-icon { width: 18px; height: 18px; margin-top: 3px; color: var(--ch-acc-text); }
+.ch-price__foot { box-sizing: border-box; margin: 0; padding: 0; display: flex; }
+.ch-price__foot > .ch-btn { flex: 1 1 auto; justify-content: center; }

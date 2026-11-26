@@ -1,0 +1,9 @@
+{
+  "slug": "conteneur",
+  "piece": "Conteneur (ch-wrap)",
+  "note": "Planche : .wrap. Largeur 1280 (max-width 1240, remplissage 28 px) et 700 (remplissage 16 px sous 800 px). Les variantes --narrow et --wide n'ont pas d'équivalent dans la planche.",
+  "cases": [
+    { "id": "wrap", "widths": [1280, 700], "ch": "<div class=\"ch-wrap\"><div>Contenu du conteneur</div></div>", "board": "<div class=\"wrap\"><div>Contenu du conteneur</div></div>",
+      "pairs": [ { "id": "wrap", "ch": ".ch-wrap", "board": ".wrap" } ] }
+  ]
+}

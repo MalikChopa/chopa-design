@@ -1,0 +1,76 @@
+{
+  "slug": "radio",
+  "cases": [
+    {
+      "id": "fleches",
+      "example": "radio/defaut",
+      "tabOrder": [
+        "input[value=normal]"
+      ],
+      "steps": [
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "focus": "input[value=expert]",
+            "checked": {
+              "input[value=expert]": true,
+              "input[value=normal]": false
+            }
+          }
+        },
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "focus": "input[value=decouverte]",
+            "checked": {
+              "input[value=decouverte]": true,
+              "input[value=expert]": false
+            }
+          }
+        },
+        {
+          "key": "ArrowUp",
+          "expect": {
+            "focus": "input[value=expert]",
+            "checked": {
+              "input[value=expert]": true
+            }
+          }
+        },
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "focus": "input[value=normal]",
+            "checked": {
+              "input[value=normal]": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "aucun-coche",
+      "example": "radio/erreur",
+      "tabOrder": [
+        "input[value=archere]"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "checked": {
+              "input[value=archere]": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactives",
+      "example": "radio/desactive",
+      "tabOrder": [
+        "input[value=retrait]"
+      ]
+    }
+  ]
+}

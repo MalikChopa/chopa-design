@@ -1,0 +1,59 @@
+---
+// Une page par pièce, générée de site/src/data/<slug>.mjs (getStaticPaths sur la liste lue par glob).
+import DocLayout from '../../components/DocLayout.astro';
+import Example from '../../components/Example.astro';
+import { pieces } from '../../lib/pieces.mjs';
+
+export function getStaticPaths() {
+  return pieces.map((p) => ({ params: { slug: p.slug }, props: { piece: p } }));
+}
+const { piece } = Astro.props;
+const liste = (a: string[] | undefined) => (a && a.length ? a : []);
+const themes = [['sombre', 'Sombre'], ['clair', 'Clair'], ['chaud', 'Chaud']];
+const premier = piece.variantes?.[0]?.exemple;
+---
+<DocLayout title={piece.titre}>
+  <p class="doc-eyebrow">{piece.famille} · {piece.ref === 'P' ? 'présente dans la planche' : 'nouvelle pièce'}</p>
+  <h1 class="doc-h1 doc-h1--page">{piece.titre}</h1>
+  <p class="doc-lead">{piece.but}</p>
+
+  {piece.quand && <>
+    <h2 class="doc-h2">Quand l'employer</h2>
+    <p class="doc-text">{piece.quand}</p>
+  </>}
+
+  <h2 class="doc-h2">Variantes</h2>
+  {(piece.variantes ?? []).length === 0 && <p class="doc-text">Aucune variante.</p>}
+  {(piece.variantes ?? []).map((v) => (
+    <section class="doc-variant">
+      <h3 class="doc-h3">{v.titre}</h3>
+      {v.texte && <p class="doc-text">{v.texte}</p>}
+      <Example file={v.exemple} />
+    </section>
+  ))}
+
+  {premier && <>
+    <h2 class="doc-h2">Dans les trois thèmes</h2>
+    <div class="doc-themes-grid">
+      {themes.map(([id, label]) => (
+        <div>
+          <p class="doc-eyebrow">{label}</p>
+          <Example file={premier} theme={id} code={false} />
+        </div>
+      ))}
+    </div>
+  </>}
+
+  {liste(piece.etats).length > 0 && <>
+    <h2 class="doc-h2">États</h2>
+    <ul class="doc-list">{liste(piece.etats).map((e) => <li>{e}</li>)}</ul>
+  </>}
+
+  {liste(piece.a11y).length > 0 && <>
+    <h2 class="doc-h2">Accessibilité</h2>
+    <ul class="doc-list">{liste(piece.a11y).map((e) => <li>{e}</li>)}</ul>
+  </>}
+
+  <h2 class="doc-h2">JavaScript requis</h2>
+  <p class="doc-text">{piece.js ?? 'aucun'}</p>
+</DocLayout>

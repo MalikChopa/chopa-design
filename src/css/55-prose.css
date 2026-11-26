@@ -1,0 +1,67 @@
+/* Prose (pièce 6) : ch-prose style lui-même ses enfants (exception prévue par l'architecture, section 2).
+   Titres, paragraphes, listes, citation, code en ligne et en bloc, tableau, figure, liens, filet.
+   Rien ne déborde de la page : les mots longs et les URL se coupent (overflow-wrap), le bloc de code et la
+   boîte du tableau (ch-prose__scroll) défilent dans leur propre cadre.
+   Couleurs : fg (titres, gras, code), soft (texte), mute (légendes, h6), acc-text (liens, repères) sur bg, bg2, card. */
+.ch-prose { box-sizing: border-box; margin: 0; padding: 0; width: 100%; max-width: var(--ch-measure); min-width: 0;
+  font-family: var(--ch-sans); font-size: 17px; line-height: 1.65; color: var(--ch-soft); overflow-wrap: anywhere; }
+
+/* Remise à zéro des enfants (l'hôte n'a pas de prise sur eux), puis rythme vertical. */
+.ch-prose :where(h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote, figure, figcaption, pre, table, hr, dl, dd) { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-prose > * + * { margin-top: var(--ch-s4); }
+.ch-prose > * + h2 { margin-top: var(--ch-s7); }
+.ch-prose > * + h3 { margin-top: var(--ch-s6); }
+.ch-prose > * + h4, .ch-prose > * + h5, .ch-prose > * + h6 { margin-top: var(--ch-s5); }
+.ch-prose > * + hr { margin-top: var(--ch-s6); }
+.ch-prose > hr + * { margin-top: var(--ch-s6); }
+.ch-prose > h1 + *, .ch-prose > h2 + *, .ch-prose > h3 + *, .ch-prose > h4 + *, .ch-prose > h5 + *, .ch-prose > h6 + * { margin-top: var(--ch-s3); }
+
+/* Titres : h1 et h2 en police d'affichage comme la planche, h3 et h4 en gras courant, h5 et h6 en légende. */
+.ch-prose :where(h1, h2, h3, h4) { color: var(--ch-fg); text-wrap: balance; }
+.ch-prose h1 { font-family: var(--ch-display); font-size: clamp(34px, 6vw, 64px); line-height: .9; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); }
+.ch-prose h2 { font-family: var(--ch-display); font-size: clamp(26px, 3.6vw, 40px); line-height: .95; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); }
+.ch-prose h3 { font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-prose h4 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+.ch-prose h5, .ch-prose h6 { font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; }
+.ch-prose h5 { color: var(--ch-fg); }
+.ch-prose h6 { color: var(--ch-mute); }
+
+/* Texte courant et liens. Les liens dans une phrase sont exemptés de la cible de 44 px (architecture, section 2). */
+.ch-prose strong, .ch-prose b { color: var(--ch-fg); font-weight: 600; }
+.ch-prose a { color: var(--ch-acc-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.ch-prose a:hover { color: var(--ch-fg); }
+
+/* Listes. */
+.ch-prose ul, .ch-prose ol { padding-left: 1.5em; }
+.ch-prose li + li { margin-top: var(--ch-s2); }
+.ch-prose li > ul, .ch-prose li > ol { margin-top: var(--ch-s2); }
+.ch-prose li::marker { color: var(--ch-acc-text); }
+.ch-prose dt { color: var(--ch-fg); font-weight: 600; }
+.ch-prose dd { margin-top: var(--ch-s1); }
+.ch-prose dt + dt, .ch-prose dd + dt { margin-top: var(--ch-s3); }
+
+/* Citation : trait orange à gauche, comme .note de la planche. */
+.ch-prose blockquote { border-left: 2px solid var(--ch-acc); background: var(--ch-bg2); padding: var(--ch-s4) var(--ch-s5); color: var(--ch-soft); }
+.ch-prose blockquote > * + * { margin-top: var(--ch-s3); }
+.ch-prose blockquote cite, .ch-prose blockquote footer { display: block; font-family: var(--ch-mono); font-size: 12px; font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--ch-mute); }
+
+/* Code en ligne et en bloc. Le bloc défile dans son cadre (poser tabindex="0" pour le défiler au clavier). */
+.ch-prose code, .ch-prose kbd, .ch-prose samp { font-family: var(--ch-mono); font-size: .9em; }
+.ch-prose :not(pre) > code { padding: .1em .4em; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-prose pre { max-width: 100%; overflow-x: auto; padding: var(--ch-s4); background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 14px; line-height: 1.6; white-space: pre; overflow-wrap: normal; tab-size: 2; }
+.ch-prose pre code { padding: 0; border: 0; background: none; font-size: inherit; color: inherit; }
+
+/* Tableau : à poser dans ch-prose__scroll (région défilante, role="region", aria-label, tabindex="0"). */
+.ch-prose__scroll { box-sizing: border-box; max-width: 100%; overflow-x: auto; margin: 0; padding: 0; }
+.ch-prose table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.ch-prose caption { padding: 0 0 var(--ch-s2); text-align: left; font-size: 14px; color: var(--ch-mute); }
+.ch-prose th { padding: 10px 12px; text-align: left; font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); border-bottom: 1px solid var(--ch-line); }
+.ch-prose td { padding: 12px; border-bottom: 1px solid var(--ch-line); vertical-align: top; }
+.ch-prose td, .ch-prose th { overflow-wrap: normal; }
+
+/* Figure : image ou vidéo qui ne dépasse jamais la colonne, légende en gris. */
+.ch-prose img, .ch-prose video, .ch-prose iframe { display: block; max-width: 100%; height: auto; border: 1px solid var(--ch-line); background: var(--ch-bg2); }
+.ch-prose figcaption { margin-top: var(--ch-s2); font-size: 14px; line-height: 1.5; color: var(--ch-mute); }
+
+/* Filet. */
+.ch-prose hr { border: 0; border-top: 1px solid var(--ch-line); height: 0; }

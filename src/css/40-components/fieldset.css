@@ -1,0 +1,9 @@
+/* Groupe de champs (pièce 21) : <fieldset class="ch-fieldset"> et sa <legend class="ch-fieldset__legend">. La légende
+   nomme le groupe pour les lecteurs d'écran (radios, cases) ; elle reprend le style du libellé (mute, mono).
+   Les choix (ch-choice) s'empilent. Erreur : is-error sur le groupe et un ch-field__error relié par aria-describedby.
+   Désactivé (disabled natif) : la légende reste mute. */
+.ch-fieldset { box-sizing: border-box; margin: 0; padding: 0; border: 0; min-width: 0; }
+.ch-fieldset__legend { box-sizing: border-box; margin: 0 0 6px; padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-fieldset > .ch-choice { display: flex; }
+.ch-fieldset > .ch-field__help, .ch-fieldset > .ch-field__error { display: block; margin-top: 6px; }
+.ch-fieldset.is-error .ch-check, .ch-fieldset.is-error .ch-radio, .ch-fieldset.is-error .ch-switch { border-color: var(--ch-acc); }

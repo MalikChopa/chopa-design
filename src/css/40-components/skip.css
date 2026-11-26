@@ -1,0 +1,6 @@
+/* Lien d'évitement (pièce 31) : <a class="ch-skip" href="#id-du-contenu"> en TOUT PREMIER de la page ; la cible existe (id, tabindex="-1" pour recevoir le focus).
+   Au repos : hors de la vue (rogné à 1 px, jamais display: none : un lien masqué ne se focalise pas). Au focus : un bouton plein
+   en haut à gauche de la fenêtre (position fixe), 44 px de haut, entièrement dans la fenêtre ; le contour de focus de 30-base.css s'y ajoute.
+   Couleurs : on-acc sur acc (paire autorisée). Aucune transition. */
+.ch-skip { box-sizing: border-box; margin: 0; padding: 0; position: fixed; top: var(--ch-s2); left: var(--ch-s2); z-index: var(--ch-z-overlay); width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; background: var(--ch-acc); color: var(--ch-on-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-skip:focus { border: 1px solid var(--ch-acc); width: auto; height: auto; min-height: var(--ch-hit); padding: 0 var(--ch-s5); overflow: visible; clip-path: none; }

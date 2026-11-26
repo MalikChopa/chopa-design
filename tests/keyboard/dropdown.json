@@ -1,0 +1,180 @@
+{
+  "slug": "dropdown",
+  "cases": [
+    {
+      "id": "actions",
+      "example": "dropdown/defaut",
+      "js": true,
+      "tabOrder": [
+        ".ch-dropdown > .ch-btn"
+      ],
+      "steps": [
+        {
+          "key": "Enter"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(1)",
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(2)"
+          }
+        },
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(3)"
+          }
+        },
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(1)"
+          }
+        },
+        {
+          "key": "ArrowUp",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(3)"
+          }
+        },
+        {
+          "key": "Home",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(1)"
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(3)"
+          }
+        },
+        {
+          "key": "Escape"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown > .ch-btn",
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "false"
+            }
+          }
+        },
+        {
+          "key": "Space"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown__panel .ch-dropdown__item:nth-child(1)",
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "Tab"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "example": "dropdown/navigation",
+      "js": true,
+      "tabOrder": [
+        ".ch-dropdown > .ch-btn"
+      ],
+      "steps": [
+        {
+          "key": "Enter"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown > .ch-btn",
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "true"
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-dropdown__panel a:nth-child(1)"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-dropdown__panel a:nth-child(2)"
+          }
+        },
+        {
+          "key": "Escape"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown > .ch-btn",
+            "attr": {
+              "sel": ".ch-dropdown > .ch-btn",
+              "name": "aria-expanded",
+              "value": "false"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "sans-js-popover-natif",
+      "example": "dropdown/defaut",
+      "tabOrder": [
+        ".ch-dropdown > .ch-btn"
+      ],
+      "steps": [
+        {
+          "key": "Enter"
+        },
+        {
+          "wait": 150,
+          "expect": {
+            "focus": ".ch-dropdown > .ch-btn"
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": ".ch-dropdown > .ch-btn"
+          }
+        }
+      ]
+    }
+  ]
+}

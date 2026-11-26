@@ -1,0 +1,7 @@
+/* Séparateur (pièce 48) : hr.ch-divider (filet de 1 px). --label : div.ch-divider.ch-divider--label avec role="separator" et aria-label (le nom),
+   un mot au milieu dans span.ch-divider__label (aria-hidden : le nom est déjà porté par aria-label, il ne se lit pas deux fois) ; deux filets de part et d'autre.
+   Couleurs : filet line (non-texte) ; mot mute sur bg, bg2, card. */
+.ch-divider { box-sizing: border-box; margin: var(--ch-s5) 0; padding: 0; width: 100%; height: 0; border: 0; border-top: 1px solid var(--ch-line); border-radius: 0; background: none; color: var(--ch-mute); }
+.ch-divider--label { height: auto; display: flex; align-items: center; gap: var(--ch-s3); border-top: 0; }
+.ch-divider--label::before, .ch-divider--label::after { content: ""; flex: 1 1 0; height: 0; border-top: 1px solid var(--ch-line); }
+.ch-divider__label { box-sizing: border-box; margin: 0; padding: 0; flex: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; line-height: 1.5; text-transform: uppercase; color: var(--ch-mute); }

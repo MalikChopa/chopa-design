@@ -1,0 +1,97 @@
+{
+  "slug": "tooltip",
+  "cases": [
+    {
+      "id": "focus-echap",
+      "example": "tooltip/haut",
+      "js": true,
+      "tabOrder": [
+        ".ch-tooltip [aria-describedby]"
+      ],
+      "steps": [
+        {
+          "wait": 50,
+          "expect": {
+            "focus": ".ch-tooltip [aria-describedby]",
+            "attr": {
+              "sel": ".ch-tooltip",
+              "name": "class",
+              "value": "ch-tooltip ch-tooltip--haut is-open"
+            }
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": ".ch-tooltip [aria-describedby]",
+            "attr": {
+              "sel": ".ch-tooltip",
+              "name": "class",
+              "value": "ch-tooltip ch-tooltip--haut"
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "attr": {
+              "sel": ".ch-tooltip",
+              "name": "class",
+              "value": "ch-tooltip ch-tooltip--haut"
+            }
+          }
+        },
+        {
+          "key": "Shift+Tab",
+          "expect": {
+            "focus": ".ch-tooltip [aria-describedby]",
+            "attr": {
+              "sel": ".ch-tooltip",
+              "name": "class",
+              "value": "ch-tooltip ch-tooltip--haut is-open"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bas",
+      "example": "tooltip/bas",
+      "js": true,
+      "tabOrder": [
+        ".ch-tooltip [aria-describedby]"
+      ],
+      "steps": [
+        {
+          "wait": 50,
+          "expect": {
+            "focus": ".ch-chip",
+            "attr": [
+              {
+                "sel": ".ch-tooltip",
+                "name": "class",
+                "value": "ch-tooltip ch-tooltip--bas is-open"
+              },
+              {
+                "sel": ".ch-tooltip__bubble",
+                "name": "role",
+                "value": "tooltip"
+              }
+            ]
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": ".ch-chip",
+            "attr": {
+              "sel": ".ch-tooltip",
+              "name": "class",
+              "value": "ch-tooltip ch-tooltip--bas"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

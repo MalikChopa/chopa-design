@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Veilleurs de cendre, jeu d'aventure</title>
+  <meta name="description" content="Gabarit de site de jeu vidéo : accueil d'un jeu fictif, avec une présentation, des régions en onglets, des captures, deux éditions et une FAQ.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/jeu/accueil/">Veilleurs de cendre</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/jeu/accueil/" aria-current="page">Le jeu</a>
+        <a href="/gabarits/jeu/accueil/#regions">Régions</a>
+        <a href="/gabarits/jeu/journal/">Journal</a>
+        <a href="/gabarits/jeu/accueil/#editions">Éditions</a>
+        <a href="/gabarits/jeu/accueil/#faq">Questions</a>
+      </nav>
+      <div class="ch-row ch-row--nowrap" role="group" aria-label="Thème de la page">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu" tabindex="-1">
+    <section class="ch-section ch-section--loose" aria-labelledby="titre-page">
+      <div class="ch-wrap">
+        <div class="ch-stack ch-stack--s7">
+        <div class="ch-stack ch-stack--s5">
+          <p class="ch-label">Jeu d'aventure · ordinateur · sortie 1.3</p>
+          <h1 class="ch-t-giant" id="titre-page">Veilleurs<br>de cendre</h1>
+          <p class="ch-t-body">Une lanterne, un village éteint et douze tours à rallumer avant la nuit. Explorez à votre rythme, sans combat, en suivant la lumière.</p>
+          <div class="ch-row">
+            <a class="ch-btn ch-btn--primary" href="#editions">Acheter le jeu <svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-arrow"></use></svg></a>
+            <a class="ch-btn ch-btn--secondary" href="/gabarits/jeu/journal/">Lire le journal de bord</a>
+            <span class="ch-badge ch-badge--outline">1 à 2 joueurs</span>
+          </div>
+        </div>
+        <figure class="ch-figure">
+          <img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3Cpath d='M7 9 11 5 14 9z' fill='%235c5c58'/%3E%3C/svg%3E" width="1280" height="720" alt="Image principale : un village éteint au pied d'une crête, une lanterne au premier plan (image grise de remplacement)">
+          <figcaption class="ch-figure__caption">Le village de Sablon, avant que la première tour ne s'allume.</figcaption>
+        </figure>
+        </div>
+      </div>
+    </section>
+
+    <section class="ch-section" id="presentation" aria-labelledby="t-presentation">
+      <div class="ch-wrap"><div class="ch-stack ch-stack--s5">
+        <h2 class="ch-t-h2" id="t-presentation">Ce que vous allez faire</h2>
+        <div class="ch-grid ch-grid--3">
+          <article class="ch-card">
+            <div class="ch-card__top"><div><span class="ch-label">Explorer</span><h3 class="ch-card__title">Douze tours à rallumer</h3></div></div>
+            <p class="ch-card__body">Chaque tour change la lumière de la région : les ombres reculent, de nouveaux chemins apparaissent.</p>
+          </article>
+          <article class="ch-card">
+            <div class="ch-card__top"><div><span class="ch-label">Respirer</span><h3 class="ch-card__title">Aucun combat</h3></div></div>
+            <p class="ch-card__body">Les dangers sont des éléments : le vent, le brouillard, le noir. On les apprivoise ou on les contourne.</p>
+          </article>
+          <article class="ch-card">
+            <div class="ch-card__top"><div><span class="ch-label">Partager</span><h3 class="ch-card__title">À deux sur le même écran</h3></div></div>
+            <p class="ch-card__body">Une seconde lanterne peut rejoindre la partie à tout moment, sur la même manette ou un autre clavier.</p>
+          </article>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="ch-section ch-section--alt" id="regions" aria-labelledby="t-regions">
+      <div class="ch-wrap"><div class="ch-stack ch-stack--s5">
+        <h2 class="ch-t-h2" id="t-regions">Trois régions</h2>
+        <p class="ch-t-body">La carte se découvre dans l'ordre que vous voulez. Chaque région a sa lumière, sa musique et ses habitants.</p>
+        <div class="ch-tabs" data-ch-tabs>
+          <div class="ch-tabs__list">
+            <button class="ch-tabs__tab" type="button">La plaine</button>
+            <button class="ch-tabs__tab" type="button">La crête</button>
+            <button class="ch-tabs__tab" type="button">Le marais</button>
+          </div>
+          <div class="ch-tabs__panel">
+            <h3 class="ch-tabs__heading">La plaine</h3>
+            <p>Une étendue de cendre balayée par le vent. Les quatre premières tours s'y trouvent, et le tutoriel se fait en marchant.</p>
+            <p><span class="ch-badge">4 tours</span> <span class="ch-badge ch-badge--outline">2 heures</span></p>
+          </div>
+          <div class="ch-tabs__panel">
+            <h3 class="ch-tabs__heading">La crête</h3>
+            <p>Des ponts, des cordes et des passages étroits : la région verticale du jeu, où la lanterne sert aussi de repère.</p>
+            <p><span class="ch-badge">4 tours</span> <span class="ch-badge ch-badge--outline">3 heures</span></p>
+          </div>
+          <div class="ch-tabs__panel">
+            <h3 class="ch-tabs__heading">Le marais</h3>
+            <p>Sauter de racine en racine sans éteindre la lanterne. La région la plus lente, et la plus calme.</p>
+            <p><span class="ch-badge">4 tours</span> <span class="ch-badge ch-badge--outline">3 heures</span></p>
+          </div>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="ch-section" id="captures" aria-labelledby="t-captures">
+      <div class="ch-wrap"><div class="ch-stack ch-stack--s5">
+        <h2 class="ch-t-h2" id="t-captures">Captures d'écran</h2>
+        <ul class="ch-gallery ch-gallery--3" role="list">
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 9 4 3.5 6.5 6.5 9.5 2 16 9z' fill='%232b2b29'/%3E%3Cpath d='M7 9 11 5 14 9z' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : la plaine de cendre, balayée par un vent gris (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">La plaine de cendre</figcaption></figure></li>
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 6h16v3H0z' fill='%232b2b29'/%3E%3Cpath d='M0 6.2h16' stroke='%235c5c58' stroke-width='.2'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : un pont de pierre au-dessus d'un ravin (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">Le pont du ravin</figcaption></figure></li>
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M6 9V3h4v6z' fill='%232b2b29'/%3E%3Cpath d='M9 6h.4' stroke='%238c8c88' stroke-width='.3'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : une porte seule dans un mur de pierre (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">La porte du fond</figcaption></figure></li>
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='11' cy='3.5' r='1.6' fill='%235c5c58'/%3E%3Cpath d='M0 9 3 6 6 8 9 5.5 16 9z' fill='%232b2b29'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : un sommet au lever du soleil (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">Le sommet</figcaption></figure></li>
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Cpath d='M0 3h16M0 6h16M5.3 0v9M10.6 0v9' stroke='%232b2b29' stroke-width='.15' fill='none'/%3E%3Ccircle cx='8' cy='4.5' r='1.2' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : des filets tendus au-dessus d'une cave (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">La cave aux filets</figcaption></figure></li>
+          <li class="ch-gallery__item"><figure class="ch-figure ch-figure--16x9"><img class="ch-figure__media" src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 9' width='16' height='9'%3E%3Crect width='16' height='9' fill='%23262626'/%3E%3Ccircle cx='8' cy='4.5' r='3' fill='%232b2b29'/%3E%3Ccircle cx='8' cy='4.5' r='1.5' fill='%235c5c58'/%3E%3C/svg%3E" width="640" height="360" alt="Capture : une salle ronde au sol dallé (image grise de remplacement)" loading="lazy"><figcaption class="ch-figure__caption">La salle ronde</figcaption></figure></li>
+        </ul>
+      </div></div>
+    </section>
+
+    <section class="ch-section ch-section--alt" id="editions" aria-labelledby="t-editions">
+      <div class="ch-wrap"><div class="ch-stack ch-stack--s5">
+        <h2 class="ch-t-h2" id="t-editions">Choisir son édition</h2>
+        <div class="ch-grid ch-grid--2">
+          <article class="ch-price">
+            <div class="ch-price__top"><h3 class="ch-price__name">Édition standard</h3></div>
+            <p class="ch-price__amount"><span class="ch-price__value">29</span><span class="ch-price__currency">€</span><span class="ch-price__period">une seule fois</span></p>
+            <p class="ch-price__desc">Le jeu complet, sans extra.</p>
+            <ul class="ch-price__list" role="list">
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>Le jeu et ses trois régions</span></li>
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>Les mises à jour de la version 1</span></li>
+            </ul>
+            <div class="ch-price__foot"><button class="ch-btn ch-btn--secondary" type="button">Acheter l'édition standard</button></div>
+          </article>
+          <article class="ch-price ch-price--featured">
+            <div class="ch-price__top"><h3 class="ch-price__name">Édition collector</h3><span class="ch-badge ch-badge--solid">Recommandée</span></div>
+            <p class="ch-price__amount"><span class="ch-price__value">49</span><span class="ch-price__currency">€</span><span class="ch-price__period">une seule fois</span></p>
+            <p class="ch-price__desc">Pour accompagner le jeu.</p>
+            <ul class="ch-price__list" role="list">
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>Le jeu et ses trois régions</span></li>
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>Les mises à jour de la version 1</span></li>
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>La bande-son en 14 pistes</span></li>
+              <li><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-check"></use></svg><span>Le carnet de croquis numérique</span></li>
+            </ul>
+            <div class="ch-price__foot"><button class="ch-btn ch-btn--primary" type="button">Acheter l'édition collector</button></div>
+          </article>
+        </div>
+      </div></div>
+    </section>
+
+    <section class="ch-section" id="faq" aria-labelledby="t-faq">
+      <div class="ch-wrap"><div class="ch-stack ch-stack--s5">
+        <h2 class="ch-t-h2" id="t-faq">Questions fréquentes</h2>
+        <div class="ch-faq">
+          <details class="ch-accordion__item" name="faq-jeu" open>
+            <summary class="ch-accordion__summary">La sauvegarde est-elle automatique ?<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-down"></use></svg></summary>
+            <div class="ch-accordion__panel">Oui, à chaque changement de zone et toutes les cinq minutes.</div>
+          </details>
+          <details class="ch-accordion__item" name="faq-jeu">
+            <summary class="ch-accordion__summary">Puis-je jouer hors connexion ?<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-down"></use></svg></summary>
+            <div class="ch-accordion__panel">Oui : seul le tableau des records demande une connexion.</div>
+          </details>
+          <details class="ch-accordion__item" name="faq-jeu">
+            <summary class="ch-accordion__summary">Les sauvegardes passent-elles d'un appareil à l'autre ?<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-down"></use></svg></summary>
+            <div class="ch-accordion__panel">Oui, avec un compte de joueur ; sans compte, elles restent sur l'appareil.</div>
+          </details>
+          <details class="ch-accordion__item" name="faq-jeu">
+            <summary class="ch-accordion__summary">Quelle configuration faut-il ?<svg class="ch-icon ch-accordion__icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-down"></use></svg></summary>
+            <div class="ch-accordion__panel">Un ordinateur de moins de huit ans suffit : 4 Go de mémoire, une carte graphique intégrée et 2 Go d'espace libre.</div>
+          </details>
+        </div>
+      </div></div>
+    </section>
+  </main>
+  <footer class="ch-footer">
+    <div class="ch-footer__inner">
+      <div class="ch-footer__brand">
+        <p class="ch-footer__name">Veilleurs de cendre</p>
+        <p class="ch-footer__text">Un jeu d'aventure et de lumière, fait à trois dans un atelier de Rennes (fictif).</p>
+      </div>
+      <nav class="ch-footer__nav" aria-label="Pied de page">
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Le jeu</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#regions">Les régions</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#captures">Les captures</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#editions">Les éditions</a></li>
+          </ul>
+        </div>
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Suivre</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/jeu/journal/">Journal de bord</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Veilleurs de cendre est un jeu fictif. Toutes les images de cette page sont des remplacements gris.</p>
+  </footer>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/* Bloc de code (pièce 39) : div.ch-code[data-ch-copy] > pre.ch-code__pre[tabindex="0"] > code.
+   Défile dans son cadre (jamais la page) : la région défilante est focalisable pour le clavier. Sans coloration (couleur fg sur card).
+   Module copy (data-ch-copy) : insère ch-code__bar > button.ch-code__copy (« Copier ») avant le pre ; sans JavaScript, ni barre ni bouton.
+   Avant l'initialisation (classe ch-js sur <html>), la place de la barre est réservée : pas de saut de mise en page.
+   Le bouton affiche « Copié » un instant (data-ch-state="ok") ou « Ctrl+C ou ⌘C » (data-ch-state="manual", le code est alors sélectionné).
+   Couleurs : fg sur card (code), soft puis fg (bouton), acc-text (état) sur card ; filets line. */
+.ch-code { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; min-width: 0; max-width: 100%; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-code__pre { box-sizing: border-box; margin: 0; padding: var(--ch-s4); max-width: 100%; overflow-x: auto; background: none; border: 0; color: inherit; font-family: var(--ch-mono); font-size: 14px; line-height: 1.6; white-space: pre; tab-size: 2; }
+.ch-code__pre code { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; }
+.ch-js .ch-code[data-ch-copy]:not([data-ch-ready]):not([data-ch-failed]) { padding-top: 45px; }
+.ch-code__bar { box-sizing: border-box; margin: 0; padding: 0; display: flex; justify-content: flex-end; border-bottom: 1px solid var(--ch-line); }
+.ch-code__copy { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: inline-flex; align-items: center; gap: var(--ch-s2); min-height: var(--ch-hit); border: 0; border-radius: var(--ch-radius); background: none; color: var(--ch-soft); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-code__copy:hover { color: var(--ch-fg); }
+.ch-code__copy[data-ch-state] { color: var(--ch-acc-text); }
+.ch-code__copy:focus-visible { outline-offset: -2px; }

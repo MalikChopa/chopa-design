@@ -1,0 +1,30 @@
+export default {
+  titre: 'Fenêtre modale',
+  famille: 'Retours et fenêtres',
+  jalon: 'J5a',
+  ref: 'N',
+  but: 'Une fenêtre posée au-dessus de la page, qui demande une réponse ou montre un détail ; le reste de la page est mis de côté tant qu\'elle est ouverte.',
+  quand: 'Pour une confirmation, un détail qui ne mérite pas sa propre page, une pause. Pas pour un message qui peut attendre (une notification), ni pour un long formulaire (une page), ni pour une aide courte attachée à un mot (une infobulle ou une bulle d\'info).',
+  variantes: [
+    { titre: 'Fenêtre de base', exemple: 'modal/defaut', texte: 'Un bouton data-ch-dialog-open="#id" (avec data-ch-needs-js) et un <dialog class="ch-modal" aria-labelledby> : ch-modal__head (titre et bouton de fermeture), ch-modal__body, ch-modal__foot. Tout bouton qui ferme porte data-ch-dialog-close. L\'attribut autofocus choisit le premier élément focalisé.' },
+    { titre: 'Petite fenêtre de confirmation', exemple: 'modal/petite', texte: 'ch-modal--sm (400 px) avec role="alertdialog" et aria-describedby vers la phrase de la question. Sans autofocus, le focus va au premier bouton qui n\'est pas la croix : ici « Garder », le choix sûr.' },
+    { titre: 'Grande fenêtre qui défile', exemple: 'modal/grande', texte: 'ch-modal--lg (800 px). Quand le contenu est plus haut que la fenêtre moins 32 px, seul ch-modal__body défile : l\'en-tête et le pied restent. Le corps porte tabindex="0" pour qu\'un utilisateur du clavier puisse le faire défiler.' },
+  ],
+  etats: [
+    'Fermée : rien ne s\'affiche. Ouverte : le voile (bg à 72 %) recouvre la page, la fenêtre apparaît en fondu avec un léger glissement ; sous prefers-reduced-motion, rien ne s\'anime.',
+    'Sans JavaScript (ou module en échec) : le bouton d\'ouverture et les boutons de fermeture sont masqués, le contenu de la fenêtre s\'affiche dans la page, à la suite : rien n\'est perdu et aucun bouton ne reste sans effet. Cela suppose la classe ch-js (chopa-theme.js dans <head>, avant le chargement de chopa.js) : sinon la page montre un instant le contenu avant que le module ne passe.',
+    'Pendant l\'ouverture, la page est non défilante (classe ch-scroll-lock posée par le module sur <html>) et inerte (showModal).',
+    'Largeur : jamais plus que la fenêtre moins 32 px ; hauteur : jamais plus que la fenêtre moins 32 px.',
+  ],
+  a11y: [
+    'Élément <dialog> natif ouvert par showModal() : le reste de la page est inerte, Échap ferme, le focus reste dans la fenêtre. Le module boucle aussi Tab et Maj+Tab (du dernier élément au premier et inversement), pour ne pas dépendre du moteur.',
+    'aria-labelledby vers le titre visible (ch-modal__title, un h2) ; role="alertdialog" et aria-describedby pour une question qui demande une réponse.',
+    'Focus à l\'ouverture : l\'élément marqué autofocus, sinon le premier élément focalisable qui n\'est pas la croix de fermeture. Focus rendu à l\'ouvreur à la fermeture, quelle qu\'en soit la voie (Échap, croix, bouton, clic sur le fond).',
+    'Clic sur le fond : ferme, à condition que le bouton de la souris ait aussi été appuyé sur le fond (un glisser de texte qui finit dehors ne ferme pas).',
+    'Croix de fermeture : ch-btn--icon de 44 px avec aria-label précis (« Fermer la fenêtre de pause »), glyphe close.',
+    'Couleurs : fg, soft sur card (paires autorisées) ; filets line ; voile = mélange de bg et de transparent.',
+    'Invocateurs natifs (command="show-modal", commandfor) : Invoker Commands API « Newly available, depuis décembre 2025 » (MDN, lu le 2026-11-16). Non utilisés : le module garde le même comportement dans tous les moteurs du banc.',
+  ],
+  js: 'module dialog de chopa.js (data-ch-dialog-open, data-ch-dialog-close)',
+  classes: ['ch-modal', 'ch-modal--sm', 'ch-modal--lg', 'ch-scroll-lock'],
+};

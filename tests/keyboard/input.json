@@ -1,0 +1,68 @@
+{
+  "slug": "input",
+  "cases": [
+    {
+      "id": "saisie",
+      "example": "input/defaut",
+      "tabOrder": [
+        "input[type=text]",
+        "input[type=email]"
+      ],
+      "steps": [
+        {
+          "type": "Loup",
+          "expect": {
+            "focus": "input[type=text]",
+            "value": {
+              "input[type=text]": "Loup"
+            }
+          }
+        },
+        {
+          "key": "Backspace",
+          "expect": {
+            "value": {
+              "input[type=text]": "Lou"
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "input[type=email]"
+          }
+        },
+        {
+          "type": "a@b.fr",
+          "expect": {
+            "value": {
+              "input[type=email]": "a@b.fr"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactive-saute",
+      "example": "input/desactive",
+      "tabOrder": []
+    },
+    {
+      "id": "lecture-seule-focalisable",
+      "example": "input/lecture-seule",
+      "tabOrder": [
+        "input[readonly]"
+      ],
+      "steps": [
+        {
+          "type": "zz",
+          "expect": {
+            "value": {
+              "input": "https://exemple.fr/blog/les-cartes-de-randonnee"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

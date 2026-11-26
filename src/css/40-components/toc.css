@@ -1,0 +1,10 @@
+/* Sommaire (pièce 28) : ch-toc > ch-toc__title + ch-toc__list (ol) > li > ch-toc__link. Sans JavaScript : liste d'ancres.
+   Section active (module toc) : aria-current="true" ; marquée par un filet de 2 px à gauche ET le texte fg (jamais la couleur seule).
+   Couleurs : soft, fg sur bg, bg2, card ; titre mute ; filet acc-text, rail line. */
+.ch-toc { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-toc__title { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-toc__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--ch-line); }
+.ch-toc__list > li { margin: 0; padding: 0; }
+.ch-toc__link { box-sizing: border-box; margin: 0 0 0 -1px; padding: 0 var(--ch-s4); display: flex; align-items: center; min-height: var(--ch-hit); border-left: 2px solid transparent; font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); }
+.ch-toc__link:hover { color: var(--ch-fg); }
+.ch-toc__link[aria-current="true"] { color: var(--ch-fg); border-left-color: var(--ch-acc-text); }

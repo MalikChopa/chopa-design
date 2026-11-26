@@ -1,0 +1,21 @@
+/* Onglets (pièce 23) : ch-tabs > ch-tabs__list (boutons ch-tabs__tab) + ch-tabs__panel (un titre ch-tabs__heading chacun).
+   Sans JavaScript : la liste de boutons est masquée (des boutons qui ne font rien n'ont pas à se voir) et chaque panneau
+   s'affiche à la suite, avec son titre. Avec .ch-js : la liste apparaît, les titres se masquent, les panneaux inactifs sont
+   cachés (attribut hidden posé par le module). Avant l'initialisation (ch-js déjà posée, module pas encore passé) tous les panneaux
+   sauf le premier sont masqués : pas de saut de mise en page. Module en échec : tout redevient visible.
+   Actif : barre de 2 px sous l'onglet ET texte fg (jamais la couleur seule) ; désactivé : texte mute, curseur interdit.
+   Couleurs : soft, fg, mute sur bg, bg2, card ; barre acc-text ; filet line. */
+.ch-tabs { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; }
+.ch-tabs__list { box-sizing: border-box; margin: 0; padding: 0; display: none; overflow-x: auto; box-shadow: inset 0 -1px 0 var(--ch-line); }
+.ch-js .ch-tabs__list { display: flex; }
+.ch-tabs__tab { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); flex: none; display: inline-flex; align-items: center; min-height: var(--ch-hit); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: var(--ch-soft); cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-tabs__tab:hover { color: var(--ch-fg); }
+.ch-tabs__tab[aria-selected="true"] { color: var(--ch-fg); border-bottom-color: var(--ch-acc-text); }
+.ch-tabs__tab[aria-disabled="true"] { color: var(--ch-mute); cursor: not-allowed; }
+.ch-tabs__tab:focus-visible { outline-offset: -2px; }
+.ch-tabs__panel { box-sizing: border-box; margin: 0; padding: var(--ch-s5) 0 0; }
+.ch-tabs__heading { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-js .ch-tabs:not([data-ch-failed]) .ch-tabs__heading { display: none; }
+.ch-js .ch-tabs:not([data-ch-failed]):not([data-ch-ready]) .ch-tabs__panel ~ .ch-tabs__panel { display: none; }
+.ch-js .ch-tabs[data-ch-failed] .ch-tabs__list { display: none; }
+.ch-js .ch-tabs[data-ch-failed] .ch-tabs__panel[hidden] { display: block; }

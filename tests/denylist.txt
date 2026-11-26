@@ -1,0 +1,29 @@
+# Mots et noms interdits dans les pages et exemples de la doc (contenu fictif, jamais « entreprise »).
+# Lu par scripts/checks/denylist.mjs. Une entrée par ligne ; « # » commence un commentaire ; lignes vides ignorées.
+# Comparaison sans casse ni accents, mots entiers (un pluriel en « s » ou « x » compte ; « doc-lead » ou « ch-lead »,
+# mots joints par un trait d'union ou un tiret bas, ne comptent pas) ; les espaces d'une entrée valent « un ou
+# plusieurs espaces ».
+# Entrées fournies par Diapason (ARCHITECTURE.md section 8) : à compléter par lui, pas par l'agent.
+
+# Vocabulaire commercial et de prospection
+prospect
+prospection
+prospecter
+démarchage
+lead
+crm
+client potentiel
+entreprise exemple
+contact chaud
+
+# Nom de famille de l'utilisateur, tel qu'il figure dans maquette/index.html (option D du logo)
+moussaoui
+# Ajouts de Diapason (2026-11-15, vérification J1b-1). « ROI » écarté : « roi » peut servir dans un gabarit de jeu.
+B2B
+SaaS
+KPI
+Acme
+chiffre d'affaires
+tunnel de vente
+client potentiel
+pipeline commercial

@@ -1,0 +1,14 @@
+/* chopa-reset.css : remise à zéro GLOBALE, facultative (docs/ARCHITECTURE.md, section 2).
+   À charger APRÈS chopa.css, seulement dans un site qui n'a pas déjà sa propre remise à zéro.
+   Sans ce fichier, chopa.css ne touche que les éléments qui portent une classe ch- : tout le reste est à l'hôte.
+   Avec ce fichier, TOUS les éléments de la page sont remis à zéro, comme sur la planche de style (maquette/index.html) :
+   boîte, marges, remplissages, liens, contrôles de formulaire, corps de page. Les puces des listes ne sont pas retirées. :where() garde une spécificité nulle :
+   n'importe quelle règle du site, même une simple règle d'élément, l'emporte. Aucune couleur en dur : rôles seulement. */
+:where(*, *::before, *::after) { box-sizing: border-box; margin: 0; padding: 0; }
+:where(body) {
+  background: var(--ch-bg); color: var(--ch-fg);
+  font-family: var(--ch-sans); font-size: 16px; line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+:where(a) { color: inherit; text-decoration: none; }
+:where(button, input, select, textarea) { font: inherit; color: inherit; }

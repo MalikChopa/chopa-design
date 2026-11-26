@@ -1,0 +1,9 @@
+/* Champ (pièce 10) : conteneur d'un libellé, d'un contrôle (ch-input, ch-select, ch-textarea, ch-file, ch-input-group)
+   et de son aide. Planche : .field, .field .help, .field.is-error. L'erreur se dit par aria-invalid="true" sur le
+   contrôle, une aide liée par aria-describedby, et la classe is-error sur le champ (jamais la couleur seule : texte). */
+.ch-field { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; min-width: 0; }
+.ch-field__label { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-field__help { box-sizing: border-box; margin: 0; padding: 0; font-size: 13px; color: var(--ch-mute); }
+.ch-field.is-error .ch-field__help, .ch-field__help.is-error { color: var(--ch-acc-text); }
+.ch-field__error { box-sizing: border-box; margin: 0; padding: 0; font-size: 13px; color: var(--ch-acc-text); }
+.ch-field__help .ch-icon, .ch-field__error .ch-icon { width: 16px; height: 16px; margin-right: 4px; vertical-align: -.2em; }

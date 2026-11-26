@@ -1,0 +1,40 @@
+/* Effets (J8b) : bande qui défile avec la page, titre qui apparaît, grain en option.
+   Rien n'est caché par la feuille seule : sans JavaScript (ou si chopa-effects.js ne se charge pas), tout le texte reste
+   visible, immobile. Le script ajoute l'état « en attente » (data-ch-reveal="wait") aux seuls titres encore sous la
+   fenêtre, puis le retire à leur arrivée. Mouvement réduit : le script ne fait rien et la feuille remet tout à plat.
+   Couleurs : rôles du thème seulement (fg, acc) ; le grain n'a aucune couleur propre. */
+
+/* --- Bande : texte répété sur une ligne, rognée dans sa propre boîte (jamais de défilement latéral de la page) --- */
+.ch-band { box-sizing: border-box; display: block; width: 100%; max-width: 100%; margin: 0; padding: 0; overflow: hidden; }
+.ch-band__track { box-sizing: border-box; display: flex; flex-wrap: nowrap; width: max-content; margin: 0; padding: 0; will-change: transform; }
+.ch-band__item { box-sizing: border-box; flex: none; margin: 0; padding: 0 var(--ch-s6) 0 0; white-space: nowrap; font-family: var(--ch-display); font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); text-transform: uppercase; font-size: clamp(44px, 9vw, 120px); line-height: 1; color: var(--ch-fg); }
+/* Séparateur carré orange (décor, pas de texte). */
+.ch-band__item::after { content: ""; display: inline-block; width: .2em; height: .2em; margin-left: .35em; background: var(--ch-acc); }
+
+/* --- Titre qui apparaît --- */
+.ch-reveal { transition: opacity var(--ch-t-panel), transform var(--ch-t-panel); }
+/* En attente : posé sans transition (pas de fondu vers le caché) ; la transition joue à l'arrivée (état « in »). */
+.ch-reveal[data-ch-reveal="wait"] { opacity: 0; transform: translateY(var(--ch-s5)); transition: none; }
+
+/* --- Grain : une classe sur <html>, <body> ou une zone ; absent par défaut ---
+   Le grain est un calque (pseudo-élément) qui ne reçoit jamais la souris : il peint le rôle fg à travers un masque de
+   bruit (SVG feTurbulence intégré, sans couleur : seul son canal alpha compte). Au-delà de 5 % d'opacité, le texte
+   discret (mute) passerait sous 4,5 : 1 ; la valeur reste donc à 5 %. */
+@supports ((mask-image: url("x")) or (-webkit-mask-image: url("x"))) {
+  .ch-grain::after {
+    content: ""; position: fixed; inset: 0; z-index: calc(var(--ch-z-overlay) - 10); pointer-events: none;
+    background: var(--ch-fg); opacity: .05;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    -webkit-mask-size: 180px 180px; mask-size: 180px 180px;
+  }
+  /* Grain d'une zone (carte, cadre) : le calque suit la zone au lieu de la fenêtre. */
+  .ch-grain--zone { position: relative; }
+  .ch-grain--zone::after { position: absolute; z-index: 1; }
+}
+
+/* --- Mouvement réduit et impression : tout à plat, tout visible (testeur n° 2 : titres absents sur papier) --- */
+@media (prefers-reduced-motion: reduce), print {
+  .ch-band__track { transform: none !important; will-change: auto; }
+  .ch-reveal[data-ch-reveal="wait"] { opacity: 1; transform: none; }
+}

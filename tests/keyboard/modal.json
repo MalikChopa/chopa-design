@@ -1,0 +1,192 @@
+{
+  "slug": "modal",
+  "cases": [
+    {
+      "id": "ouvrir-boucler-fermer",
+      "example": "modal/defaut",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--primary",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__close"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--secondary"
+          }
+        },
+        {
+          "key": "Shift+Tab",
+          "expect": {
+            "focus": ".ch-modal__close"
+          }
+        },
+        {
+          "key": "Shift+Tab",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--primary"
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[data-ch-dialog-open]",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "bouton-fermer",
+      "example": "modal/defaut",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__close"
+          }
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "[data-ch-dialog-open]",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": false
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--primary",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "focus-sur-le-choix-sur",
+      "example": "modal/petite",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--secondary",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn--primary"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__close"
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[data-ch-dialog-open]",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "grande-corps-focalisable",
+      "example": "modal/grande",
+      "js": true,
+      "tabOrder": [
+        "[data-ch-dialog-open]"
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-modal__body",
+            "matches": {
+              "sel": ".ch-modal",
+              "query": ":modal",
+              "value": true
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__foot .ch-btn"
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": ".ch-modal__close"
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "[data-ch-dialog-open]"
+          }
+        }
+      ]
+    }
+  ]
+}

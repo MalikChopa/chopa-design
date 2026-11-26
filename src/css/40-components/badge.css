@@ -1,0 +1,7 @@
+/* Badge (pièce 35) : étiquette courte, jamais seule porteuse du sens (le texte dit l'état). Variantes : base (filet line, fg), --solid (on-acc sur acc),
+   --outline (acc-text, filet acc-text), --mute (mute). Non interactif : pas de cible de 44 px.
+   Couleurs : fg, acc-text, mute sur bg, bg2, card ; on-acc sur acc. */
+.ch-badge { box-sizing: border-box; margin: 0; padding: 2px 8px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--ch-line); border-radius: var(--ch-radius); background: none; color: var(--ch-fg); font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; line-height: 1.5; text-transform: uppercase; white-space: nowrap; }
+.ch-badge--solid { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-badge--outline { border-color: var(--ch-acc-text); color: var(--ch-acc-text); }
+.ch-badge--mute { color: var(--ch-mute); }

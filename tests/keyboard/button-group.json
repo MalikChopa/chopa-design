@@ -1,0 +1,38 @@
+{
+  "slug": "button-group",
+  "cases": [
+    {
+      "id": "ordre-et-activation",
+      "example": "button-group/attached",
+      "tabOrder": [
+        "button:nth-child(1)",
+        "button:nth-child(2)",
+        "button:nth-child(3)"
+      ],
+      "setup": [
+        {
+          "sel": "button:nth-child(1)",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "focus": "button:nth-child(1)",
+            "count": {
+              "clic": 1
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "button:nth-child(2)"
+          }
+        }
+      ]
+    }
+  ]
+}

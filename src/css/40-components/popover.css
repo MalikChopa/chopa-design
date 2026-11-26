@@ -1,0 +1,15 @@
+/* Bulle d'info (pièce 53) : bouton[popovertarget="id"] + <div class="ch-popover" id popover> > ch-popover__head (ch-popover__title + bouton de fermeture
+   popovertarget="id" popovertargetaction="hide") + ch-popover__body. Tout est natif, sans module : ouverture au clic, fermeture à l'Échap ou
+   au clic à côté (light dismiss), focus rendu au bouton par le navigateur. Le positionnement par ancre n'est pas utilisé (docs/ARCHITECTURE.md,
+   section 6) : la bulle s'ouvre au centre de la fenêtre, jamais plus large qu'elle moins 32 px, et défile si elle est trop haute.
+   Le panneau ne déclare pas `display` : fermé, il reste masqué par le navigateur. Entrée : @starting-style. Mouvement réduit : aucune transition.
+   Couleurs : fg, soft sur card ; filets line ; pas de voile. */
+.ch-popover { box-sizing: border-box; margin: auto; padding: 0; width: min(340px, calc(100vw - 32px)); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: auto; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transition: opacity var(--ch-t-fast); }
+@starting-style { .ch-popover:popover-open { opacity: 0; } }
+.ch-popover__head { box-sizing: border-box; margin: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s3); padding: var(--ch-s2) var(--ch-s2) var(--ch-s2) var(--ch-s4); border-bottom: 1px solid var(--ch-line); }
+.ch-popover__close { flex: none; }
+.ch-popover__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 16px; font-weight: 600; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-popover__body { box-sizing: border-box; margin: 0; padding: var(--ch-s4); color: var(--ch-soft); font-size: 14px; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-popover { transition: none; }
+}

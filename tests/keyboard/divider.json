@@ -1,0 +1,13 @@
+{
+  "slug": "divider",
+  "cases": [
+    {
+      "id": "separateur-non-focalisable",
+      "example": "divider/etiquette",
+      "tabOrder": [
+        ".ch-btn--primary",
+        ".ch-btn--secondary"
+      ]
+    }
+  ]
+}

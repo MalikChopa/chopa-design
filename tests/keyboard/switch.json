@@ -1,0 +1,68 @@
+{
+  "slug": "switch",
+  "cases": [
+    {
+      "id": "espace-bascule",
+      "example": "switch/defaut",
+      "tabOrder": [
+        "label:nth-child(1) input",
+        "label:nth-child(2) input"
+      ],
+      "steps": [
+        {
+          "key": "Space",
+          "expect": {
+            "focus": "label:nth-child(1) input",
+            "checked": {
+              "label:nth-child(1) input": true
+            }
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "checked": {
+              "label:nth-child(1) input": false
+            }
+          }
+        },
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "label:nth-child(2) input"
+          }
+        },
+        {
+          "key": "Space",
+          "expect": {
+            "checked": {
+              "label:nth-child(2) input": false
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "role",
+      "example": "switch/defaut",
+      "steps": [
+        {
+          "key": "Tab",
+          "expect": {
+            "focus": "input[role=switch]",
+            "attr": {
+              "sel": "input[role=switch]",
+              "name": "role",
+              "value": "switch"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactive-saute",
+      "example": "switch/desactive",
+      "tabOrder": []
+    }
+  ]
+}

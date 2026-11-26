@@ -1,0 +1,9 @@
+/* Logotype (pièce « Logotype », J8a) : <span class="ch-wordmark">Nom<span class="ch-wordmark__dot" aria-hidden="true"></span></span>.
+   Le nom du site en police d'affichage (--ch-display, graisse et approche d'affichage), en majuscules, suivi d'un point carré orange (--ch-acc).
+   Tailles : --sm 14 px, défaut 18 px, --lg 32 px, --xl 64 px ; le point mesure .34em, donc 4,08 px au minimum de 12 px.
+   Couleurs : fg sur bg, bg2, card ; point acc (décor, jamais seul porteur de sens). Coins carrés : le point garde un rayon de 0 quel que soit --ch-radius. */
+.ch-wordmark { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: baseline; font-family: var(--ch-display); font-size: 18px; font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .9; text-transform: uppercase; white-space: nowrap; color: var(--ch-fg); text-decoration: none; }
+.ch-wordmark--sm { font-size: 14px; }
+.ch-wordmark--lg { font-size: 32px; }
+.ch-wordmark--xl { font-size: 64px; }
+.ch-wordmark__dot { box-sizing: border-box; display: inline-block; width: .34em; height: .34em; margin: 0 0 0 .14em; padding: 0; background: var(--ch-acc); border-radius: 0; }

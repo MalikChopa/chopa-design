@@ -1,0 +1,26 @@
+{
+  "slug": "wordmark",
+  "piece": "Logotype (ch-wordmark, ch-wordmark__dot)",
+  "note": "Planche : .wm.wm-c (variante C) et .wm-c .dot. La planche règle la taille en ligne (font-size:18px, comme .bar .wm) ; ch-wordmark vaut 18 px par défaut. Ajouts de Chopa non comparés : --sm, --lg, --xl (tailles), absents de la planche.",
+  "cases": [
+    {
+      "id": "defaut",
+      "ch": "<span class=\"ch-wordmark\">Chopa<span class=\"ch-wordmark__dot\"></span></span>",
+      "board": "<span class=\"wm wm-c\" style=\"font-size:18px\">Chopa<span class=\"dot\"></span></span>",
+      "widths": [1280, 375],
+      "pairs": [
+        { "id": "logotype", "ch": ".ch-wordmark", "board": ".wm", "states": ["rest"] },
+        { "id": "point", "ch": ".ch-wordmark__dot", "board": ".wm .dot", "states": ["rest"] }
+      ]
+    },
+    {
+      "id": "grand",
+      "ch": "<span class=\"ch-wordmark ch-wordmark--xl\">Chopa<span class=\"ch-wordmark__dot\"></span></span>",
+      "board": "<span class=\"wm wm-c\" style=\"font-size:64px\">Chopa<span class=\"dot\"></span></span>",
+      "pairs": [
+        { "id": "logotype-xl", "ch": ".ch-wordmark", "board": ".wm", "states": ["rest"] },
+        { "id": "point-xl", "ch": ".ch-wordmark__dot", "board": ".wm .dot", "states": ["rest"] }
+      ]
+    }
+  ]
+}

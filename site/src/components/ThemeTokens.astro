@@ -1,0 +1,97 @@
+---
+// Un thème de la page des jetons : pastilles vivantes des rôles de couleur et tableau des paires autorisées avec
+// leur contraste. Les chiffres viennent de props, calculés au build par la page depuis dist-lib/chopa.css.
+import { toHex } from '../../../src/lib/color.mjs';
+interface Pair { id: string; text: string; on: string; surface: string | null; kind: string; min: number; ratio: number }
+interface Props { theme: string; colors: Record<string, any>; dimPct: number | null; pairs: Pair[] }
+const { theme, colors, dimPct, pairs } = Astro.props;
+const GROUPS: [string, string[]][] = [
+  ['Surfaces', ['bg', 'bg2', 'card', 'line']],
+  ['Texte', ['fg', 'soft', 'mute']],
+  ['Accent', ['acc', 'acc-text', 'on-acc', 'acc-dim', 'focus']],
+];
+const hex = (role: string) => {
+  const c = colors[role];
+  return c.a < 1 ? `${toHex(c)} à ${(c.a * 100).toFixed(1)} %` : toHex(c);
+};
+const f2 = (n: number) => n.toFixed(2).replace('.', ',');
+---
+<section class="jt" data-ch-theme={theme} aria-labelledby={`jt-${theme}`} tabindex="0">
+  <h3 class="jt__title" id={`jt-${theme}`}>Thème « {theme} »</h3>
+  {GROUPS.map(([group, roles]) => (
+    <div class="jt__group">
+      <p class="jt__label">{group}</p>
+      <ul class="jt__swatches">
+        {roles.map((role) => (
+          <li class="jt__sw">
+            <span class="jt__chip" data-role={role}></span>
+            <span class="jt__name">--ch-{role}</span>
+            <span class="jt__hex">{hex(role)}</span>
+          </li>
+        ))}
+        {group === 'Accent' && <li class="jt__sw"><span class="jt__name">--ch-dim-pct</span><span class="jt__hex">{dimPct} %</span></li>}
+      </ul>
+    </div>
+  ))}
+  <p class="jt__label">Paires autorisées ({pairs.length}) : texte sur fond, contraste mesuré</p>
+  <table class="jt__table">
+    <thead><tr><th scope="col">Aperçu</th><th scope="col">Texte</th><th scope="col">Fond</th><th scope="col">Contraste</th><th scope="col">Seuil</th><th scope="col">Résultat</th></tr></thead>
+    <tbody>
+      {pairs.map((p) => (
+        <tr>
+          <td><span class="jt__demo" data-t={p.text} data-b={p.on === 'acc-dim' ? `dim-${p.surface}` : p.on}>Aa</span></td>
+          <td><code>{p.text}</code></td>
+          <td><code>{p.on}</code>{p.surface ? <> sur <code>{p.surface}</code></> : null}</td>
+          <td class="jt__num">{f2(p.ratio)} : 1</td>
+          <td class="jt__num">{f2(p.min)}</td>
+          <td>{p.ratio >= p.min ? 'conforme' : 'sous le seuil'}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</section>
+<style>
+  .jt { margin: 0 0 32px; padding: 24px; border: 1px solid var(--ch-line); }
+  .jt__title { margin: 0 0 16px; font-size: 18px; font-weight: 600; }
+  .jt__label { margin: 24px 0 8px; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+  .jt__group:first-of-type .jt__label { margin-top: 0; }
+  .jt__swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; margin: 0; padding: 0; list-style: none; }
+  .jt__sw { display: grid; gap: 2px; }
+  .jt__chip { display: block; height: 44px; border: 1px solid var(--ch-line); }
+  .jt__name, .jt__hex { font-family: var(--ch-mono); font-size: 12px; }
+  .jt__hex { color: var(--ch-mute); }
+  .jt__chip[data-role="bg"] { background: var(--ch-bg); }
+  .jt__chip[data-role="bg2"] { background: var(--ch-bg2); }
+  .jt__chip[data-role="card"] { background: var(--ch-card); }
+  .jt__chip[data-role="line"] { background: var(--ch-line); }
+  .jt__chip[data-role="fg"] { background: var(--ch-fg); }
+  .jt__chip[data-role="soft"] { background: var(--ch-soft); }
+  .jt__chip[data-role="mute"] { background: var(--ch-mute); }
+  .jt__chip[data-role="acc"] { background: var(--ch-acc); }
+  .jt__chip[data-role="acc-text"] { background: var(--ch-acc-text); }
+  .jt__chip[data-role="on-acc"] { background: var(--ch-on-acc); }
+  .jt__chip[data-role="focus"] { background: var(--ch-focus); }
+  .jt__chip[data-role="acc-dim"] { background: linear-gradient(var(--ch-acc-dim), var(--ch-acc-dim)), var(--ch-bg); }
+  .jt__table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .jt__table th { padding: 6px 8px; text-align: left; font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); border-bottom: 1px solid var(--ch-line); }
+  .jt__table td { padding: 6px 8px; border-bottom: 1px solid var(--ch-line); }
+  .jt__table code { font-family: var(--ch-mono); font-size: 12px; }
+  .jt__num { font-family: var(--ch-mono); white-space: nowrap; }
+  .jt__demo { display: inline-block; min-width: 56px; padding: 4px 12px; font-weight: 600; }
+  .jt__demo[data-t="fg"] { color: var(--ch-fg); }
+  .jt__demo[data-t="soft"] { color: var(--ch-soft); }
+  .jt__demo[data-t="mute"] { color: var(--ch-mute); }
+  .jt__demo[data-t="acc-text"] { color: var(--ch-acc-text); }
+  .jt__demo[data-t="on-acc"] { color: var(--ch-on-acc); }
+  .jt__demo[data-t="focus"] { color: var(--ch-focus); }
+  .jt__demo[data-b="bg"] { background: var(--ch-bg); }
+  .jt__demo[data-b="bg2"] { background: var(--ch-bg2); }
+  .jt__demo[data-b="card"] { background: var(--ch-card); }
+  .jt__demo[data-b="acc"] { background: var(--ch-acc); }
+  .jt__demo[data-b="dim-bg"] { background: linear-gradient(var(--ch-acc-dim), var(--ch-acc-dim)), var(--ch-bg); }
+  .jt__demo[data-b="dim-bg2"] { background: linear-gradient(var(--ch-acc-dim), var(--ch-acc-dim)), var(--ch-bg2); }
+  .jt__demo[data-b="dim-card"] { background: linear-gradient(var(--ch-acc-dim), var(--ch-acc-dim)), var(--ch-card); }
+  /* tabindex="0" sur la section : sur téléphone elle défile, il faut pouvoir l'atteindre au clavier (testeur n° 1, axe scrollable-region-focusable). */
+  .jt:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 2px; }
+  @media (max-width: 800px) { .jt { padding: 16px; overflow-x: auto; } .jt__table { min-width: 560px; } }
+</style>

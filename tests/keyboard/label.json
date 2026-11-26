@@ -1,0 +1,34 @@
+{
+  "slug": "label",
+  "cases": [
+    {
+      "id": "clic-libelle",
+      "example": "label/defaut",
+      "steps": [
+        {
+          "click": ".ch-field__label",
+          "expect": {
+            "focus": "input"
+          }
+        }
+      ]
+    },
+    {
+      "id": "erreur-ordre",
+      "example": "label/erreur",
+      "tabOrder": [
+        "input[aria-invalid=true]"
+      ],
+      "steps": [
+        {
+          "type": "ab",
+          "expect": {
+            "value": {
+              "input": "ab"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

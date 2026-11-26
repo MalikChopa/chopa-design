@@ -1,0 +1,13 @@
+{
+  "slug": "grille",
+  "piece": "Grille (ch-grid)",
+  "note": "Planche : .grid + .g2/.g3/.g4. Largeurs 1280 et 700 (une colonne sous 800 px). Racine : toutes les propriétés ; enfants : boîte seulement (les enfants sont des div nus, la planche leur applique sa remise à zéro universelle).",
+  "cases": [
+    { "id": "g2", "widths": [1280, 700], "ch": "<div class=\"ch-grid ch-grid--2\"><div>A</div><div>B</div><div>C</div></div>", "board": "<div class=\"grid g2\"><div>A</div><div>B</div><div>C</div></div>",
+      "pairs": [ { "id": "racine", "ch": ".ch-grid", "board": ".grid" }, { "id": "enfant", "ch": ".ch-grid > :nth-child(2)", "board": ".grid > :nth-child(2)", "only": ["width", "height", "inline-size", "block-size", "display", "grid-column-start", "grid-row-start"] } ] },
+    { "id": "g3", "widths": [1280, 700], "ch": "<div class=\"ch-grid ch-grid--3\"><div>A</div><div>B</div><div>C</div><div>D</div></div>", "board": "<div class=\"grid g3\"><div>A</div><div>B</div><div>C</div><div>D</div></div>",
+      "pairs": [ { "id": "racine", "ch": ".ch-grid", "board": ".grid" }, { "id": "enfant", "ch": ".ch-grid > :nth-child(4)", "board": ".grid > :nth-child(4)", "only": ["width", "height", "inline-size", "block-size", "display", "grid-column-start", "grid-row-start"] } ] },
+    { "id": "g4", "widths": [1280, 700], "ch": "<div class=\"ch-grid ch-grid--4\"><div>A</div><div>B</div><div>C</div><div>D</div><div>E</div></div>", "board": "<div class=\"grid g4\"><div>A</div><div>B</div><div>C</div><div>D</div><div>E</div></div>",
+      "pairs": [ { "id": "racine", "ch": ".ch-grid", "board": ".grid" }, { "id": "enfant", "ch": ".ch-grid > :nth-child(5)", "board": ".grid > :nth-child(5)", "only": ["width", "height", "inline-size", "block-size", "display", "grid-column-start", "grid-row-start"] } ] }
+  ]
+}

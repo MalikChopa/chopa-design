@@ -1,0 +1,29 @@
+/* Bouton : ch-btn (base), --primary, --secondary, --ghost, [disabled]. */
+.ch-btn {
+  box-sizing: border-box; margin: 0; /* déclarés ici (règle D4) : une feuille d'hôte « button { margin; box-sizing } » ne passe plus (Diapason, vérif. J2a-2) */
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 44px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--ch-radius);
+  font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  cursor: pointer; background: none; color: inherit;
+  transition: background var(--ch-t-fast), color var(--ch-t-fast), border-color var(--ch-t-fast);
+}
+.ch-btn--primary { background: var(--ch-acc); color: var(--ch-on-acc); border-color: var(--ch-acc); }
+.ch-btn--primary:hover { background: var(--ch-fg); border-color: var(--ch-fg); color: var(--ch-bg); }
+.ch-btn--secondary { border-color: var(--ch-acc); color: var(--ch-acc-text); }
+.ch-btn--secondary:hover { background: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-btn--ghost { color: var(--ch-fg); padding: 0 4px; position: relative; }
+.ch-btn--ghost::after { content: ""; position: absolute; left: 4px; right: 100%; bottom: 10px; height: 1px; background: var(--ch-acc); transition: right var(--ch-t-panel); }
+.ch-btn--ghost:hover::after { right: 4px; }
+/* Zone de clic invisible, sans changement visuel : 44 px de haut au minimum, 8 px de plus de chaque côté. */
+.ch-btn--ghost::before { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
+.ch-btn[disabled] { background: none; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-btn--ghost[disabled]::after { display: none; }
+
+/* Bouton icône (pièce 9) : carré de 44 x 44 px, un glyphe seul ; aria-label obligatoire (contrôle btn-icon.mjs).
+   Se combine avec --primary, --secondary ou --ghost. */
+.ch-btn--icon { width: 44px; padding: 0; gap: 0; }
+.ch-btn--icon.ch-btn--ghost { padding: 0; }
+.ch-btn--icon.ch-btn--ghost::after { display: none; }
+.ch-btn--icon.ch-btn--ghost::before { left: 0; right: 0; }
+.ch-btn--icon.ch-btn--ghost:hover { color: var(--ch-acc-text); }
+.ch-btn--icon.ch-btn--ghost[disabled] { color: var(--ch-mute); }

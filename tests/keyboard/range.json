@@ -1,0 +1,144 @@
+{
+  "slug": "range",
+  "cases": [
+    {
+      "id": "fleches",
+      "example": "range/defaut",
+      "tabOrder": [
+        "input[type=range]"
+      ],
+      "steps": [
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": "input[type=range]",
+            "value": {
+              "input[type=range]": "70"
+            }
+          }
+        },
+        {
+          "key": "ArrowUp",
+          "expect": {
+            "value": {
+              "input[type=range]": "80"
+            }
+          }
+        },
+        {
+          "key": "ArrowLeft",
+          "expect": {
+            "value": {
+              "input[type=range]": "70"
+            }
+          }
+        },
+        {
+          "key": "ArrowDown",
+          "expect": {
+            "value": {
+              "input[type=range]": "60"
+            }
+          }
+        },
+        {
+          "key": "Home",
+          "expect": {
+            "value": {
+              "input[type=range]": "0"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "value": {
+              "input[type=range]": "100"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "desactive-saute",
+      "example": "range/desactive",
+      "tabOrder": []
+    },
+    {
+      "id": "valeur-affichee-par-le-module",
+      "example": "range/defaut",
+      "js": true,
+      "tabOrder": [
+        "input[type=range]"
+      ],
+      "steps": [
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "focus": "input[type=range]",
+            "prop": {
+              "sel": "output",
+              "name": "textContent",
+              "value": "70"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "prop": {
+              "sel": "output",
+              "name": "textContent",
+              "value": "100"
+            }
+          }
+        },
+        {
+          "key": "Home",
+          "expect": {
+            "prop": {
+              "sel": "output",
+              "name": "textContent",
+              "value": "0"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "modele-et-valuetext",
+      "example": "range/pas",
+      "js": true,
+      "tabOrder": [
+        "input[type=range]"
+      ],
+      "steps": [
+        {
+          "key": "ArrowRight",
+          "expect": {
+            "prop": {
+              "sel": "output",
+              "name": "textContent",
+              "value": "4 sur 5"
+            },
+            "attr": {
+              "sel": "input[type=range]",
+              "name": "aria-valuetext",
+              "value": "4 sur 5"
+            }
+          }
+        },
+        {
+          "key": "End",
+          "expect": {
+            "prop": {
+              "sel": "output",
+              "name": "textContent",
+              "value": "5 sur 5"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

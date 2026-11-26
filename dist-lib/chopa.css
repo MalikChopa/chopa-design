@@ -1,0 +1,1254 @@
+/*! Chopa Design v0.1.0 · 2026-11-26
+ * Polices : Inter Tight et IBM Plex Mono, SIL OFL 1.1 (textes dans ./fonts/). Ne pas renommer ni modifier les fichiers de police.
+ * Fichier généré par scripts/build-css.mjs : ne pas le modifier à la main. */
+
+/* --- 00-fonts.css --- */
+/* Polices : Inter Tight (400, 500, 600, 800) et IBM Plex Mono (400, 500), latin. SIL OFL 1.1. */
+@font-face { font-family: "Inter Tight"; font-weight: 400; font-display: swap; src: url("./fonts/inter-tight-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 500; font-display: swap; src: url("./fonts/inter-tight-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 600; font-display: swap; src: url("./fonts/inter-tight-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 800; font-display: swap; src: url("./fonts/inter-tight-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("./fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("./fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+
+/* --- 10-tokens.css --- */
+/* Jetons à deux niveaux (docs/ARCHITECTURE.md, section 3).
+   Niveau 1, primitives --ch-p-* : les valeurs brutes, posées ici dans :root. Jamais lues par un composant
+   (check-tokens le vérifie) : seuls les thèmes (20-themes.css) les lisent.
+   Niveau 2, rôles --ch-* : posés par thème. Les jetons communs à tous les thèmes sont ci-dessous. */
+:root {
+  /* Primitives : neutres (encre et papier). Le chiffre suit la clarté (950 = presque noir, 50 = presque blanc). */
+  --ch-p-ink-950: #050505; --ch-p-ink-900: #0d0d0d; --ch-p-ink-850: #111111; --ch-p-ink-800: #262626;
+  --ch-p-ink-700: #2b2b29; --ch-p-ink-600: #5c5c58; --ch-p-ink-400: #8c8c88;
+  --ch-p-paper-300: #d6d6d2; --ch-p-paper-200: #ebebe7; --ch-p-paper-100: #f4f4f1; --ch-p-paper-50: #fbfbf9;
+  /* Primitives : famille chaude (thème « chaud »). */
+  --ch-p-warm-950: #0b0807; --ch-p-warm-900: #130f0d; --ch-p-warm-850: #19130f; --ch-p-warm-800: #2a211c;
+  --ch-p-warm-400: #a1938a; --ch-p-warm-300: #d9cec4; --ch-p-warm-100: #f3ebe3;
+  /* Primitives : l'unique orange. orange-500 pour les fonds ; orange-ink pour le texte en thème clair (>= 4,5 : 1). */
+  --ch-p-orange-500: #ff5a1f; --ch-p-orange-ink: #c23300;
+
+  /* Rôles communs : polices, espacement, mesure, forme, mouvement, plans. */
+  --ch-sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, sans-serif;
+  --ch-display: var(--ch-sans);
+  --ch-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --ch-display-weight: 800;
+  --ch-display-track: -.045em;
+  --ch-s1: 4px; --ch-s2: 8px; --ch-s3: 12px; --ch-s4: 16px; --ch-s5: 24px;
+  --ch-s6: 32px; --ch-s7: 48px; --ch-s8: 72px; --ch-s9: 110px;
+  --ch-hit: 44px;          /* cible tactile minimale */
+  --ch-measure: 65ch;      /* longueur de ligne de la prose */
+  --ch-wrap-max: 1240px;   /* largeur maximale du conteneur */
+  --ch-radius: 0;
+  --ch-t-fast: .25s;
+  --ch-t-panel: .35s ease;
+  --ch-z-bar: 80;
+  --ch-z-overlay: 100;
+}
+
+/* --- 20-themes.css --- */
+/* Thèmes, par l'attribut data-ch-theme (le nom évite les collisions avec les attributs des sites hôtes).
+   Le fond et la couleur ne sont posés que par les trois sélecteurs explicites ci-dessous : un cadre local
+   portant data-ch-theme prend son thème, un élément sans cet attribut n'est pas touché.
+
+   RE-THÉMER UN SITE : réglages (les surfaces restent celles des 3 thèmes), à poser dans la feuille du site,
+   après chopa.css, thème par thème pour les trois qui en dépendent :
+     1. --ch-acc        l'accent, pour les fonds (un seul, le même dans les 3 thèmes) ;
+     2. --ch-acc-text   l'accent en texte et en lien, par thème, calculé : jamais un simple var(--ch-acc) ;
+                        un accent bleu #2563eb fait 3,65 sur --ch-card en sombre, sous 4,5 ;
+     3. --ch-on-acc     le texte posé sur l'accent, calculé : #050505 ou #f4f4f1, le meilleur (>= 4,5) ;
+     4. --ch-dim-pct    la force de la teinte d'accent (--ch-acc-dim), par thème, calculée : abaissée jusqu'à ce que
+                        fg, soft et mute restent >= 4,5 sur la teinte, quelle que soit la surface ;
+     5. --ch-radius     l'arrondi (0 par défaut ; tout autre valeur est un écart assumé).
+   Les polices (--ch-sans, --ch-display, --ch-mono) se règlent aussi, le site chargeant lui-même ses fichiers de police.
+   --ch-focus et --ch-acc-dim suivent seuls (règle en fin de fichier). src/lib/color.mjs calcule 2, 3 et 4 ;
+   scripts/static/check-contrast.mjs mesure toutes les paires autorisées (docs/ARCHITECTURE.md, section 9). */
+:root, [data-ch-theme="sombre"] {
+  --ch-bg: var(--ch-p-ink-950); --ch-bg2: var(--ch-p-ink-900); --ch-card: var(--ch-p-ink-850);
+  --ch-fg: var(--ch-p-paper-100); --ch-soft: var(--ch-p-paper-300); --ch-mute: var(--ch-p-ink-400); --ch-line: var(--ch-p-ink-800);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-500); --ch-on-acc: var(--ch-p-ink-950);
+  --ch-dim-pct: 13.3%; /* équivaut à #ff5a1f22 de la planche */
+  color-scheme: dark;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+[data-ch-theme="clair"] {
+  --ch-bg: var(--ch-p-paper-100); --ch-bg2: var(--ch-p-paper-200); --ch-card: var(--ch-p-paper-50);
+  --ch-fg: var(--ch-p-ink-950); --ch-soft: var(--ch-p-ink-700); --ch-mute: var(--ch-p-ink-600); --ch-line: var(--ch-p-paper-300);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-ink); --ch-on-acc: var(--ch-p-ink-950);
+  --ch-dim-pct: 12.2%; /* équivaut à #ff5a1f1f de la planche */
+  color-scheme: light;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+[data-ch-theme="chaud"] {
+  --ch-bg: var(--ch-p-warm-950); --ch-bg2: var(--ch-p-warm-900); --ch-card: var(--ch-p-warm-850);
+  --ch-fg: var(--ch-p-warm-100); --ch-soft: var(--ch-p-warm-300); --ch-mute: var(--ch-p-warm-400); --ch-line: var(--ch-p-warm-800);
+  --ch-acc: var(--ch-p-orange-500); --ch-acc-text: var(--ch-p-orange-500); --ch-on-acc: var(--ch-p-warm-950);
+  --ch-dim-pct: 13.3%;
+  color-scheme: dark;
+  background: var(--ch-bg); color: var(--ch-fg);
+}
+/* Dérivés. Posés sur chaque élément qui porte un thème (et :root), jamais hérités d'un parent : un var() est résolu
+   là où il est déclaré, donc un cadre local data-ch-theme="clair" dans une page sombre recalcule la teinte
+   avec son propre --ch-dim-pct et son propre --ch-acc. Le thème d'un site n'a qu'à régler --ch-acc et --ch-dim-pct. */
+:root, [data-ch-theme] {
+  --ch-acc-dim: color-mix(in srgb, var(--ch-acc) var(--ch-dim-pct), transparent);
+  --ch-focus: var(--ch-acc-text);
+}
+
+/* --- 30-base.css --- */
+/* Base : remise à zéro, focus, mouvement réduit.
+   La remise à zéro ne vise que l'élément qui porte une classe ch-, jamais ses descendants : un descendant sans
+   classe ch- reste à l'hôte. Les quatre formes couvrent le début de l'attribut class et un ch- précédé d'une
+   espace, d'une tabulation (\9 ) ou d'un saut de ligne (\A ). :where() garde une spécificité nulle : chaque
+   composant déclare lui-même margin, padding et box-sizing de ses éléments et parties. */
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) {
+  box-sizing: border-box; margin: 0; padding: 0;
+}
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]):where(button, input, select, textarea) {
+  font: inherit;
+}
+/* L'attribut hidden l'emporte sur l'affichage d'une pièce (.ch-btn[hidden] restait visible : testeur n° 2), sauf dans une
+   pièce dont le module a échoué ([data-ch-failed]) : là, tout le contenu doit rester visible (section 5). */
+:is([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])[hidden]:not([data-ch-failed] *) { display: none !important; }
+/* Focus visible sur les éléments ch-* et leurs descendants focalisables. */
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]):focus-visible,
+:where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) :focus-visible {
+  outline: 2px solid var(--ch-focus); outline-offset: 3px;
+}
+@media (prefers-reduced-motion: reduce) {
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]),
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"]) :where(*),
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])::before,
+  :where([class^="ch-"], [class*=" ch-"], [class*="\9 ch-"], [class*="\A ch-"])::after {
+    transition-duration: .01ms !important; animation: none !important;
+  }
+}
+
+/* Texte (pièce 1) : échelle de la planche (.t-giant, .t-h2, .t-h3, .t-body, .t-small, .t-mono, .label).
+   Chaque classe déclare elle-même marge, remplissage et boîte : un h1 ou un p de l'hôte ne les modifie pas.
+   Couleurs : fg (hérité), soft, mute sur bg, bg2, card (paires autorisées). */
+.ch-t-giant, .ch-t-h2, .ch-t-h3, .ch-t-body, .ch-t-small, .ch-t-mono, .ch-label { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-t-giant { font-family: var(--ch-display); font-size: clamp(44px, 8vw, 120px); line-height: .86; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); overflow-wrap: anywhere; }
+.ch-t-h2 { font-family: var(--ch-display); font-size: clamp(30px, 4.5vw, 60px); line-height: .9; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); overflow-wrap: anywhere; }
+.ch-t-h3 { font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-t-body { font-family: var(--ch-sans); font-size: 17px; line-height: 1.5; color: var(--ch-soft); max-width: 620px; }
+.ch-t-small { font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-mute); }
+.ch-t-mono { font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; }
+.ch-label { font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+
+/* --- 40-components/accordion.css --- */
+/* Accordéon (pièce 43) : ch-accordion (div) > details.ch-accordion__item [name] > summary.ch-accordion__summary (texte + glyphe chevron-down
+   ch-accordion__icon) + div.ch-accordion__panel. Natif, sans JavaScript : `name` identique sur plusieurs details = un seul ouvert à la fois
+   (sans support de l'attribut, chaque details reste indépendant : seule l'exclusivité est perdue). État ouvert : attribut `open`.
+   L'état ouvert ne tient pas à la couleur : le chevron fait un demi-tour et le titre passe en gras.
+   Résumé : 44 px de haut, contour de focus tracé à l'intérieur (-2px).
+   Couleurs : titre fg, panneau soft, glyphe fg (survol acc-text) sur bg, bg2, card ; filets line. */
+.ch-accordion { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; border-bottom: 1px solid var(--ch-line); }
+.ch-accordion__item { box-sizing: border-box; margin: 0; padding: 0; display: block; border-top: 1px solid var(--ch-line); }
+.ch-accordion__summary { box-sizing: border-box; margin: 0; padding: var(--ch-s2); display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s4); min-height: var(--ch-hit); font-family: var(--ch-sans); font-size: 16px; line-height: 1.4; color: var(--ch-fg); cursor: pointer; list-style: none; }
+.ch-accordion__summary::-webkit-details-marker { display: none; }
+.ch-accordion__summary:focus-visible { outline-offset: -2px; }
+.ch-accordion__icon { transition: transform var(--ch-t-fast), color var(--ch-t-fast); }
+.ch-accordion__summary:hover .ch-accordion__icon { color: var(--ch-acc-text); }
+.ch-accordion__item[open] > .ch-accordion__summary { font-weight: 600; }
+.ch-accordion__item[open] > .ch-accordion__summary .ch-accordion__icon { transform: rotate(180deg); }
+.ch-accordion__panel { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s2) var(--ch-s4); max-width: var(--ch-measure); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+
+/* --- 40-components/alert.css --- */
+/* Alerte (pièce 55) : bandeau en flux. Parité avec .note de la planche (filet de 2 px à gauche, fond bg2, remplissage s4 s5, 15 px, soft ;
+   .note b = ch-alert__kind : fg, 600). Le marquage ajoute un glyphe du sprite (ch-icon ch-alert__icon) devant le mot.
+   Variantes : --info (= la planche), --warn (fond acc-dim), --error (fond acc-dim, cadre acc de 2 px). Chaque alerte porte un glyphe ET un mot
+   (« Info », « Attention », « Erreur ») : elle se lit sans couleur. Aucun role dans le code à copier : on ne pose role="alert" (erreur)
+   ou role="status" que sur une alerte insérée après le chargement de la page.
+   Couleurs : soft (texte), fg (mot, glyphe) sur bg2 ; soft, fg sur acc-dim (composé sur bg, bg2, card) : paires autorisées. */
+.ch-alert { box-sizing: border-box; margin: 0; padding: var(--ch-s4) var(--ch-s5); border: 0; border-left: 2px solid var(--ch-acc); border-radius: 0; background: var(--ch-bg2); color: var(--ch-soft); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.ch-alert--info { border-left-color: var(--ch-acc); }
+.ch-alert--warn { background: var(--ch-acc-dim); }
+.ch-alert--error { background: var(--ch-acc-dim); border: 2px solid var(--ch-acc); }
+.ch-alert__icon { margin-right: var(--ch-s2); color: var(--ch-fg); }
+.ch-alert__kind { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }
+
+/* --- 40-components/avatar.css --- */
+/* Avatar (pièce 37) : TOUJOURS carré (CLAUDE.md). rayon de coin à 0 en dur (jamais la variable de rayon) sur l'élément, son image et ses pseudo-éléments :
+   un site qui règle --ch-radius n'arrondit pas l'avatar. <img class="ch-avatar" alt="…"> ou <span class="ch-avatar" role="img" aria-label="Nom">AB</span>
+   (initiales : le nom complet est le nom accessible). Tailles : --sm 32, base 40, --lg 56, --xl 80 px. Groupe : ch-avatar-group (recouvrement de 8 px).
+   Non interactif. Couleurs : fg sur bg2 (initiales), filet line. */
+.ch-avatar { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; flex: none; width: 40px; height: 40px; overflow: hidden; vertical-align: middle; object-fit: cover; border: 1px solid var(--ch-line); border-radius: 0; background: var(--ch-bg2); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 13px; letter-spacing: .04em; line-height: 1; text-transform: uppercase; }
+.ch-avatar::before, .ch-avatar::after, .ch-avatar * { border-radius: 0; }
+.ch-avatar--sm { width: 32px; height: 32px; font-size: 11px; }
+.ch-avatar--lg { width: 56px; height: 56px; font-size: 16px; }
+.ch-avatar--xl { width: 80px; height: 80px; font-size: 22px; }
+.ch-avatar-group { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; }
+.ch-avatar-group > .ch-avatar + .ch-avatar { margin-left: -8px; }
+
+/* --- 40-components/badge.css --- */
+/* Badge (pièce 35) : étiquette courte, jamais seule porteuse du sens (le texte dit l'état). Variantes : base (filet line, fg), --solid (on-acc sur acc),
+   --outline (acc-text, filet acc-text), --mute (mute). Non interactif : pas de cible de 44 px.
+   Couleurs : fg, acc-text, mute sur bg, bg2, card ; on-acc sur acc. */
+.ch-badge { box-sizing: border-box; margin: 0; padding: 2px 8px; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--ch-line); border-radius: var(--ch-radius); background: none; color: var(--ch-fg); font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; line-height: 1.5; text-transform: uppercase; white-space: nowrap; }
+.ch-badge--solid { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-badge--outline { border-color: var(--ch-acc-text); color: var(--ch-acc-text); }
+.ch-badge--mute { color: var(--ch-mute); }
+
+/* --- 40-components/breadcrumb.css --- */
+/* Fil d'Ariane (pièce 25) : nav (nommé) > ch-breadcrumb__list (ol) > ch-breadcrumb__item (li) > ch-breadcrumb__link (a) ou texte courant.
+   Page courante : aria-current="page", soit sur un <span> (pas un arrêt de Tab), soit sur un lien. Elle se reconnaît à fg, sans soulignement
+   (les liens sont soulignés) : jamais la couleur seule.
+   Séparateur : tracé par CSS (petit trait penché, fond line), sans aucun texte généré : rien dans l'arbre d'accessibilité.
+   Cible : 44 px de haut (lien et texte courant). Passe à la ligne sur téléphone.
+   Couleurs : liens soft (survol fg), courant fg, sur bg, bg2, card ; séparateur : fond mute (non-texte). */
+.ch-breadcrumb { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-breadcrumb__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.ch-breadcrumb__item { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); }
+.ch-breadcrumb__item + .ch-breadcrumb__item::before { content: ""; flex: none; width: 1px; height: 14px; margin: 0 var(--ch-s3); background: var(--ch-mute); transform: rotate(20deg); }
+.ch-breadcrumb__link { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); color: var(--ch-soft); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; transition: color var(--ch-t-fast); }
+.ch-breadcrumb__link:hover { color: var(--ch-fg); }
+.ch-breadcrumb [aria-current="page"] { color: var(--ch-fg); text-decoration: none; }
+
+/* --- 40-components/btn-group.css --- */
+/* Groupe de boutons (pièce 8) : <div class="ch-btn-group" role="group" aria-label="…">. --attached : boutons soudés,
+   comme un sélecteur ; aria-pressed="true" marque le bouton actif (on-acc sur acc). */
+.ch-btn-group { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s3); max-width: 100%; }
+.ch-btn-group--attached { flex-wrap: nowrap; gap: 0; }
+.ch-btn-group--attached > .ch-btn { position: relative; flex: 0 1 auto; min-width: 0; }
+.ch-btn-group--attached > .ch-btn + .ch-btn { margin-left: -1px; }
+.ch-btn-group--attached > .ch-btn:not([class*="--"]) { border-color: var(--ch-line); color: var(--ch-fg); }
+.ch-btn-group--attached > .ch-btn:not([class*="--"]):hover { border-color: var(--ch-mute); z-index: 1; }
+.ch-btn-group--attached > .ch-btn:hover, .ch-btn-group--attached > .ch-btn:focus-visible { z-index: 1; }
+.ch-btn-group--attached > .ch-btn[aria-pressed="true"] { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); z-index: 1; }
+.ch-btn-group--attached > .ch-btn[disabled] { background: none; border-color: var(--ch-line); color: var(--ch-mute); }
+
+/* --- 40-components/btn.css --- */
+/* Bouton : ch-btn (base), --primary, --secondary, --ghost, [disabled]. */
+.ch-btn {
+  box-sizing: border-box; margin: 0; /* déclarés ici (règle D4) : une feuille d'hôte « button { margin; box-sizing } » ne passe plus (Diapason, vérif. J2a-2) */
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  min-height: 44px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--ch-radius);
+  font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none;
+  cursor: pointer; background: none; color: inherit;
+  transition: background var(--ch-t-fast), color var(--ch-t-fast), border-color var(--ch-t-fast);
+}
+.ch-btn--primary { background: var(--ch-acc); color: var(--ch-on-acc); border-color: var(--ch-acc); }
+.ch-btn--primary:hover { background: var(--ch-fg); border-color: var(--ch-fg); color: var(--ch-bg); }
+.ch-btn--secondary { border-color: var(--ch-acc); color: var(--ch-acc-text); }
+.ch-btn--secondary:hover { background: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-btn--ghost { color: var(--ch-fg); padding: 0 4px; position: relative; }
+.ch-btn--ghost::after { content: ""; position: absolute; left: 4px; right: 100%; bottom: 10px; height: 1px; background: var(--ch-acc); transition: right var(--ch-t-panel); }
+.ch-btn--ghost:hover::after { right: 4px; }
+/* Zone de clic invisible, sans changement visuel : 44 px de haut au minimum, 8 px de plus de chaque côté. */
+.ch-btn--ghost::before { content: ""; position: absolute; left: -8px; right: -8px; top: 50%; height: 44px; transform: translateY(-50%); }
+.ch-btn[disabled] { background: none; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-btn--ghost[disabled]::after { display: none; }
+
+/* Bouton icône (pièce 9) : carré de 44 x 44 px, un glyphe seul ; aria-label obligatoire (contrôle btn-icon.mjs).
+   Se combine avec --primary, --secondary ou --ghost. */
+.ch-btn--icon { width: 44px; padding: 0; gap: 0; }
+.ch-btn--icon.ch-btn--ghost { padding: 0; }
+.ch-btn--icon.ch-btn--ghost::after { display: none; }
+.ch-btn--icon.ch-btn--ghost::before { left: 0; right: 0; }
+.ch-btn--icon.ch-btn--ghost:hover { color: var(--ch-acc-text); }
+.ch-btn--icon.ch-btn--ghost[disabled] { color: var(--ch-mute); }
+
+/* --- 40-components/card.css --- */
+/* Carte (pièce 32) : ch-card (article) > ch-card__top (ch-label + ch-card__title, puis une pastille ou un badge) + ch-card__body + ch-card__foot.
+   Planche : .card, .c-top, .card h3, .c-body, .c-foot.
+   --media : une image (ch-card__media) en tête, bord à bord. --horizontal : image et texte côte à côte (le texte dans ch-card__main) ;
+   la rangée passe à la ligne d'elle-même quand la carte est étroite (flex-wrap, sans requête de média : la carte est montrée dans des colonnes
+   de toutes largeurs). --link : UN SEUL lien (ch-card__link, dans le titre) étendu sur toute la carte par un ::after ; c'est le seul arrêt de Tab,
+   la zone de clic est la boîte de la carte ; aucun autre élément interactif dans une carte --link.
+   Couleurs : fg (titre), soft (texte), mute (étiquette) sur card ; bordure line, survol d'une carte --link : mute. Aucun nouveau jeton. */
+.ch-card { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; min-width: 0; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-card__top { box-sizing: border-box; margin: 0; display: flex; justify-content: space-between; gap: var(--ch-s3); padding: var(--ch-s5); align-items: start; }
+.ch-card__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-card__body { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s5) var(--ch-s5); color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-card__foot { box-sizing: border-box; margin: 0; display: flex; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); flex-wrap: wrap; }
+
+/* Image en tête. */
+.ch-card--media > .ch-card__media { box-sizing: border-box; display: block; width: 100%; height: auto; margin: 0; padding: 0; aspect-ratio: 16 / 9; object-fit: cover; background: var(--ch-bg2); border: 0; border-bottom: 1px solid var(--ch-line); border-radius: 0; }
+
+/* Image à côté du texte : les deux blocs se rangent côte à côte tant qu'il y a la place, puis l'un sous l'autre. */
+.ch-card--horizontal { flex-direction: row; flex-wrap: wrap; }
+.ch-card--horizontal > .ch-card__main { box-sizing: border-box; margin: 0; padding: 0; flex: 2 1 260px; min-width: 0; display: flex; flex-direction: column; }
+.ch-card--horizontal.ch-card--media > .ch-card__media { flex: 1 1 200px; width: auto; min-width: 0; min-height: 160px; aspect-ratio: auto; border-bottom: 0; box-shadow: 1px 1px 0 var(--ch-line); }
+
+/* Carte-lien : le lien est dans le titre, son ::after couvre toute la carte. */
+.ch-card--link { position: relative; transition: border-color var(--ch-t-fast); }
+.ch-card--link:hover { border-color: var(--ch-mute); }
+.ch-card--link:has(.ch-card__link:focus-visible) { border-color: var(--ch-acc-text); }
+.ch-card__link { color: inherit; text-decoration: none; }
+.ch-card__link::after { content: ""; position: absolute; top: 0; right: 0; bottom: 0; left: 0; }
+.ch-card--link:hover .ch-card__link { text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+
+/* --- 40-components/check.css --- */
+/* Case à cocher (pièce 16) : <input type="checkbox" class="ch-check"> dans un <label class="ch-choice">.
+   Planche : .check (étiquette) et .check input (case 20 px, coché = fond acc, marque on-acc de 8 px).
+   Ajouts : indéterminé (barre), erreur (aria-invalid), désactivé. Aucune transition (la planche n'en a pas).
+   Zone de clic : le libellé fait au moins 44 px de haut (cible tactile, planche : min-height 44px).
+   Textes : fg sur bg, bg2, card ; désactivé mute (paire autorisée, sans opacité). Marques : on-acc sur acc. */
+.ch-choice { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 15px; }
+.ch-choice:has(> :disabled) { color: var(--ch-mute); cursor: not-allowed; }
+.ch-check { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); background: var(--ch-bg2); color: inherit; display: grid; place-items: center; cursor: pointer; }
+.ch-check:checked, .ch-check:indeterminate { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-check:checked::after, .ch-check:indeterminate::after { content: ""; width: 8px; height: 8px; background: var(--ch-on-acc); }
+.ch-check:indeterminate::after { width: 10px; height: 2px; }
+.ch-check[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-check:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-check:disabled:checked, .ch-check:disabled:indeterminate { background: none; border-color: var(--ch-mute); }
+.ch-check:disabled:checked::after, .ch-check:disabled:indeterminate::after { background: var(--ch-mute); }
+
+/* --- 40-components/chip.css --- */
+/* Puce (pièce 36) : button (aria-pressed) ou a. Planche : .chip, .chip:hover, .chip[aria-pressed="true"].
+   Une puce-bouton ne bascule PAS toute seule : le script du site pose aria-pressed (chopa.js n'a pas de module pour cela).
+   32 px visibles ; zone de clic invisible de 44 px (au moins) en ::before, centrée sur la puce (6 px de chaque côté dans la hauteur).
+   Pressée : fond acc-dim, filet acc, texte fg ; sur un lien : aria-current. Désactivée : disabled ou aria-disabled, filet en tirets, mute.
+   Couleurs : soft (repos), fg (pressée) sur bg, bg2, card ; fg sur acc-dim composé ; mute désactivée. */
+.ch-chip { box-sizing: border-box; margin: 0; position: relative; min-height: 32px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--ch-line); border-radius: var(--ch-radius); background: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ch-soft); cursor: pointer; transition: border-color var(--ch-t-fast), background var(--ch-t-fast); }
+.ch-chip::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(calc(100% + 12px), 44px); height: 44px; transform: translate(-50%, -50%); }
+.ch-chip:hover { border-color: var(--ch-mute); }
+.ch-chip[aria-pressed="true"], .ch-chip[aria-current] { background: var(--ch-acc-dim); border-color: var(--ch-acc); color: var(--ch-fg); }
+.ch-chip[disabled], .ch-chip[aria-disabled="true"] { border-style: dashed; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-chip .ch-icon { width: 14px; height: 14px; vertical-align: baseline; }
+
+/* --- 40-components/code.css --- */
+/* Bloc de code (pièce 39) : div.ch-code[data-ch-copy] > pre.ch-code__pre[tabindex="0"] > code.
+   Défile dans son cadre (jamais la page) : la région défilante est focalisable pour le clavier. Sans coloration (couleur fg sur card).
+   Module copy (data-ch-copy) : insère ch-code__bar > button.ch-code__copy (« Copier ») avant le pre ; sans JavaScript, ni barre ni bouton.
+   Avant l'initialisation (classe ch-js sur <html>), la place de la barre est réservée : pas de saut de mise en page.
+   Le bouton affiche « Copié » un instant (data-ch-state="ok") ou « Ctrl+C ou ⌘C » (data-ch-state="manual", le code est alors sélectionné).
+   Couleurs : fg sur card (code), soft puis fg (bouton), acc-text (état) sur card ; filets line. */
+.ch-code { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; min-width: 0; max-width: 100%; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-code__pre { box-sizing: border-box; margin: 0; padding: var(--ch-s4); max-width: 100%; overflow-x: auto; background: none; border: 0; color: inherit; font-family: var(--ch-mono); font-size: 14px; line-height: 1.6; white-space: pre; tab-size: 2; }
+.ch-code__pre code { margin: 0; padding: 0; border: 0; background: none; color: inherit; font: inherit; }
+.ch-js .ch-code[data-ch-copy]:not([data-ch-ready]):not([data-ch-failed]) { padding-top: 45px; }
+.ch-code__bar { box-sizing: border-box; margin: 0; padding: 0; display: flex; justify-content: flex-end; border-bottom: 1px solid var(--ch-line); }
+.ch-code__copy { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: inline-flex; align-items: center; gap: var(--ch-s2); min-height: var(--ch-hit); border: 0; border-radius: var(--ch-radius); background: none; color: var(--ch-soft); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-code__copy:hover { color: var(--ch-fg); }
+.ch-code__copy[data-ch-state] { color: var(--ch-acc-text); }
+.ch-code__copy:focus-visible { outline-offset: -2px; }
+
+/* --- 40-components/divider.css --- */
+/* Séparateur (pièce 48) : hr.ch-divider (filet de 1 px). --label : div.ch-divider.ch-divider--label avec role="separator" et aria-label (le nom),
+   un mot au milieu dans span.ch-divider__label (aria-hidden : le nom est déjà porté par aria-label, il ne se lit pas deux fois) ; deux filets de part et d'autre.
+   Couleurs : filet line (non-texte) ; mot mute sur bg, bg2, card. */
+.ch-divider { box-sizing: border-box; margin: var(--ch-s5) 0; padding: 0; width: 100%; height: 0; border: 0; border-top: 1px solid var(--ch-line); border-radius: 0; background: none; color: var(--ch-mute); }
+.ch-divider--label { height: auto; display: flex; align-items: center; gap: var(--ch-s3); border-top: 0; }
+.ch-divider--label::before, .ch-divider--label::after { content: ""; flex: 1 1 0; height: 0; border-top: 1px solid var(--ch-line); }
+.ch-divider__label { box-sizing: border-box; margin: 0; padding: 0; flex: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; line-height: 1.5; text-transform: uppercase; color: var(--ch-mute); }
+
+/* --- 40-components/drawer.css --- */
+/* Tiroir (pièce 51) : <dialog class="ch-drawer ch-drawer--left|--right" aria-labelledby>, modal comme ch-modal (même module dialog :
+   data-ch-dialog-open="#id", data-ch-dialog-close), collé au bord gauche ou droit, pleine hauteur, jamais plus large que la fenêtre (100 %).
+   ch-drawer__head (ch-drawer__title + bouton ch-drawer__close), ch-drawer__body (défile à l'intérieur), ch-drawer__foot.
+   Entrée : le tiroir glisse depuis son bord (@starting-style) ; pas de sortie animée. Mouvement réduit : aucune transition, voile compris.
+   Sans JavaScript ou module en échec : le contenu s'affiche dans la page (voir modal.css pour les boutons masqués).
+   Couleurs : fg, soft, mute sur card ; filets line ; voile = bg à 72 %. */
+.ch-drawer { box-sizing: border-box; margin: 0; padding: 0; position: fixed; top: 0; bottom: 0; width: min(420px, 100%); max-width: 100%; height: 100vh; height: 100dvh; max-height: none; overflow: hidden; background: var(--ch-card); color: var(--ch-fg); border: 0 solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transform: none; transition: transform var(--ch-t-panel), opacity var(--ch-t-panel); }
+.ch-drawer[open] { display: flex; flex-direction: column; }
+.ch-drawer--left { left: 0; right: auto; border-right-width: 1px; }
+.ch-drawer--right { right: 0; left: auto; border-left-width: 1px; }
+.ch-drawer::backdrop { background: color-mix(in srgb, var(--ch-bg) 72%, transparent); opacity: 1; transition: opacity var(--ch-t-panel); }
+@starting-style {
+  .ch-drawer--left[open] { transform: translateX(-100%); opacity: 0; }
+  .ch-drawer--right[open] { transform: translateX(100%); opacity: 0; }
+  .ch-drawer[open]::backdrop { opacity: 0; }
+}
+.ch-drawer__head { box-sizing: border-box; margin: 0; display: flex; flex: none; align-items: center; justify-content: space-between; gap: var(--ch-s4); padding: var(--ch-s3) var(--ch-s3) var(--ch-s3) var(--ch-s5); border-bottom: 1px solid var(--ch-line); }
+.ch-drawer__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-drawer__close { flex: none; }
+.ch-drawer__body { box-sizing: border-box; margin: 0; padding: var(--ch-s5); flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-drawer__foot { box-sizing: border-box; margin: 0; display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); }
+
+:root:not(.ch-js) .ch-drawer:not([open]), .ch-js .ch-drawer[data-ch-failed]:not([open]) { display: block; position: static; width: auto; height: auto; border-width: 1px; }
+.ch-js .ch-drawer[data-ch-failed] [data-ch-dialog-close] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-drawer, .ch-drawer::backdrop { transition: none; }
+}
+
+/* --- 40-components/dropdown.css --- */
+/* Menu déroulant (pièce 24) : ch-dropdown > bouton[popovertarget] + ch-dropdown__panel[popover] > ch-dropdown__item (button ou a).
+   Sans JavaScript : popover natif, ouvert à sa place par défaut (centré dans la fenêtre, jamais plus large qu'elle), lisible.
+   Avec chopa.js : le module pose top et left (en pixels, sous le bouton) et data-ch-placed. Sans popover : repli par hidden,
+   panneau placé sous le bouton (data-ch-fallback). Le panneau ne déclare pas `display` : le popover fermé reste masqué par le navigateur.
+   `ch-dropdown--ouvert` montre le menu ouvert dans le flux (illustration, sans popover).
+   Couleurs : fg sur card ; survol et focus : fg sur acc-dim (composé sur card), plus un filet de 2 px acc-text à gauche. Bordure line. */
+.ch-dropdown { box-sizing: border-box; margin: 0; padding: 0; display: inline-block; position: relative; }
+.ch-dropdown__panel { box-sizing: border-box; margin: auto; padding: var(--ch-s1) 0; min-width: 200px; max-width: calc(100vw - 32px); max-height: calc(100vh - 32px); overflow: auto; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); transition: none; }
+.ch-dropdown__panel[data-ch-placed] { inset: auto; margin: 0; }
+.ch-dropdown__panel[data-ch-fallback] { position: absolute; top: 100%; left: 0; margin: var(--ch-s1) 0 0; z-index: var(--ch-z-overlay); }
+.ch-dropdown__item { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: flex; align-items: center; width: 100%; min-height: var(--ch-hit); background: none; border: 0; border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-align: left; text-decoration: none; color: var(--ch-fg); cursor: pointer; }
+.ch-dropdown__item:hover, .ch-dropdown__item:focus-visible { background: var(--ch-acc-dim); box-shadow: inset 2px 0 0 var(--ch-acc-text); }
+.ch-dropdown__item:focus-visible { outline-offset: -2px; }
+.ch-dropdown--ouvert { display: inline-flex; flex-direction: column; align-items: flex-start; }
+.ch-dropdown--ouvert .ch-dropdown__panel { display: block; position: static; margin: var(--ch-s1) 0 0; }
+
+/* --- 40-components/empty.css --- */
+/* État vide (pièce 59) : un titre, un texte, une action. Fond libre (il prend la surface de la page), cadre en tirets line.
+   ch-empty > ch-empty__title (titre de niveau choisi par la page), ch-empty__text, ch-empty__action (un ch-btn).
+   Couleurs : fg (titre), soft (texte) sur bg, bg2 ou card : paires autorisées ; bouton : celles de ch-btn. */
+.ch-empty { box-sizing: border-box; margin: 0; padding: var(--ch-s7) var(--ch-s5); display: flex; flex-direction: column; align-items: center; gap: var(--ch-s3); border: 1px dashed var(--ch-line); border-radius: var(--ch-radius); text-align: center; }
+.ch-empty__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-empty__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 44ch; font-family: var(--ch-sans); font-size: 16px; line-height: 1.5; color: var(--ch-soft); }
+.ch-empty__action { margin: var(--ch-s2) 0 0; }
+
+/* --- 40-components/faq.css --- */
+/* FAQ (pièce 47) : construite sur l'accordéon. ch-faq (div) > details.ch-accordion__item [name] > summary.ch-accordion__summary (la question)
+   + div.ch-accordion__panel (la réponse). Mêmes classes d'éléments que l'accordéon ; ch-faq ajoute la largeur de lecture (--ch-measure)
+   et des questions plus grandes. Exclusive (même `name` sur tous les details) ou libre (sans `name`) : au choix de l'auteur.
+   Couleurs : celles de l'accordéon (fg, soft sur bg, bg2, card). */
+.ch-faq { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: var(--ch-measure); border-bottom: 1px solid var(--ch-line); }
+.ch-faq > .ch-accordion__item > .ch-accordion__summary { font-size: 17px; font-weight: 600; }
+
+/* --- 40-components/field.css --- */
+/* Champ (pièce 10) : conteneur d'un libellé, d'un contrôle (ch-input, ch-select, ch-textarea, ch-file, ch-input-group)
+   et de son aide. Planche : .field, .field .help, .field.is-error. L'erreur se dit par aria-invalid="true" sur le
+   contrôle, une aide liée par aria-describedby, et la classe is-error sur le champ (jamais la couleur seule : texte). */
+.ch-field { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: minmax(0, 1fr); gap: 6px; min-width: 0; }
+.ch-field__label { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-field__help { box-sizing: border-box; margin: 0; padding: 0; font-size: 13px; color: var(--ch-mute); }
+.ch-field.is-error .ch-field__help, .ch-field__help.is-error { color: var(--ch-acc-text); }
+.ch-field__error { box-sizing: border-box; margin: 0; padding: 0; font-size: 13px; color: var(--ch-acc-text); }
+.ch-field__help .ch-icon, .ch-field__error .ch-icon { width: 16px; height: 16px; margin-right: 4px; vertical-align: -.2em; }
+
+/* --- 40-components/fieldset.css --- */
+/* Groupe de champs (pièce 21) : <fieldset class="ch-fieldset"> et sa <legend class="ch-fieldset__legend">. La légende
+   nomme le groupe pour les lecteurs d'écran (radios, cases) ; elle reprend le style du libellé (mute, mono).
+   Les choix (ch-choice) s'empilent. Erreur : is-error sur le groupe et un ch-field__error relié par aria-describedby.
+   Désactivé (disabled natif) : la légende reste mute. */
+.ch-fieldset { box-sizing: border-box; margin: 0; padding: 0; border: 0; min-width: 0; }
+.ch-fieldset__legend { box-sizing: border-box; margin: 0 0 6px; padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-fieldset > .ch-choice { display: flex; }
+.ch-fieldset > .ch-field__help, .ch-fieldset > .ch-field__error { display: block; margin-top: 6px; }
+.ch-fieldset.is-error .ch-check, .ch-fieldset.is-error .ch-radio, .ch-fieldset.is-error .ch-switch { border-color: var(--ch-acc); }
+
+/* --- 40-components/figure.css --- */
+/* Image, vidéo légendée (pièce 41) : ch-figure (figure) > ch-figure__media (img ou video) + ch-figure__caption (figcaption).
+   Ratios : 16 : 9 (base, ou ch-figure--16x9), ch-figure--4x3, ch-figure--1x1. Le ratio est posé sur le média (aspect-ratio, boîte de bordure) :
+   l'image est rognée par object-fit: cover, la vidéo reste entière (contain). Sans fichier chargé, le fond bg2 tient la place.
+   L'attribut alt de l'image et l'attribut controls de la vidéo sont exigés par scripts/checks/figure.mjs.
+   Couleurs : légende mute sur bg, bg2, card ; filet line ; fond du média bg2. Aucun mouvement. */
+.ch-figure { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ch-s2); min-width: 0; color: var(--ch-fg); }
+.ch-figure__media { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); }
+video.ch-figure__media { object-fit: contain; }
+.ch-figure__caption { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-mute); overflow-wrap: anywhere; }
+.ch-figure--16x9 > .ch-figure__media { aspect-ratio: 16 / 9; }
+.ch-figure--4x3 > .ch-figure__media { aspect-ratio: 4 / 3; }
+.ch-figure--1x1 > .ch-figure__media { aspect-ratio: 1 / 1; }
+
+/* --- 40-components/file.css --- */
+/* Envoi de fichier (pièce 14) : <input type="file" class="ch-file">. Le bouton natif est habillé par
+   ::file-selector-button (fg sur card). États : survol, focus, erreur (aria-invalid), désactivé. */
+.ch-file { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-soft); font: inherit; cursor: pointer; transition: border-color var(--ch-t-fast); }
+.ch-file::file-selector-button { box-sizing: border-box; min-height: 42px; margin: 0 14px 0 0; padding: 0 16px; background: var(--ch-card); border: 0; border-right: 1px solid var(--ch-line); border-radius: 0; color: var(--ch-fg); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: background var(--ch-t-fast), color var(--ch-t-fast); }
+.ch-file:hover { border-color: var(--ch-mute); }
+.ch-file:hover::file-selector-button { background: var(--ch-fg); color: var(--ch-bg); }
+.ch-file:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-file[aria-invalid="true"], .ch-field.is-error .ch-file,
+.ch-file[aria-invalid="true"]:hover, .ch-field.is-error .ch-file:hover { border-color: var(--ch-acc); }
+.ch-file:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-file:disabled::file-selector-button { background: none; color: var(--ch-mute); cursor: not-allowed; }
+.ch-file:disabled:hover::file-selector-button { background: none; color: var(--ch-mute); }
+
+/* --- 40-components/footer.css --- */
+/* Pied de page (pièce 30) : footer > ch-footer__inner > ch-footer__brand (nom + texte) + nav.ch-footer__nav (nommé) > ch-footer__col (ch-footer__title + ul.ch-footer__list > li > a.ch-footer__link),
+   puis ch-footer__legal (mentions, texte mute). Colonnes : grille qui s'adapte (minimum 160 px) ; une seule colonne sous 640 px DE LARGEUR DU PIED DE PAGE (requête de conteneur, comme l'en-tête :
+   le pied de page se montre aussi dans une colonne étroite d'un grand écran, où la fenêtre ne dit rien de sa largeur).
+   Liens : 44 px de haut (ligne entière). --compact : une seule rangée, sans colonnes.
+   Couleurs : titre de colonne mute ; lien soft (survol fg) ; nom fg ; mentions mute ; sur bg, bg2, card ; filet line. */
+.ch-footer { box-sizing: border-box; margin: 0; padding: var(--ch-s6) 0 var(--ch-s5); display: block; width: 100%; container-type: inline-size; border-top: 1px solid var(--ch-line); color: var(--ch-fg); }
+.ch-footer__inner { box-sizing: border-box; margin: 0 auto; padding: 0 28px; max-width: var(--ch-wrap-max); display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: var(--ch-s6); }
+.ch-footer__brand { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ch-s2); min-width: 0; }
+.ch-footer__name { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-display); font-size: 18px; font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .9; text-transform: uppercase; color: var(--ch-fg); }
+.ch-footer__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 36ch; font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-soft); }
+.ch-footer__nav { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: var(--ch-s5) var(--ch-s5); min-width: 0; }
+.ch-footer__col { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+.ch-footer__title { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-footer__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; }
+.ch-footer__list > li { margin: 0; padding: 0; }
+.ch-footer__link { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: center; min-height: var(--ch-hit); font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); transition: color var(--ch-t-fast); }
+.ch-footer__link:hover { color: var(--ch-fg); text-decoration: underline; text-underline-offset: 4px; text-decoration-thickness: 1px; }
+.ch-footer__legal { box-sizing: border-box; margin: var(--ch-s6) auto 0; padding: var(--ch-s4) 28px 0; max-width: var(--ch-wrap-max); border-top: 1px solid var(--ch-line); font-family: var(--ch-mono); font-size: 11px; letter-spacing: .08em; text-transform: uppercase; line-height: 1.6; color: var(--ch-mute); }
+.ch-footer--compact .ch-footer__inner { grid-template-columns: minmax(0, 1fr); gap: var(--ch-s3); }
+.ch-footer--compact .ch-footer__nav { display: flex; flex-wrap: wrap; gap: 0 var(--ch-s5); }
+.ch-footer--compact .ch-footer__list { display: flex; flex-wrap: wrap; gap: 0 var(--ch-s5); }
+@container (max-width: 800px) {
+  .ch-footer__inner { grid-template-columns: minmax(0, 1fr); padding: 0 16px; }
+  .ch-footer__legal { padding-left: 16px; padding-right: 16px; }
+}
+@container (max-width: 640px) {
+  .ch-footer__nav { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- 40-components/gallery.css --- */
+/* Galerie (pièce 42) : ch-gallery (ul, role="list") > ch-gallery__item (li) > ch-figure. Colonnes : 3 (base, ou --3), --2, --4 ;
+   une seule colonne sous 800 px de fenêtre (comme ch-grid). Pas de visionneuse : l'image ne s'agrandit pas.
+   Couleurs : celles de ch-figure (légende mute sur bg, bg2, card). */
+.ch-gallery { box-sizing: border-box; margin: 0; padding: 0; width: 100%; list-style: none; display: grid; gap: var(--ch-s4); grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-gallery__item { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; }
+.ch-gallery--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-gallery--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-gallery--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 800px) {
+  .ch-gallery, .ch-gallery--2, .ch-gallery--3, .ch-gallery--4 { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* --- 40-components/header.css --- */
+/* En-tête et menu téléphone (pièce 22) : ch-header (nouveau, fonds unis en rôles : la barre translucide de la planche n'est pas reprise).
+   Structure : ch-header > ch-header__inner > ch-header__brand, ch-header__toggle (bouton), ch-header__nav (un ch-nav).
+   Passage au téléphone : REQUÊTE DE CONTENEUR (largeur de l'en-tête, 720 px), pas requête de média : l'en-tête se montre aussi
+   dans une colonne étroite d'un grand écran (grille de 3 thèmes, barre latérale, aperçu) où la fenêtre ne dit rien de sa largeur.
+   Sans JavaScript (pas de .ch-js) : le bouton est masqué, les liens restent affichés et passent à la ligne.
+   Avec JS : sous 720 px le bouton apparaît et le menu suit aria-expanded. Module en échec (data-ch-failed) : tout redevient visible.
+   Couleurs : fg (marque), soft (liens, ch-nav), fg sur bg ; bouton ouvert : on-acc sur acc. Filet line. */
+.ch-header { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; container-type: inline-size; background: var(--ch-bg); color: var(--ch-fg); border-bottom: 1px solid var(--ch-line); }
+.ch-header__inner { box-sizing: border-box; margin: 0 auto; padding: 14px 28px; max-width: var(--ch-wrap-max); display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--ch-s3) var(--ch-s5); }
+.ch-header__brand { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); font-family: var(--ch-display); font-size: 18px; font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .9; text-transform: uppercase; text-decoration: none; white-space: nowrap; color: var(--ch-fg); }
+.ch-header__toggle { display: none; }
+.ch-header__toggle[aria-expanded="true"] { background: var(--ch-acc); color: var(--ch-on-acc); }
+@container (max-width: 720px) {
+  .ch-header__inner { padding: 8px 16px; }
+  .ch-js .ch-header:not([data-ch-failed]) .ch-header__toggle { display: inline-flex; }
+  .ch-js .ch-header:not([data-ch-failed]) .ch-header__toggle[aria-expanded="false"] ~ .ch-header__nav { display: none; }
+  .ch-js .ch-header:not([data-ch-failed]) .ch-header__nav { flex: 0 0 100%; flex-direction: column; gap: 0; border-top: 1px solid var(--ch-line); }
+  .ch-js .ch-header:not([data-ch-failed]) .ch-header__nav a { display: flex; align-items: center; min-height: var(--ch-hit); padding: 0; }
+  .ch-js .ch-header:not([data-ch-failed]) .ch-header__nav a::before { display: none; }
+}
+
+/* --- 40-components/icon.css --- */
+/* Icône (pièces 7 à 15, 15 glyphes) : <svg class="ch-icon" aria-hidden="true" focusable="false"><use href=".../chopa-icons.svg#ch-i-nom"></use></svg>.
+   Les dessins sont dans le sprite (un symbole par glyphe ; jeu Carbon 11.91.0, choisi le 2026-11-16, formes pleines en `currentColor`) : l'icône prend la couleur du texte. */
+.ch-icon { box-sizing: border-box; margin: 0; padding: 0; display: inline-block; flex: none; width: 20px; height: 20px; vertical-align: -.3em; fill: currentColor; stroke: none; }
+
+/* --- 40-components/input-group.css --- */
+/* Champ avec préfixe ou suffixe (pièce 15) : <div class="ch-input-group ch-input-group--prefix"> avec un
+   <span class="ch-input-group__addon"> (soft sur card) et un ch-input. Le libellé du champ est lié par for/id ;
+   l'ajout est décoratif ou rappelé dans le libellé. L'ordre du HTML fait le préfixe ou le suffixe. */
+.ch-input-group { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: stretch; width: 100%; }
+.ch-input-group > .ch-input { flex: 1 1 auto; min-width: 0; width: auto; }
+.ch-input-group__addon { box-sizing: border-box; margin: 0; flex: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; background: var(--ch-card); border: 1px solid var(--ch-line); color: var(--ch-soft); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; }
+.ch-input-group--prefix > .ch-input-group__addon { border-right-width: 0; }
+.ch-input-group--suffix > .ch-input-group__addon { border-left-width: 0; }
+.ch-field.is-error .ch-input-group__addon { border-color: var(--ch-acc); }
+
+/* --- 40-components/input.css --- */
+/* Champ texte (pièce 10). Planche : .field input. États : survol, focus (contour + bordure), erreur, désactivé,
+   lecture seule. Textes : fg, mute (aide, repère) sur bg2 ; désactivé et lecture seule restent des paires autorisées
+   (mute ou soft sur bg, bg2, card), sans opacité. */
+.ch-input { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; transition: border-color var(--ch-t-fast); }
+.ch-input::placeholder { color: var(--ch-mute); opacity: 1; }
+.ch-input:hover { border-color: var(--ch-mute); }
+.ch-input:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-input[readonly] { background: none; border-style: dashed; color: var(--ch-soft); }
+.ch-input[readonly]:hover { border-color: var(--ch-line); }
+.ch-input[aria-invalid="true"], .ch-field.is-error .ch-input,
+.ch-input[aria-invalid="true"]:hover, .ch-field.is-error .ch-input:hover { border-color: var(--ch-acc); }
+.ch-input:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; }
+.ch-input:disabled::placeholder { color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); }
+
+/* --- 40-components/kbd.css --- */
+/* Touche clavier (pièce 40) : <kbd class="ch-kbd">. Une combinaison : span.ch-kbd__combo > kbd + span.ch-kbd__plus (« + », lu par les lecteurs d'écran) + kbd.
+   Couleurs : fg sur bg2 (touche), mute (« + ») sur bg, bg2, card ; filets line. */
+.ch-kbd { box-sizing: border-box; margin: 0; padding: 2px 6px; display: inline-block; min-width: 1.75em; border: 1px solid var(--ch-line); border-bottom-width: 2px; border-radius: var(--ch-radius); background: var(--ch-bg2); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 12px; line-height: 1.4; text-align: center; }
+.ch-kbd__combo { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; gap: var(--ch-s1); }
+.ch-kbd__plus { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+
+/* --- 40-components/list.css --- */
+/* Liste (pièce 33) : ch-list sur ul, ol ou dl. Variantes : --rule (filets entre les éléments), --media (une image ou un avatar devant le texte).
+   ul : marqueurs carrés natifs en acc-text ; ol : chiffres natifs en mono mute ; dl : terme en étiquette mono mute, définition en soft.
+   --rule et --media retirent les puces : posez role="list" sur la liste pour que Safari garde la sémantique de liste.
+   Parties : ch-list__media (image ou avatar), ch-list__text (bloc de texte), ch-list__title (fg), ch-list__meta (mute).
+   Couleurs : fg, soft, mute, acc-text (marqueurs) sur bg, bg2, card ; filets line. */
+.ch-list { box-sizing: border-box; margin: 0; padding: 0 0 0 1.25em; font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+ul.ch-list { list-style: square; }
+ol.ch-list { list-style: decimal; }
+.ch-list > li { box-sizing: border-box; margin: 0; padding: var(--ch-s1) 0 var(--ch-s1) var(--ch-s1); }
+ul.ch-list > li::marker { color: var(--ch-acc-text); }
+ol.ch-list > li::marker { font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+dl.ch-list { padding-left: 0; }
+dl.ch-list > dt { box-sizing: border-box; margin: 0; padding: var(--ch-s2) 0 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+dl.ch-list > dd { box-sizing: border-box; margin: 0; padding: var(--ch-s1) 0 var(--ch-s2); }
+
+.ch-list.ch-list--rule, .ch-list.ch-list--media { list-style: none; padding-left: 0; }
+.ch-list--rule > li, .ch-list--media > li { padding: var(--ch-s3) 0; border-bottom: 1px solid var(--ch-line); }
+.ch-list--rule > li:first-child, .ch-list--media > li:first-child { border-top: 1px solid var(--ch-line); }
+dl.ch-list--rule > dt { padding: var(--ch-s3) 0 0; border-top: 1px solid var(--ch-line); }
+dl.ch-list--rule > dd { padding: var(--ch-s1) 0 var(--ch-s3); }
+dl.ch-list--rule > dd:last-child { border-bottom: 1px solid var(--ch-line); }
+.ch-list--media > li { display: flex; align-items: center; gap: var(--ch-s4); }
+.ch-list__media { flex: none; }
+.ch-list__text { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; }
+.ch-list__title { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }
+.ch-list__meta { box-sizing: border-box; margin: 0; padding: 0; font-size: 14px; color: var(--ch-mute); }
+
+/* --- 40-components/modal.css --- */
+/* Fenêtre modale (pièce 50) : <dialog class="ch-modal" aria-labelledby> > ch-modal__head (ch-modal__title + bouton ch-modal__close)
+   + ch-modal__body + ch-modal__foot. Ouverte par showModal() (module dialog de chopa.js : data-ch-dialog-open="#id" sur l'ouvreur,
+   data-ch-dialog-close sur tout bouton qui ferme). Tailles : --sm (400 px), base (560 px), --lg (800 px) ; jamais plus large que la fenêtre moins 32 px.
+   La fenêtre ne dépasse pas la hauteur de la fenêtre moins 32 px : le corps défile à l'intérieur, l'en-tête et le pied restent.
+   Défilement du fond : le module pose ch-scroll-lock sur <html> tant qu'une fenêtre modale est ouverte.
+   Sans JavaScript (pas de .ch-js) ou module en échec (data-ch-failed) : le contenu de la fenêtre s'affiche dans la page, à la suite,
+   et les boutons qui ouvrent ou ferment (data-ch-dialog-open, data-ch-dialog-close, data-ch-needs-js) sont masqués : rien n'est perdu, rien ne reste sans effet.
+   Entrée : @starting-style (opacité, léger glissement) ; pas de sortie animée (non vérifiée). Mouvement réduit : aucune transition, y compris sur le voile.
+   Couleurs : fg, soft, mute sur card ; filets line ; voile = bg à 72 % (mélange de rôles, sans autre couleur).
+   Le voile lit les jetons par héritage de l'élément : sur un navigateur qui ne les passe pas à ::backdrop, il disparaît (la fenêtre reste utilisable). */
+.ch-modal { box-sizing: border-box; margin: auto; padding: 0; width: min(560px, calc(100% - 32px)); max-width: none; max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: hidden; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transform: none; transition: opacity var(--ch-t-panel), transform var(--ch-t-panel); }
+.ch-modal[open] { display: flex; flex-direction: column; }
+.ch-modal--sm { width: min(400px, calc(100% - 32px)); }
+.ch-modal--lg { width: min(800px, calc(100% - 32px)); }
+.ch-modal::backdrop { background: color-mix(in srgb, var(--ch-bg) 72%, transparent); opacity: 1; transition: opacity var(--ch-t-panel); }
+@starting-style {
+  .ch-modal[open] { opacity: 0; transform: translateY(var(--ch-s3)); }
+  .ch-modal[open]::backdrop { opacity: 0; }
+}
+.ch-modal__head { box-sizing: border-box; margin: 0; display: flex; flex: none; align-items: center; justify-content: space-between; gap: var(--ch-s4); padding: var(--ch-s3) var(--ch-s3) var(--ch-s3) var(--ch-s5); border-bottom: 1px solid var(--ch-line); }
+.ch-modal__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-modal__close { flex: none; }
+.ch-modal__body { box-sizing: border-box; margin: 0; padding: var(--ch-s5); flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-modal__foot { box-sizing: border-box; margin: 0; display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); }
+
+/* Fond non défilant tant qu'une fenêtre modale est ouverte (classe posée par le module). La gouttière évite le saut de mise en page. */
+.ch-scroll-lock { overflow: hidden; scrollbar-gutter: stable; }
+
+/* Sans JavaScript, ou module en échec : le contenu de la fenêtre est dans la page, les boutons sans effet disparaissent. */
+:root:not(.ch-js) [data-ch-needs-js], :root:not(.ch-js) [data-ch-dialog-open], :root:not(.ch-js) [data-ch-dialog-close],
+.ch-js [data-ch-needs-js][data-ch-failed], .ch-js [data-ch-dialog-open][data-ch-failed], .ch-js .ch-modal[data-ch-failed] [data-ch-dialog-close] { display: none; }
+:root:not(.ch-js) .ch-modal:not([open]), .ch-js .ch-modal[data-ch-failed]:not([open]) { display: block; position: static; width: auto; max-height: none; margin: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-modal, .ch-modal::backdrop { transition: none; }
+}
+
+/* --- 40-components/nav.css --- */
+/* Navigation (pièce 22, partie « nav ») : ch-nav. Reprend .nav de la planche : rangée de liens en mono, 26 px d'écart,
+   soulignement fin qui se déploie au survol et sous le lien courant (aria-current="page").
+   Zone de clic : ::before invisible de 44 px de haut (ajout voulu de Chopa, mesuré à part dans tests/parity/header.json).
+   Couleurs : soft et fg (lien courant) sur bg, bg2, card. Sans mouvement réduit : la transition tombe à 0,01 ms (30-base.css). */
+.ch-nav { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 26px; font-family: var(--ch-mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.ch-nav a { box-sizing: border-box; margin: 0; position: relative; padding: 4px 0; color: var(--ch-soft); text-decoration: none; }
+.ch-nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--ch-fg); transition: right var(--ch-t-panel); }
+.ch-nav a:hover::after, .ch-nav a[aria-current="page"]::after { right: 0; }
+.ch-nav a[aria-current="page"] { color: var(--ch-fg); }
+@media (prefers-reduced-motion: reduce) { .ch-nav a::after { transition-duration: .01ms !important; } } /* ::after d'un lien sans classe ch- : hors de la règle de 30-base.css */
+.ch-nav a::before { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 44px; transform: translateY(-50%); }
+
+/* --- 40-components/notfound.css --- */
+/* Page 404 (pièce 60) : pièce de page. Sur une vraie page, la classe se pose sur <main> (un seul main par page) ; l'exemple de la doc utilise
+   un <section>, car il vit déjà dans le <main> de la doc. ch-notfound > ch-notfound__code (« 404 », décoratif : aria-hidden) + ch-notfound__title
+   (titre de niveau 1 sur une vraie page, 2 dans l'exemple) + ch-notfound__text + ch-notfound__links (liens de secours, 44 px).
+   Couleurs : fg (code, titre), soft (texte) sur bg ; acc-text (liens) sur bg : paires autorisées. */
+.ch-notfound { box-sizing: border-box; margin: 0; padding: var(--ch-s7) var(--ch-s4); min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: var(--ch-s4); }
+.ch-notfound__code { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-display); max-width: 100%; overflow-wrap: anywhere; font-size: clamp(56px, 7vw, 140px); font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .86; color: var(--ch-fg); }
+.ch-notfound__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 28px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-notfound__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 52ch; font-family: var(--ch-sans); font-size: 17px; line-height: 1.5; color: var(--ch-soft); }
+.ch-notfound__links { box-sizing: border-box; margin: var(--ch-s2) 0 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; gap: var(--ch-s2) var(--ch-s4); }
+.ch-notfound__links a { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; min-height: var(--ch-hit); color: var(--ch-acc-text); font-family: var(--ch-sans); font-size: 16px; text-decoration: underline; text-underline-offset: 3px; }
+
+/* --- 40-components/pagination.css --- */
+/* Pagination (pièce 26) : nav (nommé) > ch-pagination__list (ul) > li > ch-pagination__link (a, ou span si désactivé) ; ch-pagination__gap = « … ».
+   États : courant = aria-current="page" (fond acc, texte on-acc) ; désactivé = aria-disabled="true" sur un <span> (pas un lien, pas un arrêt de Tab),
+   texte mute, bordure en tirets, curseur interdit, pas de survol : jamais la couleur seule.
+   Précédent / suivant : glyphe chevron + texte (ch-pagination__label) ; le texte se masque visuellement sous 640 px, il reste lu.
+   Cible : 44 x 44 px au moins.
+   Couleurs : lien fg sur bg/bg2/card (bordure line) ; survol bordure acc-text ; courant on-acc sur acc ; désactivé et points mute. */
+.ch-pagination { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-pagination__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s2); }
+.ch-pagination__list > li { box-sizing: border-box; margin: 0; padding: 0; display: flex; }
+.ch-pagination__link { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s3); display: inline-flex; align-items: center; justify-content: center; gap: var(--ch-s2); min-width: var(--ch-hit); min-height: var(--ch-hit); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ch-fg); background: none; transition: border-color var(--ch-t-fast), background var(--ch-t-fast), color var(--ch-t-fast); }
+a.ch-pagination__link:hover { border-color: var(--ch-acc-text); }
+.ch-pagination__link[aria-current="page"] { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); }
+.ch-pagination__link[aria-disabled="true"] { border-style: dashed; color: var(--ch-mute); cursor: not-allowed; }
+.ch-pagination__gap { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; justify-content: center; min-width: var(--ch-hit); min-height: var(--ch-hit); font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+@media (max-width: 640px) {
+  .ch-pagination__label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+}
+
+/* --- 40-components/popover.css --- */
+/* Bulle d'info (pièce 53) : bouton[popovertarget="id"] + <div class="ch-popover" id popover> > ch-popover__head (ch-popover__title + bouton de fermeture
+   popovertarget="id" popovertargetaction="hide") + ch-popover__body. Tout est natif, sans module : ouverture au clic, fermeture à l'Échap ou
+   au clic à côté (light dismiss), focus rendu au bouton par le navigateur. Le positionnement par ancre n'est pas utilisé (docs/ARCHITECTURE.md,
+   section 6) : la bulle s'ouvre au centre de la fenêtre, jamais plus large qu'elle moins 32 px, et défile si elle est trop haute.
+   Le panneau ne déclare pas `display` : fermé, il reste masqué par le navigateur. Entrée : @starting-style. Mouvement réduit : aucune transition.
+   Couleurs : fg, soft sur card ; filets line ; pas de voile. */
+.ch-popover { box-sizing: border-box; margin: auto; padding: 0; width: min(340px, calc(100vw - 32px)); max-height: calc(100vh - 32px); max-height: calc(100dvh - 32px); overflow: auto; background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transition: opacity var(--ch-t-fast); }
+@starting-style { .ch-popover:popover-open { opacity: 0; } }
+.ch-popover__head { box-sizing: border-box; margin: 0; display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s3); padding: var(--ch-s2) var(--ch-s2) var(--ch-s2) var(--ch-s4); border-bottom: 1px solid var(--ch-line); }
+.ch-popover__close { flex: none; }
+.ch-popover__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 16px; font-weight: 600; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-popover__body { box-sizing: border-box; margin: 0; padding: var(--ch-s4); color: var(--ch-soft); font-size: 14px; line-height: 1.5; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-popover { transition: none; }
+}
+
+/* --- 40-components/price.css --- */
+/* Prix (pièce 46) : ch-price (article) > ch-price__top (ch-price__name + badge) + ch-price__amount (ch-price__value, ch-price__currency, ch-price__period)
+   + ch-price__desc + ch-price__list (li avec glyphe check) + ch-price__foot (une action).
+   --featured : l'offre mise en avant. Jamais la couleur seule : mot « Recommandée » (badge dans le balisage), filet de 2 px (filet + ombre interne)
+   et couleur acc-text. Le prix dit la devise et la période en toutes lettres (« par mois »).
+   Couleurs : nom et montant fg, description et liste soft, période mute sur card ; badge solid on-acc sur acc ; glyphe check acc-text (non-texte) ;
+   filet line ou acc-text (--featured). Bouton : celui de ch-btn. */
+.ch-price { box-sizing: border-box; margin: 0; padding: var(--ch-s5); display: flex; flex-direction: column; gap: var(--ch-s4); min-width: 0; background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-price--featured { border-color: var(--ch-acc-text); box-shadow: inset 0 0 0 1px var(--ch-acc-text); }
+.ch-price__top { box-sizing: border-box; margin: 0; padding: 0; display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ch-s3); }
+.ch-price__name { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-price__amount { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--ch-s1) var(--ch-s2); font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: 44px; line-height: 1; letter-spacing: -.03em; }
+.ch-price__value, .ch-price__currency { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-price__period { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; text-transform: uppercase; color: var(--ch-mute); }
+.ch-price__desc { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+.ch-price__list { box-sizing: border-box; margin: 0; padding: 0; flex: 1 1 auto; list-style: none; display: flex; flex-direction: column; gap: var(--ch-s2); }
+.ch-price__list > li { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: flex-start; gap: var(--ch-s2); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+.ch-price__list .ch-icon { width: 18px; height: 18px; margin-top: 3px; color: var(--ch-acc-text); }
+.ch-price__foot { box-sizing: border-box; margin: 0; padding: 0; display: flex; }
+.ch-price__foot > .ch-btn { flex: 1 1 auto; justify-content: center; }
+
+/* --- 40-components/progress.css --- */
+/* Progression (pièce 56) : <progress class="ch-progress" max="100" value="64"> natif, avec un <label> (ou aria-label) obligatoire.
+   Carré, 10 px de haut, piste bg2 cernée de mute (le remplissage orange seul ne fait pas 3 : 1 sur la piste en thème clair), remplissage acc.
+   Moteurs : ::-webkit-progress-bar / ::-webkit-progress-value (Chromium, WebKit), ::-moz-progress-bar (Firefox : non testé).
+   Indéterminée (sans attribut value) : une barre qui glisse (fond animé de l'élément). Mouvement réduit : plus de glissement, la piste est
+   rayée sur toute sa longueur (aspect « en cours », pas une valeur) ; le libellé doit dire « en cours ».
+   Couleurs : acc (remplissage), mute (cadre) : éléments graphiques, aucun texte. */
+.ch-progress { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; height: 10px; border: 1px solid var(--ch-mute); border-radius: 0; background: var(--ch-bg2); color: var(--ch-acc);
+  -webkit-appearance: none; appearance: none; overflow: hidden; vertical-align: baseline; }
+.ch-progress::-webkit-progress-bar { background: transparent; border-radius: 0; }
+.ch-progress::-webkit-progress-value { background: var(--ch-acc); border-radius: 0; }
+.ch-progress::-moz-progress-bar { background: var(--ch-acc); border-radius: 0; }
+.ch-progress:indeterminate { background-image: linear-gradient(90deg, var(--ch-acc), var(--ch-acc)); background-repeat: no-repeat; background-size: 35% 100%; background-position: -35% 0; animation: ch-progress-slide 1.4s linear infinite; }
+.ch-progress:indeterminate::-webkit-progress-value { background: transparent; }
+.ch-progress:indeterminate::-moz-progress-bar { background: transparent; }
+@keyframes ch-progress-slide { to { background-position: 135% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ch-progress:indeterminate { animation: none; background-image: repeating-linear-gradient(90deg, var(--ch-acc) 0 8px, transparent 8px 16px); background-size: 100% 100%; background-position: 0 0; }
+}
+
+/* --- 40-components/quote.css --- */
+/* Citation (pièce 38) : figure.ch-quote > blockquote.ch-quote__text + figcaption.ch-quote__source (la source dans un <cite> ; cite="" sur le blockquote
+   si elle a une adresse). Filet acc à gauche, fond bg2, comme la citation de ch-prose.
+   Couleurs : fg (texte), mute (source) sur bg2. */
+.ch-quote { box-sizing: border-box; margin: 0; padding: var(--ch-s4) var(--ch-s5); max-width: var(--ch-measure); border-left: 2px solid var(--ch-acc); background: var(--ch-bg2); }
+.ch-quote__text { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; line-height: 1.4; color: var(--ch-fg); }
+.ch-quote__text > * { margin: 0; padding: 0; }
+.ch-quote__text > * + * { margin-top: var(--ch-s3); }
+.ch-quote__source { box-sizing: border-box; margin: var(--ch-s3) 0 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ch-mute); }
+.ch-quote__source cite { font-style: normal; }
+
+/* --- 40-components/radio.css --- */
+/* Radio (pièce 17) : <input type="radio" class="ch-radio"> dans un <label class="ch-choice">, groupe dans un
+   <fieldset class="ch-fieldset"> avec sa <legend>. SEUL élément rond de la bibliothèque (CLAUDE.md, 2026-11-15) :
+   border-radius 50 % sur le contrôle et sur son point ; check-radius n'accepte 50 % que sur les sélecteurs .ch-radio.
+   Coché : fond acc, point on-acc (même logique que la case). Flèches : natif (même attribut name). Désactivé : mute. */
+.ch-radio { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 1px solid var(--ch-mute); border-radius: 50%; background: var(--ch-bg2); color: inherit; display: grid; place-items: center; cursor: pointer; }
+.ch-radio:checked { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-radio:checked::after { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--ch-on-acc); }
+.ch-radio[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-radio:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-radio:disabled:checked { background: none; border-color: var(--ch-mute); }
+.ch-radio:disabled:checked::after { background: var(--ch-mute); }
+
+/* --- 40-components/range.css --- */
+/* Curseur (pièce 19) : <input type="range" class="ch-range"> natif (flèches, Début, Fin, PageHaut/Bas : navigateur).
+   Piste de 6 px (bordure mute), poignée carrée de 20 px en acc ; hauteur de la zone 44 px. La valeur se montre dans
+   un <output class="ch-range__value"> relié par for, vide dans le HTML : le module `range` de chopa.js (data-ch-range sur le
+   curseur, J3a) y écrit la valeur courante après chaque changement ; sans JavaScript rien n'est affiché (pas de valeur périmée). Focus : contour de la base (30-base.css). Désactivé : bordure line, poignée mute. */
+.ch-range { box-sizing: border-box; margin: 0; padding: 0; color: inherit; appearance: none; -webkit-appearance: none; display: block; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+.ch-range::-webkit-slider-runnable-track { box-sizing: border-box; height: 6px; background: var(--ch-bg2); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); }
+.ch-range::-moz-range-track { box-sizing: border-box; height: 6px; background: var(--ch-bg2); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); }
+.ch-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; box-sizing: border-box; width: 20px; height: 20px; margin-top: -8px; background: var(--ch-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-range::-moz-range-thumb { box-sizing: border-box; width: 20px; height: 20px; background: var(--ch-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-range:disabled { cursor: not-allowed; }
+.ch-range:disabled::-webkit-slider-runnable-track { border-color: var(--ch-line); }
+.ch-range:disabled::-moz-range-track { border-color: var(--ch-line); }
+.ch-range:disabled::-webkit-slider-thumb { background: var(--ch-mute); }
+.ch-range:disabled::-moz-range-thumb { background: var(--ch-mute); }
+.ch-range__value { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; color: var(--ch-fg); font-variant-numeric: tabular-nums; text-align: right; min-width: 3ch; }
+
+/* --- 40-components/score.css --- */
+/* Pastille de score (pièce 49) : span.ch-score (nombre), --cold (froide). Planche : .score, .score.cold (parité : tests/parity/score.json).
+   Le nombre est l'information ; la couleur n'est qu'un renfort. Quand le nombre seul n'est pas clair, posez role="img" et aria-label
+   (« Score 87 sur 100 ») : le lecteur d'écran lit la phrase, pas « 87 ».
+   Couleurs : fg sur acc-dim (filet acc) ; --cold : mute sur bg, bg2, card (filet line). */
+.ch-score { box-sizing: border-box; margin: 0; display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 8px; border: 1px solid var(--ch-acc); border-radius: var(--ch-radius); background: var(--ch-acc-dim); font-family: var(--ch-mono); font-size: 16px; font-variant-numeric: tabular-nums; color: var(--ch-fg); }
+.ch-score--cold { border-color: var(--ch-line); background: none; color: var(--ch-mute); }
+
+/* --- 40-components/search.css --- */
+/* Recherche (pièce 13) : <form class="ch-search" role="search"> (ou <search class="ch-search">) contenant un champ
+   type="search" (ch-input, nommé par aria-label ou un libellé) et un bouton. Le champ et le bouton se touchent. */
+.ch-search { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: stretch; width: 100%; max-width: 480px; }
+.ch-search > .ch-input { flex: 1 1 auto; min-width: 0; width: auto; border-right-width: 0; -webkit-appearance: none; appearance: none; }
+.ch-search > .ch-input::-webkit-search-cancel-button, .ch-search > .ch-input::-webkit-search-decoration { -webkit-appearance: none; appearance: none; }
+.ch-search > .ch-btn { flex: none; }
+
+/* --- 40-components/select.css --- */
+/* Liste déroulante (pièce 12) : <select> natif. Planche : .field select (repos). Le survol et le focus changent la
+   bordure comme ch-input (la planche n'a pas ces états pour le select : ajout voulu, voir tests/parity/select.json). */
+.ch-select { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; transition: border-color var(--ch-t-fast); }
+.ch-select:hover { border-color: var(--ch-mute); }
+.ch-select:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-select[aria-invalid="true"], .ch-field.is-error .ch-select,
+.ch-select[aria-invalid="true"]:hover, .ch-field.is-error .ch-select:hover { border-color: var(--ch-acc); }
+.ch-select:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; }
+
+/* --- 40-components/sidebar.css --- */
+/* Barre latérale (pièce 29) : aside (nommé) > details.ch-sidebar__details[open] > summary.ch-sidebar__summary + nav.ch-sidebar__nav (nommé) > ch-sidebar__group
+   (ch-sidebar__title + ul.ch-sidebar__list > li > a.ch-sidebar__link). Aucun JavaScript.
+   REPLI « TOUJOURS OUVERTE » (le comportement de base) : le HTML porte l'attribut `open`, donc, quel que soit le navigateur et la largeur,
+   les liens sont visibles et atteignables ; le résumé est un bouton natif (Entrée, Espace) qui plie et déplie, 44 px de haut.
+   AMÉLIORATION (@supports selector(::details-content), seulement) : à partir de 800 px de fenêtre, le résumé disparaît et le contenu reste affiché
+   même si le détail a été replié (par exemple sur téléphone, avant d'élargir la fenêtre). Sans ce support rien ne change : la barre reste ouverte.
+   Lien courant : aria-current="page" : fg, filet de 2 px à gauche et gras (jamais la couleur seule).
+   Couleurs : titre de groupe mute ; lien soft (survol fg, courant fg) ; résumé fg ; filets line, acc-text ; sur bg, bg2, card. */
+.ch-sidebar { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: 280px; }
+.ch-sidebar__details { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-sidebar__summary { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s3); min-height: var(--ch-hit); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-fg); cursor: pointer; list-style: none; }
+.ch-sidebar__summary::-webkit-details-marker { display: none; }
+.ch-sidebar__summary::after { content: ""; flex: none; width: 8px; height: 8px; border-right: 2px solid currentColor; border-bottom: 2px solid currentColor; transform: translateY(-2px) rotate(45deg); transition: transform var(--ch-t-fast); }
+.ch-sidebar__details[open] > .ch-sidebar__summary::after { transform: translateY(2px) rotate(225deg); }
+.ch-sidebar__summary:hover { border-color: var(--ch-acc-text); }
+.ch-sidebar__nav { box-sizing: border-box; margin: 0; padding: var(--ch-s3) 0 0; display: flex; flex-direction: column; gap: var(--ch-s4); }
+.ch-sidebar__group { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-sidebar__title { box-sizing: border-box; margin: 0 0 var(--ch-s1); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-sidebar__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--ch-line); }
+.ch-sidebar__list > li { margin: 0; padding: 0; }
+.ch-sidebar__link { box-sizing: border-box; margin: 0 0 0 -1px; padding: 0 var(--ch-s4); display: flex; align-items: center; min-height: var(--ch-hit); border-left: 2px solid transparent; font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); }
+.ch-sidebar__link:hover { color: var(--ch-fg); }
+.ch-sidebar__link[aria-current="page"] { color: var(--ch-fg); border-left-color: var(--ch-acc-text); font-weight: 600; }
+@supports selector(::details-content) {
+  @media (min-width: 800px) {
+    .ch-sidebar__summary { display: none; }
+    .ch-sidebar__details::details-content { content-visibility: visible; display: block; }
+    .ch-sidebar__nav { padding-top: 0; }
+  }
+}
+
+/* --- 40-components/skeleton.css --- */
+/* Squelette (pièce 57) : blocs gris pendant un chargement. Chaque bloc est aria-hidden="true" ; la région en cours de chargement porte aria-busy="true"
+   (le contenu réel remplace les blocs, puis aria-busy est retiré). Variantes : base (bloc libre, hauteur donnée par l'hôte ou 16 px),
+   --line (une ligne de texte), --title (ligne plus haute et plus courte), --media (image 16:9). Toujours carré : 0, jamais var(--ch-radius).
+   Reflet : un dégradé line / bg2 qui glisse. Mouvement réduit : bloc uni line, sans reflet. Aucun texte : pas de paire de contraste. */
+.ch-skeleton { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; min-height: 16px; border: 0; border-radius: 0; background-color: var(--ch-line);
+  background-image: linear-gradient(90deg, var(--ch-line) 0, var(--ch-bg2) 50%, var(--ch-line) 100%); background-size: 200% 100%; background-repeat: no-repeat; animation: ch-skeleton-shimmer 1.6s linear infinite; }
+.ch-skeleton--line { height: 14px; min-height: 0; }
+.ch-skeleton--title { height: 26px; min-height: 0; width: 60%; }
+.ch-skeleton--media { height: auto; min-height: 0; aspect-ratio: 16 / 9; }
+@keyframes ch-skeleton-shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ch-skeleton { animation: none; background-image: none; }
+}
+
+/* --- 40-components/skip.css --- */
+/* Lien d'évitement (pièce 31) : <a class="ch-skip" href="#id-du-contenu"> en TOUT PREMIER de la page ; la cible existe (id, tabindex="-1" pour recevoir le focus).
+   Au repos : hors de la vue (rogné à 1 px, jamais display: none : un lien masqué ne se focalise pas). Au focus : un bouton plein
+   en haut à gauche de la fenêtre (position fixe), 44 px de haut, entièrement dans la fenêtre ; le contour de focus de 30-base.css s'y ajoute.
+   Couleurs : on-acc sur acc (paire autorisée). Aucune transition. */
+.ch-skip { box-sizing: border-box; margin: 0; padding: 0; position: fixed; top: var(--ch-s2); left: var(--ch-s2); z-index: var(--ch-z-overlay); width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; display: inline-flex; align-items: center; justify-content: center; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; background: var(--ch-acc); color: var(--ch-on-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-skip:focus { border: 1px solid var(--ch-acc); width: auto; height: auto; min-height: var(--ch-hit); padding: 0 var(--ch-s5); overflow: visible; clip-path: none; }
+
+/* --- 40-components/spinner.css --- */
+/* Indicateur de chargement (pièce 58) : <span class="ch-spinner" role="status"><span class="ch-spinner__label">Chargement…</span></span>.
+   Un carré dont le bord tourne : rayon 0 (jamais var(--ch-radius), même si le site arrondit). Le texte ch-spinner__label est masqué à l'œil,
+   lu par les lecteurs d'écran. Tailles : base 24 px, --sm 16 px, --lg 40 px. Mouvement réduit : plus de rotation ; deux côtés orange, un cadre
+   qui se lit encore « en cours » (le mot visible à côté le dit aussi, dans les exemples).
+   Couleurs : acc et line (éléments graphiques), aucun texte visible. */
+.ch-spinner { box-sizing: border-box; margin: 0; padding: 0; position: relative; display: inline-block; flex: none; width: 24px; height: 24px; vertical-align: middle;
+  border: 3px solid var(--ch-line); border-top-color: var(--ch-acc); border-radius: 0; animation: ch-spin .9s linear infinite; }
+.ch-spinner--sm { width: 16px; height: 16px; border-width: 2px; }
+.ch-spinner--lg { width: 40px; height: 40px; border-width: 4px; }
+.ch-spinner__label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+@keyframes ch-spin { to { transform: rotate(360deg); } }
+@media (prefers-reduced-motion: reduce) {
+  .ch-spinner { animation: none; border-right-color: var(--ch-acc); }
+}
+
+/* --- 40-components/stats.css --- */
+/* Chiffres clés (pièce 45) : ch-stats (dl) > ch-stats__item (div) > dt.ch-stats__label + dd.ch-stats__value [> small.ch-stats__trend].
+   Planche : .mini .m-stats, .m-stat, .m-stat .label, .m-stat .v, .v small (parité : tests/parity/stats.json).
+   Colonnes : 3 (base, parité avec la planche), --2, --4 ; une colonne sous 800 px de fenêtre (comme la planche).
+   Tendance : flèche (↑ ↓) + nombre, jamais la couleur seule ; ↑ en acc-text, ↓ (--down) en mute. ch-stats__sr : mots lus, masqués visuellement.
+   Le terme (dt) est en ligne comme l'étiquette de la planche (un span), la valeur (dd) en bloc.
+   Couleurs : étiquette mute, valeur fg, tendance acc-text ou mute sur bg, bg2, card ; filets line. */
+.ch-stats { box-sizing: border-box; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--ch-line); }
+.ch-stats--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-stats--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.ch-stats__item { box-sizing: border-box; margin: 0; padding: 18px 20px; border-right: 1px solid var(--ch-line); }
+.ch-stats__item:last-child { border-right: 0; }
+.ch-stats__label { box-sizing: border-box; margin: 0; padding: 0; display: inline; unicode-bidi: normal; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; line-height: 1.5; text-transform: uppercase; color: var(--ch-mute); }
+.ch-stats__value { box-sizing: border-box; margin: 8px 0 0; padding: 0; font-family: var(--ch-display); font-weight: var(--ch-display-weight); font-size: 40px; line-height: 1; letter-spacing: -.03em; overflow-wrap: anywhere; }
+.ch-stats__trend { box-sizing: border-box; margin: 0 0 0 6px; padding: 0; font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--ch-acc-text); }
+.ch-stats__trend--down { color: var(--ch-mute); }
+.ch-stats__sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+@media (max-width: 800px) {
+  .ch-stats, .ch-stats--2, .ch-stats--4 { grid-template-columns: minmax(0, 1fr); }
+  .ch-stats__item { border-right: 0; border-bottom: 1px solid var(--ch-line); }
+}
+
+/* --- 40-components/steps.css --- */
+/* Étapes (pièce 27) : ch-steps (ol) > ch-steps__item (li) > ch-steps__marker (carré de 32 px, aria-hidden) + ch-steps__body > ch-steps__state (mot masqué visuellement) + ch-steps__label.
+   Trois états, jamais la couleur seule :
+     fait      `is-done`            : marqueur plein (acc) avec le glyphe check ; mot lu « Terminée » ;
+     courant   `aria-current="step"`: anneau épais (2 px) autour du numéro, libellé fg et gras ; mot lu « En cours » ;
+     à faire   `is-todo`            : anneau fin en tirets, numéro mute ; mot lu « À venir ».
+   Disposition : en rangée dès 640 px (trait de liaison entre marqueurs), en colonne dessous ; ch-steps--vertical force la colonne.
+   Couleurs : libellé fg (courant), soft (fait), mute (à faire) sur bg/bg2/card ; numéro fg ou mute ; check on-acc sur acc ; traits line/acc (non-texte). */
+.ch-steps { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: var(--ch-s5); counter-reset: ch-step; }
+.ch-steps__item { box-sizing: border-box; margin: 0; padding: 0; position: relative; display: flex; align-items: flex-start; gap: var(--ch-s3); min-width: 0; counter-increment: ch-step; }
+.ch-steps__marker { box-sizing: border-box; margin: 0; padding: 0; flex: none; display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border: 1px dashed var(--ch-mute); border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 13px; line-height: 1; color: var(--ch-mute); }
+.ch-steps__marker::before { content: counter(ch-step); }
+.ch-steps__body { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; min-width: 0; padding-top: 5px; }
+.ch-steps__label { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 15px; line-height: 1.3; color: var(--ch-mute); overflow-wrap: anywhere; }
+.ch-steps__state { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+/* Trait de liaison (colonne) : sous le marqueur, jusqu'au suivant. */
+.ch-steps__item:not(:last-child)::after { content: ""; position: absolute; left: 15px; top: 36px; bottom: calc(-1 * var(--ch-s5) + 4px); width: 2px; background: var(--ch-line); }
+/* Fait */
+.ch-steps__item.is-done .ch-steps__marker { background: var(--ch-acc); border: 1px solid var(--ch-acc); color: var(--ch-on-acc); }
+.ch-steps__item.is-done .ch-steps__marker::before { content: none; }
+.ch-steps__item.is-done .ch-steps__label { color: var(--ch-soft); }
+.ch-steps__item.is-done:not(:last-child)::after { background: var(--ch-acc); }
+.ch-steps__marker .ch-icon { width: 18px; height: 18px; vertical-align: 0; }
+/* Courant */
+.ch-steps__item[aria-current="step"] .ch-steps__marker { border: 2px solid var(--ch-acc-text); color: var(--ch-fg); }
+.ch-steps__item[aria-current="step"] .ch-steps__label { color: var(--ch-fg); font-weight: 600; }
+@media (min-width: 640px) {
+  .ch-steps:not(.ch-steps--vertical) { flex-direction: row; gap: var(--ch-s4); }
+  .ch-steps:not(.ch-steps--vertical) > .ch-steps__item { flex: 1 1 0; flex-direction: column; gap: var(--ch-s2); }
+  .ch-steps:not(.ch-steps--vertical) .ch-steps__body { padding-top: 0; }
+  .ch-steps:not(.ch-steps--vertical) > .ch-steps__item:not(:last-child)::after { left: 40px; right: calc(-1 * var(--ch-s4) + 8px); top: 15px; bottom: auto; width: auto; height: 2px; }
+}
+
+/* --- 40-components/switch.css --- */
+/* Interrupteur (pièce 18) : <input type="checkbox" role="switch" class="ch-switch"> dans un <label class="ch-choice">.
+   Piste carrée de 40 × 24 px, curseur carré de 16 px : à droite et rempli d'accent quand c'est activé (la position
+   le dit aussi, pas la couleur seule). Espace bascule (natif). Mouvement : le curseur glisse (--ch-t-fast), annulé
+   par prefers-reduced-motion (30-base.css). Désactivé : bordure et curseur en line (éteint) ou mute (allumé). */
+.ch-switch { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; color: inherit; appearance: none; -webkit-appearance: none; position: relative; width: 40px; height: 24px; border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); background: var(--ch-bg2); cursor: pointer; transition: background var(--ch-t-fast), border-color var(--ch-t-fast); }
+.ch-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ch-mute); transition: transform var(--ch-t-fast), background var(--ch-t-fast); }
+.ch-switch:checked { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-switch:checked::after { background: var(--ch-on-acc); transform: translateX(16px); }
+.ch-switch[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-switch:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-switch:disabled::after { background: var(--ch-line); }
+.ch-switch:disabled:checked { background: none; border-color: var(--ch-mute); }
+.ch-switch:disabled:checked::after { background: var(--ch-mute); }
+
+/* --- 40-components/table.css --- */
+/* Tableau (pièce 34) : ch-table__wrap (région défilante : role="region", aria-label, tabindex="0") > table.ch-table > thead th, tbody td.
+   Planche : .table, .table th, .table td, td.num, .table tr:hover td, .up, .down.
+   Les th et td n'ont pas de classe : ils sont stylés par descendance (comme ch-prose), chacun avec marge, remplissage et boîte déclarés.
+   Colonne de nombres : ch-table__num sur le th ET sur les td (alignés à droite, chiffres de largeur fixe).
+   Tendance : ch-table__up (acc-text) et ch-table__down (mute) ; jamais la couleur seule : flèche ou signe dans le texte.
+   Tri (module sort, data-ch-sort sur le table) : le module met un <button class="ch-table__sort"> dans chaque th de thead (sans bouton sans JavaScript :
+   le tableau reste lisible, non trié) ; aria-sort sur le seul en-tête trié ; le glyphe « sort » devient la moitié haute (croissant) ou basse (décroissant).
+   Le bouton couvre toute la cellule (marges négatives = le remplissage du th) : cible d'au moins 44 px de haut.
+   Couleurs : fg (cellules), mute (en-têtes), acc-text (hausse, tri), survol de ligne : fond bg2 ; filets line. */
+.ch-table__wrap { box-sizing: border-box; width: 100%; max-width: 100%; margin: 0; padding: 0; overflow-x: auto; }
+.ch-table { box-sizing: border-box; margin: 0; padding: 0; width: 100%; border-collapse: collapse; font-size: 15px; }
+.ch-table__caption { box-sizing: border-box; margin: 0; padding: 0 0 var(--ch-s2); text-align: left; font-size: 14px; color: var(--ch-mute); }
+.ch-table th { box-sizing: border-box; margin: 0; padding: 10px 12px; text-align: left; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); font-weight: 400; border-bottom: 1px solid var(--ch-line); }
+.ch-table td { box-sizing: border-box; margin: 0; padding: 14px 12px; border-bottom: 1px solid var(--ch-line); }
+.ch-table td.ch-table__num { font-family: var(--ch-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.ch-table th.ch-table__num { text-align: right; }
+.ch-table tr:hover td { background: var(--ch-bg2); }
+.ch-table__up { color: var(--ch-acc-text); }
+.ch-table__down { color: var(--ch-mute); }
+
+.ch-table__sort { box-sizing: border-box; display: flex; align-items: center; gap: var(--ch-s2); width: auto; min-height: var(--ch-hit); margin: -10px -12px; padding: 0 12px; border: 0; border-radius: var(--ch-radius); background: none; color: inherit; font: inherit; letter-spacing: inherit; text-transform: inherit; text-align: inherit; cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-table__sort:hover { color: var(--ch-fg); }
+.ch-table__sort:focus-visible { outline-offset: -2px; }
+.ch-table__num .ch-table__sort { justify-content: flex-end; }
+.ch-table__sort .ch-icon { width: 16px; height: 16px; vertical-align: baseline; }
+.ch-table th[aria-sort] .ch-table__sort { color: var(--ch-fg); }
+.ch-table th[aria-sort] .ch-icon { color: var(--ch-acc-text); }
+.ch-table th[aria-sort="ascending"] .ch-icon { clip-path: inset(0 0 50% 0); }
+.ch-table th[aria-sort="descending"] .ch-icon { clip-path: inset(50% 0 0 0); }
+
+/* --- 40-components/tabs.css --- */
+/* Onglets (pièce 23) : ch-tabs > ch-tabs__list (boutons ch-tabs__tab) + ch-tabs__panel (un titre ch-tabs__heading chacun).
+   Sans JavaScript : la liste de boutons est masquée (des boutons qui ne font rien n'ont pas à se voir) et chaque panneau
+   s'affiche à la suite, avec son titre. Avec .ch-js : la liste apparaît, les titres se masquent, les panneaux inactifs sont
+   cachés (attribut hidden posé par le module). Avant l'initialisation (ch-js déjà posée, module pas encore passé) tous les panneaux
+   sauf le premier sont masqués : pas de saut de mise en page. Module en échec : tout redevient visible.
+   Actif : barre de 2 px sous l'onglet ET texte fg (jamais la couleur seule) ; désactivé : texte mute, curseur interdit.
+   Couleurs : soft, fg, mute sur bg, bg2, card ; barre acc-text ; filet line. */
+.ch-tabs { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; }
+.ch-tabs__list { box-sizing: border-box; margin: 0; padding: 0; display: none; overflow-x: auto; box-shadow: inset 0 -1px 0 var(--ch-line); }
+.ch-js .ch-tabs__list { display: flex; }
+.ch-tabs__tab { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s4); flex: none; display: inline-flex; align-items: center; min-height: var(--ch-hit); background: none; border: 0; border-bottom: 2px solid transparent; border-radius: var(--ch-radius); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; color: var(--ch-soft); cursor: pointer; transition: color var(--ch-t-fast); }
+.ch-tabs__tab:hover { color: var(--ch-fg); }
+.ch-tabs__tab[aria-selected="true"] { color: var(--ch-fg); border-bottom-color: var(--ch-acc-text); }
+.ch-tabs__tab[aria-disabled="true"] { color: var(--ch-mute); cursor: not-allowed; }
+.ch-tabs__tab:focus-visible { outline-offset: -2px; }
+.ch-tabs__panel { box-sizing: border-box; margin: 0; padding: var(--ch-s5) 0 0; }
+.ch-tabs__heading { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-js .ch-tabs:not([data-ch-failed]) .ch-tabs__heading { display: none; }
+.ch-js .ch-tabs:not([data-ch-failed]):not([data-ch-ready]) .ch-tabs__panel ~ .ch-tabs__panel { display: none; }
+.ch-js .ch-tabs[data-ch-failed] .ch-tabs__list { display: none; }
+.ch-js .ch-tabs[data-ch-failed] .ch-tabs__panel[hidden] { display: block; }
+
+/* --- 40-components/textarea.css --- */
+/* Zone de texte (pièce 11) : mêmes états que ch-input ; hauteur libre vers le bas seulement. */
+.ch-textarea { box-sizing: border-box; margin: 0; display: block; width: 100%; min-height: 120px; padding: 12px 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; resize: vertical; transition: border-color var(--ch-t-fast); }
+.ch-textarea::placeholder { color: var(--ch-mute); opacity: 1; }
+.ch-textarea:hover { border-color: var(--ch-mute); }
+.ch-textarea:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-textarea[readonly] { background: none; border-style: dashed; color: var(--ch-soft); }
+.ch-textarea[readonly]:hover { border-color: var(--ch-line); }
+.ch-textarea[aria-invalid="true"], .ch-field.is-error .ch-textarea,
+.ch-textarea[aria-invalid="true"]:hover, .ch-field.is-error .ch-textarea:hover { border-color: var(--ch-acc); }
+.ch-textarea:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; resize: none; }
+
+/* --- 40-components/timeline.css --- */
+/* Frise (pièce 44) : ch-timeline (ol) > ch-timeline__item (li) > time.ch-timeline__time + ch-timeline__title + ch-timeline__text.
+   Étape courante ou mise en avant : aria-current="date" sur le li. Jamais la couleur seule : marqueur plein (carré acc) au lieu d'un carré creux,
+   titre en gras, et un mot lu (ch-timeline__state, masqué visuellement) devant le titre.
+   Couleurs : date mute, titre fg, texte soft sur bg, bg2, card ; marqueur mute (creux) ou acc (plein) ; trait line (non-texte). */
+.ch-timeline { box-sizing: border-box; margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; }
+.ch-timeline__item { box-sizing: border-box; margin: 0; padding: 0 0 var(--ch-s5) var(--ch-s6); position: relative; min-width: 0; }
+.ch-timeline__item:last-child { padding-bottom: 0; }
+.ch-timeline__item::before { content: ""; box-sizing: border-box; position: absolute; left: 0; top: 3px; width: 14px; height: 14px; border: 2px solid var(--ch-mute); border-radius: var(--ch-radius); }
+.ch-timeline__item:not(:last-child)::after { content: ""; position: absolute; left: 6px; top: 22px; bottom: 4px; width: 2px; background: var(--ch-line); }
+.ch-timeline__time { box-sizing: border-box; margin: 0; padding: 0; display: block; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .08em; line-height: 1.5; text-transform: uppercase; color: var(--ch-mute); }
+.ch-timeline__title { box-sizing: border-box; margin: var(--ch-s1) 0 0; padding: 0; font-family: var(--ch-sans); font-size: 17px; font-weight: 500; line-height: 1.3; color: var(--ch-fg); }
+.ch-timeline__text { box-sizing: border-box; margin: var(--ch-s1) 0 0; padding: 0; max-width: var(--ch-measure); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+.ch-timeline__state { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.ch-timeline__item[aria-current="date"]::before { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-timeline__item[aria-current="date"] .ch-timeline__title { font-weight: 800; }
+
+/* --- 40-components/toast.css --- */
+/* Notification (pièce 54) : pile fixe ch-toast-stack (créée par le module toast, jamais dans le code à copier) > ch-toast.
+   ch-toast : icône (sprite) · ch-toast__body (ch-toast__kind = le mot « Info », « Attention » ou « Erreur », puis ch-toast__text,
+   puis éventuellement ch-toast__action) · ch-toast__close. Variantes : --info (barre acc à gauche), --warn (idem, mot et glyphe d'alerte),
+   --error (cadre acc entier). Le sens est dit par le mot et le glyphe, jamais par la seule couleur.
+   Sans JavaScript : le déclencheur [data-ch-toast] est masqué (il ne sert à rien sans module).
+   Couleurs : fg (mot, croix), soft (texte) sur card ; acc-text (bouton d'action secondaire) sur card ; filets line et acc.
+   Entrée : @starting-style, limitée à la pile (un toast fixe d'une page ne s'anime pas au chargement). Mouvement réduit : aucune transition. */
+.ch-toast-stack { box-sizing: border-box; margin: 0; padding: 0; position: fixed; right: var(--ch-s4); bottom: var(--ch-s4); z-index: var(--ch-z-overlay);
+  width: min(420px, calc(100% - 2 * var(--ch-s4))); max-height: calc(100vh - 2 * var(--ch-s4)); max-height: calc(100dvh - 2 * var(--ch-s4));
+  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--ch-s2); overflow: hidden auto; pointer-events: none; }
+.ch-toast { box-sizing: border-box; margin: 0; padding: var(--ch-s2) var(--ch-s2) var(--ch-s2) var(--ch-s4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s2) var(--ch-s3);
+  background: var(--ch-card); color: var(--ch-soft); border: 1px solid var(--ch-line); border-left: 2px solid var(--ch-acc); border-radius: var(--ch-radius);
+  font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; pointer-events: auto; opacity: 1; translate: 0 0; transition: opacity var(--ch-t-fast), translate var(--ch-t-fast); }
+@starting-style { .ch-toast-stack .ch-toast { opacity: 0; translate: 0 12px; } }
+.ch-toast--info { border-left-color: var(--ch-acc); }
+.ch-toast--warn { border-left-width: 4px; }
+.ch-toast--error { border-color: var(--ch-acc); }
+.ch-toast .ch-icon { color: var(--ch-fg); }
+.ch-toast__body { box-sizing: border-box; margin: 0; padding: var(--ch-s2) 0; flex: 1 1 160px; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--ch-s2); overflow-wrap: anywhere; }
+.ch-toast__kind { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }
+.ch-toast__text { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-soft); }
+.ch-toast__action, .ch-toast__close { flex: none; }
+.ch-toast__action { margin-left: auto; }
+.ch-toast__action + .ch-toast__close { margin-left: 0; }
+.ch-toast__body + .ch-toast__close { margin-left: auto; }
+:root:not(.ch-js) [data-ch-toast], .ch-js [data-ch-toast][data-ch-failed] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-toast { transition: none; }
+}
+
+/* --- 40-components/toc.css --- */
+/* Sommaire (pièce 28) : ch-toc > ch-toc__title + ch-toc__list (ol) > li > ch-toc__link. Sans JavaScript : liste d'ancres.
+   Section active (module toc) : aria-current="true" ; marquée par un filet de 2 px à gauche ET le texte fg (jamais la couleur seule).
+   Couleurs : soft, fg sur bg, bg2, card ; titre mute ; filet acc-text, rail line. */
+.ch-toc { box-sizing: border-box; margin: 0; padding: 0; display: block; }
+.ch-toc__title { box-sizing: border-box; margin: 0 0 var(--ch-s2); padding: 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; color: var(--ch-mute); }
+.ch-toc__list { box-sizing: border-box; margin: 0; padding: 0; list-style: none; border-left: 1px solid var(--ch-line); }
+.ch-toc__list > li { margin: 0; padding: 0; }
+.ch-toc__link { box-sizing: border-box; margin: 0 0 0 -1px; padding: 0 var(--ch-s4); display: flex; align-items: center; min-height: var(--ch-hit); border-left: 2px solid transparent; font-family: var(--ch-sans); font-size: 14px; line-height: 1.4; text-decoration: none; color: var(--ch-soft); }
+.ch-toc__link:hover { color: var(--ch-fg); }
+.ch-toc__link[aria-current="true"] { color: var(--ch-fg); border-left-color: var(--ch-acc-text); }
+
+/* --- 40-components/tooltip.css --- */
+/* Infobulle (pièce 52) : <span class="ch-tooltip" data-ch-tooltip> > déclencheur (bouton, lien…, aria-describedby="id") + <span class="ch-tooltip__bubble" role="tooltip" id>.
+   Placement par position: relative (le conteneur) et absolute (la bulle) : au-dessus par défaut (--haut), en dessous (--bas) ;
+   le module recale la bulle dans la fenêtre (décalage horizontal par `translate`) et la retourne de l'autre côté s'il manque de place.
+   Affichée par le module (classe is-open sur ch-tooltip) : survol et focus ; Échap la masque sans bouger le focus ; la bulle fait partie du
+   conteneur et un pont invisible de 8 px la relie au déclencheur, donc le pointeur peut passer de l'un à l'autre (WCAG 1.4.13).
+   Sans JavaScript, ou module en échec : la bulle reste masquée (display: none) ; elle n'est jamais le seul porteur d'une information.
+   Entrée : @starting-style (opacité seule, pour que la mesure du module reste exacte). Mouvement réduit : aucune transition.
+   Couleurs : fg sur card ; filet mute (bord, pas du texte). */
+.ch-tooltip { box-sizing: border-box; margin: 0; padding: 0; position: relative; display: inline-block; }
+.ch-tooltip__bubble { box-sizing: border-box; margin: 0; padding: var(--ch-s2) var(--ch-s3); display: none; position: absolute; z-index: var(--ch-z-overlay); left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); width: max-content; max-width: min(260px, calc(100vw - 16px)); background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); font-family: var(--ch-sans); font-size: 13px; font-weight: 400; line-height: 1.4; letter-spacing: 0; text-align: left; text-transform: none; white-space: normal; opacity: 1; transition: opacity var(--ch-t-fast); }
+.ch-tooltip__bubble::before { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 9px; }
+.ch-tooltip.is-open > .ch-tooltip__bubble { display: block; }
+@starting-style { .ch-tooltip.is-open > .ch-tooltip__bubble { opacity: 0; } }
+.ch-tooltip--haut > .ch-tooltip__bubble { bottom: calc(100% + 8px); }
+.ch-tooltip--bas > .ch-tooltip__bubble, .ch-tooltip[data-ch-flip]:not(.ch-tooltip--bas) > .ch-tooltip__bubble { bottom: auto; top: calc(100% + 8px); }
+.ch-tooltip--bas > .ch-tooltip__bubble::before, .ch-tooltip[data-ch-flip]:not(.ch-tooltip--bas) > .ch-tooltip__bubble::before { bottom: auto; top: -9px; }
+.ch-tooltip--bas[data-ch-flip] > .ch-tooltip__bubble { top: auto; bottom: calc(100% + 8px); }
+.ch-tooltip--bas[data-ch-flip] > .ch-tooltip__bubble::before { top: auto; bottom: -9px; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-tooltip__bubble { transition: none; }
+}
+
+/* --- 40-components/wordmark.css --- */
+/* Logotype (pièce « Logotype », J8a) : <span class="ch-wordmark">Nom<span class="ch-wordmark__dot" aria-hidden="true"></span></span>.
+   Le nom du site en police d'affichage (--ch-display, graisse et approche d'affichage), en majuscules, suivi d'un point carré orange (--ch-acc).
+   Tailles : --sm 14 px, défaut 18 px, --lg 32 px, --xl 64 px ; le point mesure .34em, donc 4,08 px au minimum de 12 px.
+   Couleurs : fg sur bg, bg2, card ; point acc (décor, jamais seul porteur de sens). Coins carrés : le point garde un rayon de 0 quel que soit --ch-radius. */
+.ch-wordmark { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: baseline; font-family: var(--ch-display); font-size: 18px; font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); line-height: .9; text-transform: uppercase; white-space: nowrap; color: var(--ch-fg); text-decoration: none; }
+.ch-wordmark--sm { font-size: 14px; }
+.ch-wordmark--lg { font-size: 32px; }
+.ch-wordmark--xl { font-size: 64px; }
+.ch-wordmark__dot { box-sizing: border-box; display: inline-block; width: .34em; height: .34em; margin: 0 0 0 .14em; padding: 0; background: var(--ch-acc); border-radius: 0; }
+
+/* --- 50-layout.css --- */
+/* Mise en page (pièces 2 à 5) : ch-wrap (--narrow, --wide), ch-stack (--s2 à --s7), ch-grid (--2, --3, --4),
+   ch-row (--between, --nowrap). Valeurs de la planche : .wrap, .grid + .g2/.g3/.g4, .row.
+   Aucune couleur, aucun mouvement. Chaque classe déclare elle-même marge, remplissage et boîte. */
+
+/* Conteneur. Planche : .wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px } (16px sous 800px). */
+.ch-wrap { box-sizing: border-box; width: 100%; max-width: var(--ch-wrap-max); margin: 0 auto; padding: 0 28px; }
+.ch-wrap--narrow { max-width: 760px; }
+.ch-wrap--wide { max-width: 1520px; }
+
+/* Pile : colonne dont l'espacement vient d'un seul écart (gap). La pile règle les marges verticales de ses enfants
+   directs (celles d'un p ou d'un h2 de l'hôte s'ajouteraient à l'écart, car un flex ne les fusionne pas). */
+.ch-stack { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ch-s4); min-width: 0; }
+.ch-stack > * { margin-block: 0; }
+.ch-stack--s2 { gap: var(--ch-s2); }
+.ch-stack--s3 { gap: var(--ch-s3); }
+.ch-stack--s4 { gap: var(--ch-s4); }
+.ch-stack--s5 { gap: var(--ch-s5); }
+.ch-stack--s6 { gap: var(--ch-s6); }
+.ch-stack--s7 { gap: var(--ch-s7); }
+
+/* Grille. Planche : .grid { display: grid; gap: var(--s4) } ; .g2/.g3/.g4 = repeat(N, minmax(0, 1fr)). Une colonne sous 800px. */
+.ch-grid { box-sizing: border-box; margin: 0; padding: 0; width: 100%; display: grid; gap: var(--ch-s4); }
+.ch-grid > * { min-width: 0; }
+.ch-grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.ch-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.ch-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+
+/* Grilles asymétriques (mise en page, sans équivalent dans la planche). --2-1 : 2/3 + 1/3 ; --1-2 : 1/3 + 2/3 ;
+   --sidebar : colonne latérale de 17rem (la première dans le HTML) + contenu en minmax(0, 1fr). Une colonne sous 800px. */
+.ch-grid--2-1 { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+.ch-grid--1-2 { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); }
+.ch-grid--sidebar { grid-template-columns: 17rem minmax(0, 1fr); align-items: start; gap: var(--ch-s6); }
+
+/* Section : espace vertical entre les grands blocs d'une page (padding-block seulement, aucune marge : la première
+   section sous l'en-tête a donc le même espace que les autres). Défaut 48px (32px sous 800px) ; --tight 24px (16px) ;
+   --loose 72px (48px) ; --alt : bande de fond bg2 (les textes de la page y gardent leur contraste). */
+.ch-section { box-sizing: border-box; margin: 0; padding: var(--ch-s7) 0; }
+.ch-section--tight { padding-block: var(--ch-s5); }
+.ch-section--loose { padding-block: var(--ch-s8); }
+.ch-section--alt { background: var(--ch-bg2); }
+
+/* Rangée. Planche : .row { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center }. */
+.ch-row { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--ch-s3); align-items: center; }
+.ch-row--between { justify-content: space-between; }
+.ch-row--nowrap { flex-wrap: nowrap; }
+
+@media (max-width: 800px) {
+  .ch-wrap { padding: 0 16px; }
+  .ch-grid--2, .ch-grid--3, .ch-grid--4, .ch-grid--2-1, .ch-grid--1-2, .ch-grid--sidebar { grid-template-columns: minmax(0, 1fr); }
+  .ch-section { padding-block: var(--ch-s6); }
+  .ch-section--tight { padding-block: var(--ch-s4); }
+  .ch-section--loose { padding-block: var(--ch-s7); }
+}
+
+/* --- 55-prose.css --- */
+/* Prose (pièce 6) : ch-prose style lui-même ses enfants (exception prévue par l'architecture, section 2).
+   Titres, paragraphes, listes, citation, code en ligne et en bloc, tableau, figure, liens, filet.
+   Rien ne déborde de la page : les mots longs et les URL se coupent (overflow-wrap), le bloc de code et la
+   boîte du tableau (ch-prose__scroll) défilent dans leur propre cadre.
+   Couleurs : fg (titres, gras, code), soft (texte), mute (légendes, h6), acc-text (liens, repères) sur bg, bg2, card. */
+.ch-prose { box-sizing: border-box; margin: 0; padding: 0; width: 100%; max-width: var(--ch-measure); min-width: 0;
+  font-family: var(--ch-sans); font-size: 17px; line-height: 1.65; color: var(--ch-soft); overflow-wrap: anywhere; }
+
+/* Remise à zéro des enfants (l'hôte n'a pas de prise sur eux), puis rythme vertical. */
+.ch-prose :where(h1, h2, h3, h4, h5, h6, p, ul, ol, li, blockquote, figure, figcaption, pre, table, hr, dl, dd) { box-sizing: border-box; margin: 0; padding: 0; }
+.ch-prose > * + * { margin-top: var(--ch-s4); }
+.ch-prose > * + h2 { margin-top: var(--ch-s7); }
+.ch-prose > * + h3 { margin-top: var(--ch-s6); }
+.ch-prose > * + h4, .ch-prose > * + h5, .ch-prose > * + h6 { margin-top: var(--ch-s5); }
+.ch-prose > * + hr { margin-top: var(--ch-s6); }
+.ch-prose > hr + * { margin-top: var(--ch-s6); }
+.ch-prose > h1 + *, .ch-prose > h2 + *, .ch-prose > h3 + *, .ch-prose > h4 + *, .ch-prose > h5 + *, .ch-prose > h6 + * { margin-top: var(--ch-s3); }
+
+/* Titres : h1 et h2 en police d'affichage comme la planche, h3 et h4 en gras courant, h5 et h6 en légende. */
+.ch-prose :where(h1, h2, h3, h4) { color: var(--ch-fg); text-wrap: balance; }
+.ch-prose h1 { font-family: var(--ch-display); font-size: clamp(34px, 6vw, 64px); line-height: .9; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); }
+.ch-prose h2 { font-family: var(--ch-display); font-size: clamp(26px, 3.6vw, 40px); line-height: .95; letter-spacing: var(--ch-display-track); text-transform: uppercase; font-weight: var(--ch-display-weight); }
+.ch-prose h3 { font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.ch-prose h4 { font-size: 18px; font-weight: 600; letter-spacing: -.01em; line-height: 1.3; }
+.ch-prose h5, .ch-prose h6 { font-family: var(--ch-mono); font-size: 12px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; line-height: 1.5; }
+.ch-prose h5 { color: var(--ch-fg); }
+.ch-prose h6 { color: var(--ch-mute); }
+
+/* Texte courant et liens. Les liens dans une phrase sont exemptés de la cible de 44 px (architecture, section 2). */
+.ch-prose strong, .ch-prose b { color: var(--ch-fg); font-weight: 600; }
+.ch-prose a { color: var(--ch-acc-text); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.ch-prose a:hover { color: var(--ch-fg); }
+
+/* Listes. */
+.ch-prose ul, .ch-prose ol { padding-left: 1.5em; }
+.ch-prose li + li { margin-top: var(--ch-s2); }
+.ch-prose li > ul, .ch-prose li > ol { margin-top: var(--ch-s2); }
+.ch-prose li::marker { color: var(--ch-acc-text); }
+.ch-prose dt { color: var(--ch-fg); font-weight: 600; }
+.ch-prose dd { margin-top: var(--ch-s1); }
+.ch-prose dt + dt, .ch-prose dd + dt { margin-top: var(--ch-s3); }
+
+/* Citation : trait orange à gauche, comme .note de la planche. */
+.ch-prose blockquote { border-left: 2px solid var(--ch-acc); background: var(--ch-bg2); padding: var(--ch-s4) var(--ch-s5); color: var(--ch-soft); }
+.ch-prose blockquote > * + * { margin-top: var(--ch-s3); }
+.ch-prose blockquote cite, .ch-prose blockquote footer { display: block; font-family: var(--ch-mono); font-size: 12px; font-style: normal; letter-spacing: .08em; text-transform: uppercase; color: var(--ch-mute); }
+
+/* Code en ligne et en bloc. Le bloc défile dans son cadre (poser tabindex="0" pour le défiler au clavier). */
+.ch-prose code, .ch-prose kbd, .ch-prose samp { font-family: var(--ch-mono); font-size: .9em; }
+.ch-prose :not(pre) > code { padding: .1em .4em; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); }
+.ch-prose pre { max-width: 100%; overflow-x: auto; padding: var(--ch-s4); background: var(--ch-card); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 14px; line-height: 1.6; white-space: pre; overflow-wrap: normal; tab-size: 2; }
+.ch-prose pre code { padding: 0; border: 0; background: none; font-size: inherit; color: inherit; }
+
+/* Tableau : à poser dans ch-prose__scroll (région défilante, role="region", aria-label, tabindex="0"). */
+.ch-prose__scroll { box-sizing: border-box; max-width: 100%; overflow-x: auto; margin: 0; padding: 0; }
+.ch-prose table { width: 100%; border-collapse: collapse; font-size: 15px; line-height: 1.5; }
+.ch-prose caption { padding: 0 0 var(--ch-s2); text-align: left; font-size: 14px; color: var(--ch-mute); }
+.ch-prose th { padding: 10px 12px; text-align: left; font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); border-bottom: 1px solid var(--ch-line); }
+.ch-prose td { padding: 12px; border-bottom: 1px solid var(--ch-line); vertical-align: top; }
+.ch-prose td, .ch-prose th { overflow-wrap: normal; }
+
+/* Figure : image ou vidéo qui ne dépasse jamais la colonne, légende en gris. */
+.ch-prose img, .ch-prose video, .ch-prose iframe { display: block; max-width: 100%; height: auto; border: 1px solid var(--ch-line); background: var(--ch-bg2); }
+.ch-prose figcaption { margin-top: var(--ch-s2); font-size: 14px; line-height: 1.5; color: var(--ch-mute); }
+
+/* Filet. */
+.ch-prose hr { border: 0; border-top: 1px solid var(--ch-line); height: 0; }
+
+/* --- 70-effects.css --- */
+/* Effets (J8b) : bande qui défile avec la page, titre qui apparaît, grain en option.
+   Rien n'est caché par la feuille seule : sans JavaScript (ou si chopa-effects.js ne se charge pas), tout le texte reste
+   visible, immobile. Le script ajoute l'état « en attente » (data-ch-reveal="wait") aux seuls titres encore sous la
+   fenêtre, puis le retire à leur arrivée. Mouvement réduit : le script ne fait rien et la feuille remet tout à plat.
+   Couleurs : rôles du thème seulement (fg, acc) ; le grain n'a aucune couleur propre. */
+
+/* --- Bande : texte répété sur une ligne, rognée dans sa propre boîte (jamais de défilement latéral de la page) --- */
+.ch-band { box-sizing: border-box; display: block; width: 100%; max-width: 100%; margin: 0; padding: 0; overflow: hidden; }
+.ch-band__track { box-sizing: border-box; display: flex; flex-wrap: nowrap; width: max-content; margin: 0; padding: 0; will-change: transform; }
+.ch-band__item { box-sizing: border-box; flex: none; margin: 0; padding: 0 var(--ch-s6) 0 0; white-space: nowrap; font-family: var(--ch-display); font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); text-transform: uppercase; font-size: clamp(44px, 9vw, 120px); line-height: 1; color: var(--ch-fg); }
+/* Séparateur carré orange (décor, pas de texte). */
+.ch-band__item::after { content: ""; display: inline-block; width: .2em; height: .2em; margin-left: .35em; background: var(--ch-acc); }
+
+/* --- Titre qui apparaît --- */
+.ch-reveal { transition: opacity var(--ch-t-panel), transform var(--ch-t-panel); }
+/* En attente : posé sans transition (pas de fondu vers le caché) ; la transition joue à l'arrivée (état « in »). */
+.ch-reveal[data-ch-reveal="wait"] { opacity: 0; transform: translateY(var(--ch-s5)); transition: none; }
+
+/* --- Grain : une classe sur <html>, <body> ou une zone ; absent par défaut ---
+   Le grain est un calque (pseudo-élément) qui ne reçoit jamais la souris : il peint le rôle fg à travers un masque de
+   bruit (SVG feTurbulence intégré, sans couleur : seul son canal alpha compte). Au-delà de 5 % d'opacité, le texte
+   discret (mute) passerait sous 4,5 : 1 ; la valeur reste donc à 5 %. */
+@supports ((mask-image: url("x")) or (-webkit-mask-image: url("x"))) {
+  .ch-grain::after {
+    content: ""; position: fixed; inset: 0; z-index: calc(var(--ch-z-overlay) - 10); pointer-events: none;
+    background: var(--ch-fg); opacity: .05;
+    -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1.6 0 0 0 -.3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    -webkit-mask-size: 180px 180px; mask-size: 180px 180px;
+  }
+  /* Grain d'une zone (carte, cadre) : le calque suit la zone au lieu de la fenêtre. */
+  .ch-grain--zone { position: relative; }
+  .ch-grain--zone::after { position: absolute; z-index: 1; }
+}
+
+/* --- Mouvement réduit et impression : tout à plat, tout visible (testeur n° 2 : titres absents sur papier) --- */
+@media (prefers-reduced-motion: reduce), print {
+  .ch-band__track { transform: none !important; will-change: auto; }
+  .ch-reveal[data-ch-reveal="wait"] { opacity: 1; transform: none; }
+}

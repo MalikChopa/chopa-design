@@ -1,0 +1,548 @@
+<!doctype html>
+<html lang="fr" data-theme="sombre" data-fonts="chopa">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Chopa Design · planche de style</title>
+<style>
+/* Planche de style v2 (2026-11-15), choix de l'utilisateur appliqués : marque C, orange clair #c23300, thème chaud
+   avec les polices Chopa, grain en option. Fichier unique, sans dépendance ni appel réseau. Polices locales (copies Fontsource, OFL 1.1). */
+@font-face { font-family: "Inter Tight"; font-weight: 400; font-display: swap; src: url("assets/fonts/inter-tight-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 500; font-display: swap; src: url("assets/fonts/inter-tight-latin-500-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 600; font-display: swap; src: url("assets/fonts/inter-tight-latin-600-normal.woff2") format("woff2"); }
+@font-face { font-family: "Inter Tight"; font-weight: 800; font-display: swap; src: url("assets/fonts/inter-tight-latin-800-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 400; font-display: swap; src: url("assets/fonts/ibm-plex-mono-latin-400-normal.woff2") format("woff2"); }
+@font-face { font-family: "IBM Plex Mono"; font-weight: 500; font-display: swap; src: url("assets/fonts/ibm-plex-mono-latin-500-normal.woff2") format("woff2"); }
+
+/* ---------- Jetons ---------- */
+:root {
+  --sans: "Inter Tight", "Helvetica Neue", Helvetica, Arial, ui-sans-serif, sans-serif;
+  --display: var(--sans);
+  --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --display-weight: 800;
+  --display-track: -.045em;
+  --s1: 4px; --s2: 8px; --s3: 12px; --s4: 16px; --s5: 24px; --s6: 32px; --s7: 48px; --s8: 72px; --s9: 110px;
+  --radius: 0;
+  --t-fast: .25s; --t-panel: .35s ease;
+  --orange-clair: #c23300;
+}
+:root[data-theme="sombre"] {
+  --bg: #050505; --bg2: #0d0d0d; --card: #111111;
+  --fg: #f4f4f1; --soft: #d6d6d2; --mute: #8c8c88; --line: #262626;
+  --acc: #ff5a1f; --acc-text: #ff5a1f; --acc-dim: #ff5a1f22; --on-acc: #050505; --focus: #ff5a1f;
+  color-scheme: dark;
+}
+:root[data-theme="clair"] {
+  --bg: #f4f4f1; --bg2: #ebebe7; --card: #fbfbf9;
+  --fg: #050505; --soft: #2b2b29; --mute: #5c5c58; --line: #d6d6d2;
+  --acc: #ff5a1f; --acc-text: var(--orange-clair); --acc-dim: #ff5a1f1f; --on-acc: #050505; --focus: var(--orange-clair);
+  color-scheme: light;
+}
+:root[data-theme="chaud"] {
+  --bg: #0b0807; --bg2: #130f0d; --card: #19130f;
+  --fg: #f3ebe3; --soft: #d9cec4; --mute: #a1938a; --line: #2a211c;
+  --acc: #ff5a1f; --acc-text: #ff5a1f; --acc-dim: #ff5a1f22; --on-acc: #0b0807; --focus: #ff5a1f;
+  color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { background: var(--bg); }
+body { background: var(--bg); color: var(--fg); font-family: var(--sans); font-size: 16px; line-height: 1.5; -webkit-font-smoothing: antialiased; overflow-x: hidden; transition: background var(--t-fast), color var(--t-fast); }
+a { color: inherit; text-decoration: none; }
+button, input, select { font: inherit; color: inherit; }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 3px; }
+.glyph { display: inline-block; width: 1em; height: 1em; vertical-align: -.125em; fill: currentColor; flex: none; }
+.mono { font-family: var(--mono); }
+.label { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 0 28px; }
+.grain { position: fixed; inset: 0; z-index: 90; pointer-events: none; opacity: .06; mix-blend-mode: screen; display: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>"); }
+html.has-grain .grain { display: block; }
+html.has-grain[data-theme="clair"] .grain { mix-blend-mode: multiply; opacity: .08; }
+
+/* ---------- Barre de la planche ---------- */
+.bar { position: sticky; top: 0; z-index: 80; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(8px); border-bottom: 1px solid var(--line); }
+.bar .wrap { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s3) var(--s5); padding-top: 14px; padding-bottom: 14px; }
+.bar .wm { font-size: 13px; }
+.ctrls { display: flex; flex-wrap: wrap; gap: var(--s3) var(--s5); align-items: center; }
+.seg { display: inline-flex; border: 1px solid var(--line); }
+.seg button { min-height: 36px; padding: 0 12px; background: none; border: 0; border-right: 1px solid var(--line); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); cursor: pointer; transition: background var(--t-fast), color var(--t-fast); }
+.seg button:last-child { border-right: 0; }
+.seg button:hover { color: var(--fg); }
+.seg button[aria-pressed="true"] { background: var(--fg); color: var(--bg); }
+.ctrl-name { margin-right: 8px; }
+
+/* ---------- Marque ---------- */
+.wm { display: inline-flex; align-items: baseline; color: var(--fg); white-space: nowrap; }
+.wm-a { font-family: var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+.wm-b, .wm-c { font-family: var(--display); font-weight: var(--display-weight); letter-spacing: var(--display-track); text-transform: uppercase; line-height: .9; }
+.dot { display: inline-block; width: .34em; height: .34em; margin-left: .14em; background: var(--acc); border-radius: 50%; }
+.wm-a .dot { width: .5em; height: .5em; margin-left: .3em; align-self: center; }
+.wm-c .dot { border-radius: 0; }
+
+/* ---------- Sections ---------- */
+section.blk { padding: var(--s8) 0 var(--s4); border-top: 1px solid var(--line); }
+section.blk:first-of-type { border-top: 0; }
+.head { display: flex; justify-content: space-between; align-items: baseline; gap: var(--s5); margin-bottom: var(--s6); flex-wrap: wrap; }
+.head h2 { font-family: var(--display); font-size: clamp(34px, 5.5vw, 76px); line-height: .9; letter-spacing: var(--display-track); text-transform: uppercase; font-weight: var(--display-weight); }
+.head h2 .n { color: var(--acc-text); font-family: var(--mono); font-size: 13px; letter-spacing: .12em; font-weight: 400; vertical-align: top; margin-right: 14px; }
+.intro { max-width: 640px; color: var(--soft); margin-bottom: var(--s6); }
+.choice { display: inline-block; margin-top: var(--s2); padding: 2px 8px; border: 1px solid var(--acc); color: var(--acc-text); font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; }
+
+/* Hero de la planche */
+.hero { padding: var(--s9) 0 var(--s7); }
+.eyebrow { margin-bottom: var(--s5); }
+.hero h1 { font-family: var(--display); font-size: clamp(48px, 10vw, 150px); line-height: .84; letter-spacing: -.05em; text-transform: uppercase; font-weight: var(--display-weight); }
+.hero h1 .o { color: var(--bg); -webkit-text-stroke: 2px var(--fg); paint-order: stroke fill; }
+.hero p { margin-top: var(--s5); max-width: 560px; font-size: 18px; color: var(--soft); }
+
+/* Grilles */
+.grid { display: grid; gap: var(--s4); }
+.g2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.g3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.g4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.tile { border: 1px solid var(--line); background: var(--card); padding: var(--s5); }
+
+/* Options de marque */
+.opt { border: 1px solid var(--line); padding: var(--s5); display: flex; flex-direction: column; gap: var(--s5); justify-content: space-between; min-height: 230px; }
+.opt .big { font-size: clamp(36px, 5vw, 64px); }
+.opt .big.wm-a { font-size: clamp(20px, 2.6vw, 30px); }
+.opt .small { font-size: 13px; }
+.opt .small.wm-b, .opt .small.wm-c { font-size: 18px; }
+.opt figcaption { color: var(--mute); font-size: 14px; }
+.opt figcaption b { color: var(--fg); font-family: var(--mono); font-weight: 400; letter-spacing: .1em; margin-right: 6px; }
+
+/* Couleurs */
+.sw { border: 1px solid var(--line); }
+.sw .chip-c { height: 86px; border-bottom: 1px solid var(--line); }
+.sw .meta { padding: var(--s3); display: grid; gap: 2px; }
+.sw .meta .name { font-family: var(--mono); font-size: 12px; }
+.sw .meta .hex { font-family: var(--mono); font-size: 12px; color: var(--mute); }
+.sw .meta .role { font-size: 13px; color: var(--soft); }
+.contrast { width: 100%; border-collapse: collapse; margin-top: var(--s5); font-size: 14px; }
+.contrast th, .contrast td { text-align: left; padding: 10px 8px; border-bottom: 1px solid var(--line); }
+.contrast th { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); font-weight: 400; }
+.contrast td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.ok-t { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--mute); }
+.ko-t { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--acc-text); }
+
+/* Typo */
+.type-row { display: grid; grid-template-columns: 180px minmax(0, 1fr); gap: var(--s5); padding: var(--s5) 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.t-giant { font-family: var(--display); font-size: clamp(44px, 8vw, 120px); line-height: .86; letter-spacing: var(--display-track); text-transform: uppercase; font-weight: var(--display-weight); }
+.t-h2 { font-family: var(--display); font-size: clamp(30px, 4.5vw, 60px); line-height: .9; letter-spacing: var(--display-track); text-transform: uppercase; font-weight: var(--display-weight); }
+.t-h3 { font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.t-body { font-size: 17px; color: var(--soft); max-width: 620px; }
+.t-small { font-size: 14px; color: var(--mute); }
+.t-mono { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; }
+
+/* ---------- Composants ---------- */
+.comp { border: 1px solid var(--line); background: var(--bg); padding: var(--s5); display: flex; flex-direction: column; gap: var(--s4); }
+.comp > .label { margin-bottom: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: var(--s3); align-items: center; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; min-height: 44px; padding: 0 20px; border: 1px solid transparent; border-radius: var(--radius); font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; background: none; transition: background var(--t-fast), color var(--t-fast), border-color var(--t-fast); }
+.btn-primary { background: var(--acc); color: var(--on-acc); border-color: var(--acc); }
+.btn-primary:hover { background: var(--fg); border-color: var(--fg); color: var(--bg); }
+.btn-secondary { border-color: var(--acc); color: var(--acc-text); }
+.btn-secondary:hover { background: var(--acc); color: var(--on-acc); }
+.btn-ghost { color: var(--fg); padding: 0 4px; position: relative; }
+.btn-ghost::after { content: ""; position: absolute; left: 4px; right: 100%; bottom: 10px; height: 1px; background: var(--acc); transition: right var(--t-panel); }
+.btn-ghost:hover::after { right: 4px; }
+.btn[disabled] { background: none; border-color: var(--line); color: var(--mute); cursor: not-allowed; }
+
+.field { display: grid; gap: 6px; }
+.field input, .field select { min-height: 44px; padding: 0 14px; background: var(--bg2); border: 1px solid var(--line); border-radius: var(--radius); color: var(--fg); transition: border-color var(--t-fast); width: 100%; }
+.field input::placeholder { color: var(--mute); }
+.field input:hover { border-color: var(--mute); }
+.field input:focus-visible { border-color: var(--focus); outline-offset: 0; }
+.field .help { font-size: 13px; color: var(--mute); }
+.field.is-error input { border-color: var(--acc); }
+.field.is-error .help { color: var(--acc-text); }
+
+.check { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 15px; }
+.check input { appearance: none; width: 20px; height: 20px; border: 1px solid var(--mute); background: var(--bg2); display: grid; place-items: center; cursor: pointer; }
+.check input:checked { background: var(--acc); border-color: var(--acc); }
+.check input:checked::after { content: ""; width: 8px; height: 8px; background: var(--on-acc); }
+
+.chips { display: flex; flex-wrap: wrap; gap: var(--s2); }
+.chip { min-height: 32px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--line); background: none; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--soft); cursor: pointer; transition: border-color var(--t-fast), background var(--t-fast); }
+.chip:hover { border-color: var(--mute); }
+.chip[aria-pressed="true"] { background: var(--acc-dim); border-color: var(--acc); color: var(--fg); }
+
+.score { display: inline-grid; place-items: center; min-width: 44px; height: 44px; padding: 0 8px; border: 1px solid var(--acc); background: var(--acc-dim); font-family: var(--mono); font-size: 16px; font-variant-numeric: tabular-nums; color: var(--fg); }
+.score.cold { border-color: var(--line); background: none; color: var(--mute); }
+
+.card { background: var(--card); border: 1px solid var(--line); display: flex; flex-direction: column; }
+.card .c-top { display: flex; justify-content: space-between; gap: var(--s3); padding: var(--s5); align-items: start; }
+.card h3 { font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; }
+.card .c-body { padding: 0 var(--s5) var(--s5); color: var(--soft); font-size: 15px; }
+.card .c-foot { display: flex; gap: var(--s3); padding: var(--s4) var(--s5); border-top: 1px solid var(--line); flex-wrap: wrap; }
+
+.table { width: 100%; border-collapse: collapse; font-size: 15px; }
+.table th { text-align: left; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--mute); font-weight: 400; padding: 10px 12px; border-bottom: 1px solid var(--line); }
+.table td { padding: 14px 12px; border-bottom: 1px solid var(--line); }
+.table td.num { font-family: var(--mono); font-variant-numeric: tabular-nums; text-align: right; }
+.table th.num { text-align: right; }
+.table tr:hover td { background: var(--bg2); }
+.up { color: var(--acc-text); }
+.down { color: var(--mute); }
+
+.nav { display: flex; flex-wrap: wrap; gap: 26px; font-family: var(--mono); font-size: 13px; letter-spacing: .08em; text-transform: uppercase; }
+.nav a { position: relative; padding: 4px 0; color: var(--soft); }
+.nav a::after { content: ""; position: absolute; left: 0; right: 100%; bottom: 0; height: 1px; background: var(--fg); transition: right var(--t-panel); }
+.nav a:hover::after, .nav a[aria-current="page"]::after { right: 0; }
+.nav a[aria-current="page"] { color: var(--fg); }
+
+.note { border-left: 2px solid var(--acc); background: var(--bg2); padding: var(--s4) var(--s5); font-size: 15px; color: var(--soft); }
+.note b { color: var(--fg); font-weight: 600; }
+
+/* ---------- Orange du mode clair ---------- */
+.light-panel { background: #f4f4f1; color: #050505; border: 1px solid #d6d6d2; }
+.or-opt { padding: var(--s5); border-right: 1px solid #d6d6d2; display: flex; flex-direction: column; gap: var(--s3); }
+.or-opt:last-child { border-right: 0; }
+.or-opt .sw-b { height: 56px; }
+.or-opt .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #5c5c58; }
+.or-opt .txt { font-size: 17px; }
+.or-opt .lnk { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; }
+.or-opt .ratio { font-family: var(--mono); font-size: 13px; }
+.or-opt button { align-self: start; min-height: 40px; padding: 0 14px; background: none; border: 1px solid #050505; color: #050505; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; }
+.or-opt button[aria-pressed="true"] { background: #050505; color: #f4f4f1; }
+.or-opt button:focus-visible { outline: 2px solid #050505; }
+
+/* ---------- Gabarits miniatures ---------- */
+.mini { border: 1px solid var(--line); background: var(--bg); overflow: hidden; }
+.mini .m-bar { display: flex; justify-content: space-between; align-items: center; padding: 14px 20px; border-bottom: 1px solid var(--line); }
+.mini .m-hero { padding: 48px 20px 36px; }
+.mini .m-hero h4 { font-family: var(--display); font-size: clamp(36px, 5.5vw, 72px); line-height: .86; letter-spacing: var(--display-track); text-transform: uppercase; font-weight: var(--display-weight); }
+.mini .m-hero p { margin: 18px 0 24px; color: var(--soft); max-width: 420px; }
+.mini .m-stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-bottom: 1px solid var(--line); }
+.mini .m-stat { padding: 18px 20px; border-right: 1px solid var(--line); }
+.mini .m-stat:last-child { border-right: 0; }
+.mini .m-stat .v { font-family: var(--display); font-weight: var(--display-weight); font-size: 40px; line-height: 1; letter-spacing: -.03em; margin-top: 8px; }
+.mini .m-stat .v small { font-family: var(--mono); font-size: 12px; font-weight: 400; letter-spacing: .06em; color: var(--acc-text); margin-left: 6px; }
+
+/* ---------- Mouvement ---------- */
+.strip { overflow: hidden; white-space: nowrap; border-block: 1px solid var(--line); padding: 14px 0; }
+.strip .track { display: inline-flex; animation: defile 28s linear infinite; }
+.strip span { font-family: var(--mono); font-size: 13px; letter-spacing: .18em; text-transform: uppercase; padding-right: 2.2em; color: var(--mute); }
+.strip span b { color: var(--acc-text); font-weight: 400; }
+@keyframes defile { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) {
+  .strip .track { animation: none; }
+  *, *::before, *::after { transition-duration: .01ms !important; }
+}
+
+/* ---------- À choisir ---------- */
+.todo { border: 1px solid var(--acc); padding: var(--s6); }
+.todo ol { padding-left: 1.2em; display: grid; gap: var(--s3); color: var(--soft); }
+.todo ol b { color: var(--fg); }
+footer.foot { padding: var(--s7) 0 var(--s8); color: var(--mute); font-family: var(--mono); font-size: 12px; letter-spacing: .06em; }
+
+/* ---------- Téléphone ---------- */
+@media (max-width: 800px) {
+  .wrap { padding: 0 16px; }
+  .g2, .g3, .g4 { grid-template-columns: minmax(0, 1fr); }
+  .g4.sw-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .type-row { grid-template-columns: minmax(0, 1fr); gap: var(--s2); }
+  .or-opt { border-right: 0; border-bottom: 1px solid #d6d6d2; }
+  .or-opt:last-child { border-bottom: 0; }
+  .mini .m-stats { grid-template-columns: minmax(0, 1fr); }
+  .mini .m-stat { border-right: 0; border-bottom: 1px solid var(--line); }
+  .table-wrap { overflow-x: auto; }
+  .hero { padding-top: var(--s8); }
+}
+</style>
+</head>
+<body>
+<div class="grain" aria-hidden="true"></div>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="wm wm-c" style="font-size:18px">Chopa<span class="dot"></span></span>
+    <div class="ctrls" role="group" aria-label="Réglages de la planche">
+      <div><span class="label ctrl-name">Thème</span>
+        <span class="seg" id="seg-theme">
+          <button type="button" data-theme-set="sombre" aria-pressed="true">Sombre</button>
+          <button type="button" data-theme-set="clair" aria-pressed="false">Clair</button>
+          <button type="button" data-theme-set="chaud" aria-pressed="false">Chaud</button>
+        </span>
+      </div>
+      <div><span class="label ctrl-name">Grain</span>
+        <span class="seg" id="seg-grain">
+          <button type="button" data-grain-set="off" aria-pressed="true">Non</button>
+          <button type="button" data-grain-set="on" aria-pressed="false">Oui</button>
+        </span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <div class="hero">
+    <p class="label eyebrow">Planche de style · v1 · contenu fictif</p>
+    <h1>Chopa<br><span class="o">Design</span></h1>
+    <p>Une seule page pour choisir en voyant : les trois thèmes, la marque, la typo, les composants et l'orange du mode clair. Bascule le thème en haut, tout suit.</p>
+  </div>
+
+  <!-- 01 Marque -->
+  <section class="blk" id="marque">
+    <div class="head"><h2><span class="n">01</span>Marque</h2><span class="choice">choisi : C</span></div>
+    <p class="intro">Ton portfolio n'a pas de logo dessiné : c'est ton nom en Plex Mono, en capitales. Voici quatre pistes, chacune en grand et à la taille d'un en-tête.</p>
+    <div class="grid g4">
+      <figure class="opt">
+        <span class="wm wm-a big">Chopa<span class="dot"></span></span>
+        <span class="wm wm-a small">Chopa<span class="dot"></span></span>
+        <figcaption><b>A</b>Plex Mono espacé, point rond. Dans la lignée de l'en-tête du portfolio.</figcaption>
+      </figure>
+      <figure class="opt">
+        <span class="wm wm-b big">Chopa<span class="dot"></span></span>
+        <span class="wm wm-b small">Chopa<span class="dot"></span></span>
+        <figcaption><b>B</b>Inter Tight 800, serré, point rond. La voix des titres géants.</figcaption>
+      </figure>
+      <figure class="opt">
+        <span class="wm wm-c big">Chopa<span class="dot"></span></span>
+        <span class="wm wm-c small">Chopa<span class="dot"></span></span>
+        <figcaption><b>C</b>Inter Tight 800, point carré. Cohérent avec « carré partout ».<br><span class="choice">retenue</span></figcaption>
+      </figure>
+      <figure class="opt">
+        <span class="wm wm-a big" style="font-size:clamp(16px,1.9vw,22px)">M. Moussaoui<span class="dot"></span></span>
+        <span class="wm wm-a small">M. Moussaoui<span class="dot"></span></span>
+        <figcaption><b>D</b>Ton nom, comme le portfolio actuel, avec le point orange.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- 02 Couleurs -->
+  <section class="blk" id="couleurs">
+    <div class="head"><h2><span class="n">02</span>Couleurs</h2><span class="label" id="theme-name">thème sombre</span></div>
+    <p class="intro">Noir, blanc, gris, un seul orange, dans chaque thème. Les contrastes ci-dessous sont recalculés en direct pour le thème affiché (formule WCAG 2.x ; seuil AA du texte : 4,5 : 1).</p>
+    <div class="grid g4 sw-grid" id="swatches"></div>
+    <div class="table-wrap">
+      <table class="contrast" aria-describedby="theme-name">
+        <thead><tr><th>Texte</th><th>Sur</th><th>Contraste</th><th>Texte normal (AA)</th></tr></thead>
+        <tbody id="contrast-body"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 03 Typographie -->
+  <section class="blk" id="typo">
+    <div class="head"><h2><span class="n">03</span>Typographie</h2><span class="label" id="font-name">Inter Tight · IBM Plex Mono</span></div>
+    <div class="type-row"><span class="label">Géant · 800 · capitales</span><span class="t-giant">Sites qui tapent</span></div>
+    <div class="type-row"><span class="label">Titre 2 · 800</span><span class="t-h2">Projets récents</span></div>
+    <div class="type-row"><span class="label">Titre 3 · 600</span><span class="t-h3">Refonte d'une boutique en ligne fictive</span></div>
+    <div class="type-row"><span class="label">Texte courant · 400 · 1,5</span><p class="t-body">Je conçois des sites et des applis rapides, sobres et accessibles. Chaque projet part d'un besoin réel et se mesure : temps de chargement, contraste, conversions.</p></div>
+    <div class="type-row"><span class="label">Petit texte · gris</span><span class="t-small">Mis à jour il y a 3 jours · 4 min de lecture</span></div>
+    <div class="type-row"><span class="label">Étiquette · mono</span><span class="t-mono">Développeur · Sites &amp; applis · France</span></div>
+  </section>
+
+  <!-- 04 Composants -->
+  <section class="blk" id="composants">
+    <div class="head"><h2><span class="n">04</span>Composants</h2><span class="label">coins carrés · Tab pour voir le focus</span></div>
+    <div class="grid g2">
+      <div class="comp">
+        <span class="label">Boutons</span>
+        <div class="row">
+          <button class="btn btn-primary" type="button">Me contacter <svg class="glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 7.25h11.2L8.4 3.45 9.45 2.4 15 8l-5.55 5.6-1.05-1.05 3.8-3.8H1z"/></svg></button>
+          <button class="btn btn-secondary" type="button">Voir les projets</button>
+          <button class="btn btn-ghost" type="button">En savoir plus</button>
+          <button class="btn" type="button" disabled>Indisponible</button>
+        </div>
+      </div>
+      <div class="comp">
+        <span class="label">Navigation</span>
+        <nav class="nav" aria-label="Exemple de navigation">
+          <a href="#composants" aria-current="page">Projets</a><a href="#composants">Services</a><a href="#composants">À propos</a><a href="#composants">Contact</a>
+        </nav>
+        <div class="note"><b>Info</b> · un bandeau d'information : filet orange à gauche, fond légèrement relevé.</div>
+      </div>
+      <div class="comp">
+        <span class="label">Champs</span>
+        <label class="field"><span class="label">Adresse e-mail</span><input type="email" placeholder="nom@exemple.fr"><span class="help">On ne la partage jamais.</span></label>
+        <label class="field is-error"><span class="label">Site actuel</span><input type="url" value="exemple" aria-invalid="true"><span class="help">Ce n'est pas une adresse web valide.</span></label>
+        <label class="field"><span class="label">Budget</span><select><option>Moins de 1 000 €</option><option>1 000 à 3 000 €</option><option>Plus de 3 000 €</option></select></label>
+        <label class="check"><input type="checkbox" checked> J'accepte d'être recontacté</label>
+      </div>
+      <div class="comp">
+        <span class="label">Puces et pastilles</span>
+        <div class="chips">
+          <button class="chip" type="button" aria-pressed="true">Tous</button>
+          <button class="chip" type="button" aria-pressed="false">Sites</button>
+          <button class="chip" type="button" aria-pressed="false">Applis</button>
+          <button class="chip" type="button" aria-pressed="false">Automatisation</button>
+        </div>
+        <div class="row"><span class="score" aria-label="Score 87 sur 100">87</span><span class="score">64</span><span class="score cold">21</span><span class="t-small">pastilles de score : chaud, tiède, froid</span></div>
+        <article class="card">
+          <div class="c-top"><div><span class="label">Contact chaud · il y a 2 h</span><h3>Entreprise Exemple A</h3></div><span class="score">92</span></div>
+          <p class="c-body">Création récente, pas encore de site. Raison d'appeler : ouverture d'un second local le mois prochain.</p>
+          <div class="c-foot"><button class="btn btn-primary" type="button">Appeler</button><button class="btn btn-ghost" type="button">Plus tard</button></div>
+        </article>
+      </div>
+    </div>
+    <div class="comp" style="margin-top:var(--s4)">
+      <span class="label">Tableau</span>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th>Projet</th><th>Type</th><th class="num">Visites / mois</th><th class="num">Tendance</th></tr></thead>
+          <tbody>
+            <tr><td>Boutique fictive</td><td class="t-small">Site</td><td class="num">12 480</td><td class="num up">↑ 18 %</td></tr>
+            <tr><td>Agenda d'exemple</td><td class="t-small">Appli</td><td class="num">3 210</td><td class="num up">↑ 4 %</td></tr>
+            <tr><td>Studio imaginaire</td><td class="t-small">Site</td><td class="num">1 905</td><td class="num down">↓ 7 %</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <span class="t-small">Pas de vert : la hausse passe en orange, la baisse en gris.</span>
+    </div>
+  </section>
+
+  <!-- 05 Orange du mode clair -->
+  <section class="blk" id="orange-clair">
+    <div class="head"><h2><span class="n">05</span>Orange du clair</h2><span class="choice">choisi : B · #c23300</span></div>
+    <p class="intro">Sur fond clair, ton orange <span class="mono">#ff5a1f</span> ne fait que 2,8 : 1 en texte : illisible pour les petits textes. On le garde pour les fonds de bouton (texte noir dessus : 6,5 : 1) et on ajoute un orange plus foncé, de la même teinte, pour le texte, les liens et le focus. Le bouton « Appliquer » le met dans le thème clair.</p>
+    <div class="light-panel grid g3" style="gap:0">
+      <div class="or-opt" data-or="#cc3600">
+        <span class="lbl">A · le plus vif</span>
+        <div class="sw-b" style="background:#cc3600"></div>
+        <span class="ratio">#cc3600 · 4,65 : 1</span>
+        <p class="txt" style="color:#cc3600">Lien ou mot en avant dans un texte.</p>
+        <span class="lnk" style="color:#cc3600">Voir le projet →</span>
+        <button type="button" aria-pressed="false">Appliquer A</button>
+      </div>
+      <div class="or-opt" data-or="#c23300">
+        <span class="lbl">B · équilibré (mon penchant)</span>
+        <div class="sw-b" style="background:#c23300"></div>
+        <span class="ratio">#c23300 · 5,06 : 1</span>
+        <p class="txt" style="color:#c23300">Lien ou mot en avant dans un texte.</p>
+        <span class="lnk" style="color:#c23300">Voir le projet →</span>
+        <button type="button" aria-pressed="true">Appliquer B</button>
+      </div>
+      <div class="or-opt" data-or="#b83000">
+        <span class="lbl">C · le plus sûr, plus brun</span>
+        <div class="sw-b" style="background:#b83000"></div>
+        <span class="ratio">#b83000 · 5,51 : 1</span>
+        <p class="txt" style="color:#b83000">Lien ou mot en avant dans un texte.</p>
+        <span class="lnk" style="color:#b83000">Voir le projet →</span>
+        <button type="button" aria-pressed="false">Appliquer C</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 Gabarits -->
+  <section class="blk" id="gabarits">
+    <div class="head"><h2><span class="n">06</span>Gabarits</h2><span class="label">aperçu, détaillés au jalon 3</span></div>
+    <div class="grid g2">
+      <div class="mini">
+        <div class="m-bar"><span class="wm wm-c" style="font-size:16px">Chopa<span class="dot"></span></span><span class="label">Vitrine</span></div>
+        <div class="m-hero">
+          <p class="label" style="margin-bottom:16px">Développeur · Sites &amp; applis</p>
+          <h4>Des sites<br>qui tapent</h4>
+          <p>Rapides, sobres, accessibles. Du premier croquis à la mise en ligne.</p>
+          <a class="btn btn-secondary" href="#gabarits">Démarrer un projet <svg class="glyph" viewBox="0 0 16 16" aria-hidden="true"><path d="M1 7.25h11.2L8.4 3.45 9.45 2.4 15 8l-5.55 5.6-1.05-1.05 3.8-3.8H1z"/></svg></a>
+        </div>
+      </div>
+      <div class="mini">
+        <div class="m-bar"><span class="wm wm-c" style="font-size:16px">Chopa<span class="dot"></span></span><span class="label">Tableau de bord</span></div>
+        <div class="m-stats">
+          <div class="m-stat"><span class="label">Contacts chauds</span><div class="v">5<small>↑ 2</small></div></div>
+          <div class="m-stat"><span class="label">Appels faits</span><div class="v">12</div></div>
+          <div class="m-stat"><span class="label">Signés</span><div class="v">1</div></div>
+        </div>
+        <div style="padding:20px">
+          <article class="card">
+            <div class="c-top"><div><span class="label">À appeler aujourd'hui</span><h3>Entreprise Exemple B</h3></div><span class="score">78</span></div>
+            <div class="c-foot"><button class="btn btn-primary" type="button">Appeler</button><button class="btn btn-ghost" type="button">Fiche</button></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 Mouvement -->
+  <section class="blk" id="mouvement">
+    <div class="head"><h2><span class="n">07</span>Mouvement</h2><span class="label">0,25 s · 0,35 s ease · coupé si « mouvement réduit »</span></div>
+    <div class="strip" aria-hidden="true"><div class="track">
+      <span>Sites <b>●</b></span><span>Applis <b>●</b></span><span>Automatisation <b>●</b></span><span>Identité <b>●</b></span><span>Accessibilité <b>●</b></span>
+      <span>Sites <b>●</b></span><span>Applis <b>●</b></span><span>Automatisation <b>●</b></span><span>Identité <b>●</b></span><span>Accessibilité <b>●</b></span>
+    </div></div>
+    <p class="intro" style="margin-top:var(--s5)">Survole les boutons et la navigation : transitions courtes, soulignement qui se déroule. La typo cinétique et les particules du portfolio viendront au jalon 4 (effets), avec une version calme pour « mouvement réduit ».</p>
+  </section>
+
+  <!-- À choisir -->
+  <section class="blk" id="choix">
+    <div class="head"><h2><span class="n">08</span>Choix faits</h2><span class="label">2026-11-15</span></div>
+    <div class="todo">
+      <ol>
+        <li><b>Marque</b> : C, CHOPA en Inter Tight 800 avec un point carré orange.</li>
+        <li><b>Orange du mode clair</b> : B, <span class="mono">#c23300</span> pour le texte, les liens et le focus ; <span class="mono">#ff5a1f</span> reste pour les fonds.</li>
+        <li><b>Thème chaud</b> : les polices Chopa (Inter Tight, IBM Plex Mono) ; seules les couleurs changent.</li>
+        <li><b>Grain</b> : en option, une classe à activer site par site, désactivée par défaut.</li>
+      </ol>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">Chopa Design · planche de style v2 · 2026-11-15 · contenu fictif · icônes choisies au jalon 4</footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var tokens = [
+    ["--bg", "fond"], ["--bg2", "fond des champs"], ["--card", "fond des cartes"], ["--line", "filets (décor)"],
+    ["--fg", "texte principal"], ["--soft", "texte courant"], ["--mute", "texte secondaire"], ["--acc", "accent (fonds)"],
+    ["--acc-text", "accent (texte, liens)"], ["--on-acc", "texte sur l'accent"]
+  ];
+  var pairs = [
+    ["--fg", "--bg"], ["--soft", "--bg"], ["--mute", "--bg"], ["--mute", "--card"], ["--acc-text", "--bg"], ["--acc-text", "--card"], ["--on-acc", "--acc"]
+  ];
+  function v(name) { return getComputedStyle(root).getPropertyValue(name).trim(); }
+  function hex(name) {
+    var s = v(name);
+    if (s.indexOf("var(") === 0) s = v(s.slice(4, -1).trim());
+    return s.slice(0, 7).toLowerCase();
+  }
+  function lum(h) {
+    var c = [1, 3, 5].map(function (i) { var x = parseInt(h.substr(i, 2), 16) / 255; return x <= 0.04045 ? x / 12.92 : Math.pow((x + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function fr(n) { return n.toFixed(2).replace(".", ","); }
+  function render() {
+    var sw = document.getElementById("swatches"); sw.innerHTML = "";
+    tokens.forEach(function (t) {
+      var h = hex(t[0]);
+      sw.insertAdjacentHTML("beforeend", '<div class="sw"><div class="chip-c" style="background:' + h + '"></div><div class="meta"><span class="name">' + t[0] + '</span><span class="hex">' + h + '</span><span class="role">' + t[1] + "</span></div></div>");
+    });
+    var tb = document.getElementById("contrast-body"); tb.innerHTML = "";
+    pairs.forEach(function (p) {
+      var r = ratio(hex(p[0]), hex(p[1])), ok = r >= 4.5;
+      tb.insertAdjacentHTML("beforeend", "<tr><td class='num'>" + p[0] + "</td><td class='num'>" + p[1] + "</td><td class='num'>" + fr(r) + " : 1</td><td>" + (ok ? "<span class='ok-t'>passe</span>" : "<span class='ko-t'>insuffisant</span>") + "</td></tr>");
+    });
+    document.getElementById("theme-name").textContent = "thème " + root.getAttribute("data-theme");
+  }
+  function press(group, btn) { group.querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", b === btn ? "true" : "false"); }); }
+  document.getElementById("seg-theme").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    root.setAttribute("data-theme", b.dataset.themeSet); press(this, b);
+    render();
+  });
+  document.getElementById("seg-grain").addEventListener("click", function (e) {
+    var b = e.target.closest("button"); if (!b) return;
+    root.classList.toggle("has-grain", b.dataset.grainSet === "on"); press(this, b);
+  });
+  document.querySelectorAll(".or-opt button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      root.style.setProperty("--orange-clair", b.parentElement.dataset.or);
+      document.querySelectorAll(".or-opt button").forEach(function (x) { x.setAttribute("aria-pressed", x === b ? "true" : "false"); });
+      render();
+    });
+  });
+  document.querySelectorAll(".chips").forEach(function (g) {
+    g.addEventListener("click", function (e) { var b = e.target.closest(".chip"); if (b) press(g, b); });
+  });
+  render();
+})();
+</script>
+</body>
+</html>

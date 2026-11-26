@@ -1,0 +1,11 @@
+/* Puce (pièce 36) : button (aria-pressed) ou a. Planche : .chip, .chip:hover, .chip[aria-pressed="true"].
+   Une puce-bouton ne bascule PAS toute seule : le script du site pose aria-pressed (chopa.js n'a pas de module pour cela).
+   32 px visibles ; zone de clic invisible de 44 px (au moins) en ::before, centrée sur la puce (6 px de chaque côté dans la hauteur).
+   Pressée : fond acc-dim, filet acc, texte fg ; sur un lien : aria-current. Désactivée : disabled ou aria-disabled, filet en tirets, mute.
+   Couleurs : soft (repos), fg (pressée) sur bg, bg2, card ; fg sur acc-dim composé ; mute désactivée. */
+.ch-chip { box-sizing: border-box; margin: 0; position: relative; min-height: 32px; padding: 0 12px; display: inline-flex; align-items: center; gap: 8px; border: 1px solid var(--ch-line); border-radius: var(--ch-radius); background: none; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ch-soft); cursor: pointer; transition: border-color var(--ch-t-fast), background var(--ch-t-fast); }
+.ch-chip::before { content: ""; position: absolute; left: 50%; top: 50%; width: max(calc(100% + 12px), 44px); height: 44px; transform: translate(-50%, -50%); }
+.ch-chip:hover { border-color: var(--ch-mute); }
+.ch-chip[aria-pressed="true"], .ch-chip[aria-current] { background: var(--ch-acc-dim); border-color: var(--ch-acc); color: var(--ch-fg); }
+.ch-chip[disabled], .ch-chip[aria-disabled="true"] { border-style: dashed; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-chip .ch-icon { width: 14px; height: 14px; vertical-align: baseline; }

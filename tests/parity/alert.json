@@ -1,0 +1,34 @@
+{
+  "slug": "alert",
+  "piece": "Alerte (ch-alert, pièce 55)",
+  "note": "Planche : .note et .note b (bandeau « Info » : filet orange de 2 px à gauche, fond bg2, remplissage s4 s5, 15 px, soft ; mot en fg, 600). Mêmes mots des deux côtés. Un seul ajout voulu de Chopa, hors des éléments comparés : le glyphe du sprite (svg.ch-icon.ch-alert__icon) devant le mot, qui fait que l'alerte se lit sans couleur ; la hauteur de la ligne est comparée aussi (le glyphe ne doit pas l'agrandir). Les variantes --warn et --error n'existent pas dans la planche : palette seulement. Seconde différence déclarée : overflow-wrap: anywhere sur le bandeau (hérité par le mot), ajout de Chopa qui évite qu'un mot long (adresse, nom de fichier) déborde à 375 px ; la planche garde « normal » : la propriété est ignorée, tout le reste est comparé.",
+  "cases": [
+    {
+      "id": "note",
+      "ch": "<div class=\"ch-alert ch-alert--info\"><svg class=\"ch-icon ch-alert__icon\" aria-hidden=\"true\" focusable=\"false\"><use href=\"/chopa/chopa-icons.svg#ch-i-info\"></use></svg><b class=\"ch-alert__kind\">Info</b> · un bandeau d'information : filet orange à gauche, fond légèrement relevé.</div>",
+      "board": "<div class=\"note\"><b>Info</b> · un bandeau d'information : filet orange à gauche, fond légèrement relevé.</div>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "bandeau",
+          "ch": ".ch-alert",
+          "board": ".note",
+          "ignoreProps": [
+            "overflow-wrap"
+          ]
+        },
+        {
+          "id": "mot",
+          "ch": ".ch-alert__kind",
+          "board": ".note b",
+          "ignoreProps": [
+            "overflow-wrap"
+          ]
+        }
+      ]
+    }
+  ]
+}

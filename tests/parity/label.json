@@ -1,0 +1,73 @@
+{
+  "slug": "label",
+  "piece": "Libellé, aide, erreur (ch-field__label, __help, __error)",
+  "note": "Planche : .field .label, .field .help, .field.is-error .help. ch-field__error n'existe pas dans la planche : il est comparé à .field.is-error .help (même apparence, texte d'erreur en acc-text). Le libellé ch-field__label est comparé à .field .label.",
+  "cases": [
+    {
+      "id": "defaut",
+      "ch": "<label class=\"ch-field\"><span class=\"ch-field__label\">Titre de l'article</span><input class=\"ch-input\" type=\"text\" placeholder=\"Mes cartes préférées\"><span class=\"ch-field__help\">Une phrase courte.</span></label>",
+      "board": "<label class=\"field\"><span class=\"label\">Titre de l'article</span><input type=\"text\" placeholder=\"Mes cartes préférées\"><span class=\"help\">Une phrase courte.</span></label>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "champ",
+          "ch": ".ch-field",
+          "board": ".field",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "libelle",
+          "ch": ".ch-field__label",
+          "board": ".field .label",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "aide",
+          "ch": ".ch-field__help",
+          "board": ".field .help",
+          "states": [
+            "rest"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "erreur",
+      "ch": "<div class=\"ch-field is-error\"><label class=\"ch-field__label\">Site actuel</label><input class=\"ch-input\" type=\"url\" value=\"exemple\" aria-invalid=\"true\"><span class=\"ch-field__error\">Ce n'est pas une adresse web valide.</span></div>",
+      "board": "<div class=\"field is-error\"><label class=\"label\">Site actuel</label><input type=\"url\" value=\"exemple\" aria-invalid=\"true\"><span class=\"help\">Ce n'est pas une adresse web valide.</span></div>",
+      "pairs": [
+        {
+          "id": "champ-erreur",
+          "ch": ".ch-field",
+          "board": ".field",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "libelle-erreur",
+          "ch": ".ch-field__label",
+          "board": ".field .label",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "message-erreur",
+          "ch": ".ch-field__error",
+          "board": ".field .help",
+          "states": [
+            "rest"
+          ]
+        }
+      ]
+    }
+  ]
+}

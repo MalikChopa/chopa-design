@@ -1,0 +1,12 @@
+/* Feuille d'un site hôte HOSTILE (tests/host.html?hostile, scripts/browser/host.mjs, scripts/lib/parity.mjs).
+   Des règles d'ÉLÉMENT (spécificité 0,0,1), donc plus fortes que la remise à zéro de chopa.css, qui est à spécificité 0 :
+   marges, remplissages, `box-sizing` sur p, ul, h1 à h6, button, input, textarea, puces de liste.
+   Pas de typographie ici (police, taille, interligne) : elle est héritée et sert d'hôte aux deux côtés de la comparaison.
+   Données de test, pas un thème Chopa. */
+body { margin: 17px; }
+h1, h2, h3, h4, h5, h6 { margin: 23px 0 11px; padding: 3px; box-sizing: content-box; }
+p { margin: 13px 0; padding: 2px; box-sizing: content-box; }
+ul { margin: 14px 0; padding: 0 0 0 31px; list-style: disc; box-sizing: content-box; }
+li { margin: 5px 0; }
+button { margin: 9px; padding: 7px 15px; box-sizing: content-box; }
+input, textarea { margin: 6px; padding: 5px; box-sizing: content-box; }

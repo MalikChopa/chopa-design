@@ -1,0 +1,61 @@
+{
+  "slug": "search",
+  "cases": [
+    {
+      "id": "champ-et-bouton",
+      "example": "search/defaut",
+      "tabOrder": [
+        "input[type=search]",
+        "button"
+      ],
+      "setup": [
+        {
+          "sel": "button",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Tab"
+        },
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": "button",
+            "count": {
+              "clic": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "escape-efface",
+      "example": "search/defaut",
+      "tabOrder": [
+        "input[type=search]",
+        "button"
+      ],
+      "steps": [
+        {
+          "type": "epee",
+          "expect": {
+            "value": {
+              "input[type=search]": "epee"
+            }
+          }
+        },
+        {
+          "key": "Escape",
+          "expect": {
+            "focus": "input[type=search]",
+            "value": {
+              "input[type=search]": ""
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

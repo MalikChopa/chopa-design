@@ -1,0 +1,61 @@
+---
+// Étapes d'installation (docs/ARCHITECTURE.md, sections 2 et 8). Complétée à la Livraison.
+import { Code } from 'astro:components';
+import DocLayout from '../components/DocLayout.astro';
+
+const lien = `<link rel="stylesheet" href="/chopa/chopa.css">`;
+const html = `<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ma page</title>
+    <link rel="stylesheet" href="/chopa/chopa.css">
+    <link rel="stylesheet" href="/chopa/chopa-reset.css">
+    <script src="/chopa/chopa.js" defer
+      onerror="document.documentElement.classList.remove('ch-js')"></script>
+    <script src="/chopa/chopa-theme.js"></script>
+  </head>
+  <body>
+    <button class="ch-btn ch-btn--primary" type="button">Lancer la partie</button>
+  </body>
+</html>`;
+const js = `<script src="/chopa/chopa.js" defer
+  onerror="document.documentElement.classList.remove('ch-js')"></script>`;
+---
+<DocLayout title="Installation">
+  <h1 class="doc-h1 doc-h1--page">Installation</h1>
+  <p class="doc-lead">Cinq minutes, sans outil de construction : on copie un dossier et on ajoute deux lignes à la page.</p>
+
+  <h2 class="doc-h2">1. Copier le dossier</h2>
+  <p class="doc-text">Copie le dossier <code>dist-lib/</code> du dépôt dans ton site, de préférence pour qu'il soit servi à l'adresse <code>/chopa/</code> (par exemple dans <code>public/chopa/</code>). Il contient <code>chopa.css</code>, <code>chopa-reset.css</code>, <code>chopa.js</code>, <code>chopa-theme.js</code>, <code>chopa-effects.js</code>, <code>chopa-icons.svg</code> (les icônes, jeu Carbon d'IBM, avec sa licence Apache-2.0 <code>LICENSE-icones-carbon.txt</code>, à garder avec le dossier) et le dossier <code>fonts/</code> (6 fichiers <code>woff2</code> et leurs 2 licences). Garde <code>fonts/</code> à côté de <code>chopa.css</code> : la feuille le charge par un chemin relatif.</p>
+  <p class="doc-text">Les exemples de cette doc écrivent <code>/chopa/…</code>, y compris dans les icônes (<code>&lt;use href="/chopa/chopa-icons.svg#ch-i-close"&gt;</code>). Si tu copies le dossier ailleurs, remplace <code>/chopa/</code> par ton chemin dans les liens, les scripts et les <code>href</code> des icônes : sinon les icônes disparaissent sans message (le bouton « Copier » du bloc de code, lui, trouve le fichier tout seul à côté de <code>chopa.js</code>). Leurs identifiants (<code>id="ex-…"</code>) sont des exemples : si tu colles deux fois le même bloc dans une page, renomme-les, sinon le second bouton ouvre la première fenêtre.</p>
+
+  <h2 class="doc-h2">2. Lier la feuille de style</h2>
+  <p class="doc-text">Dans le <code>&lt;head&gt;</code> de chaque page, adapte le chemin à l'endroit où tu as copié le dossier.</p>
+  <div class="doc-example__code doc-example__code--solo"><Code code={lien} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">3. Choisir le thème</h2>
+  <p class="doc-text">Pose l'attribut <code>data-ch-theme</code> sur <code>&lt;html&gt;</code> : <code>sombre</code> (défaut), <code>clair</code> ou <code>chaud</code>. Il fonctionne aussi sur un simple cadre, pour montrer un autre thème dans une page. L'attribut <code>lang="fr"</code> reste à toi.</p>
+
+  <h2 class="doc-h2">4. Facultatif : la bascule de thème</h2>
+  <p class="doc-text"><code>chopa-theme.js</code> mémorise le choix du visiteur (clé <code>ch-theme</code> du <code>localStorage</code>) et gère les boutons <code>data-ch-theme-set="sombre|clair|chaud"</code>. Charge-le dans le <code>&lt;head&gt;</code>, <strong>sans</strong> <code>defer</code> ni <code>async</code> : sinon la page clignote dans le mauvais thème.</p>
+
+  <h2 class="doc-h2">Une page minimale</h2>
+  <p class="doc-text">Pour un site neuf. <code>chopa-reset.css</code> pose la police, les couleurs et les marges du <code>&lt;body&gt;</code> et remet à zéro le reste de la page, comme sur cette doc ; sans lui, <code>chopa.css</code> ne touche que les éléments qui portent une classe <code>ch-</code> (le texte libre reste dans la police du navigateur). Dans un site qui a déjà sa propre remise à zéro, retire cette ligne.</p>
+  <div class="doc-example__code doc-example__code--solo"><Code code={html} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">Les autres fichiers (facultatifs)</h2>
+  <ul class="doc-list">
+    <li><code>chopa.js</code>, avec <code>defer</code>, pour les pièces qui demandent du JavaScript : onglets, menu de l'en-tête, menu déroulant, sommaire, valeur du curseur, tri des tableaux, bouton « Copier », fenêtres, infobulles et notifications. Place-le dans le <code>&lt;head&gt;</code> <strong>avant</strong> <code>chopa-theme.js</code> : celui-ci repère la balise et pose la classe <code>ch-js</code> tout de suite, donc la page ne saute pas au chargement. Le <code>onerror</code> retire cette classe si le fichier ne charge pas : le contenu reste alors visible (onglets en liste, liens du menu affichés). Sans JavaScript, chaque pièce reste lisible. Les pièces concernées l'indiquent sur leur page.</li>
+    <li><code>chopa-reset.css</code> : remise à zéro globale, à charger après <code>chopa.css</code>, seulement si ton site n'a pas la sienne (voir la page minimale).</li>
+    <li><code>chopa-effects.js</code>, avec <code>defer</code>, <strong>après</strong> <code>chopa.js</code> : bandes qui défilent (<code>ch-band</code>) et titres révélés (<code>ch-reveal</code>) ; sans lui, ou en mouvement réduit, tout reste visible et immobile. Le grain (<code>ch-grain</code>) est une simple classe, désactivée tant que tu ne la poses pas. Voir la page <a href="/effets/">Effets</a>.</li>
+  </ul>
+  <div class="doc-example__code doc-example__code--solo"><Code code={js} lang="html" theme="css-variables" /></div>
+
+  <h2 class="doc-h2">5. Régler les couleurs de ton site</h2>
+  <p class="doc-text">Pour un autre accent, la page « Créer ton thème » (<a href="/theme/">Créer ton thème</a>) calcule les réglages et donne un extrait à coller après <code>chopa.css</code>. La page <a href="/jetons/">Jetons</a> liste tous les réglages et leurs contrastes.</p>
+
+  <h2 class="doc-h2">Mettre à jour</h2>
+  <p class="doc-text">Recopie le dossier <code>dist-lib/</code> par-dessus l'ancien. Il n'y a rien d'autre à faire.</p>
+</DocLayout>

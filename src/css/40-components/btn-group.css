@@ -1,0 +1,11 @@
+/* Groupe de boutons (pièce 8) : <div class="ch-btn-group" role="group" aria-label="…">. --attached : boutons soudés,
+   comme un sélecteur ; aria-pressed="true" marque le bouton actif (on-acc sur acc). */
+.ch-btn-group { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s3); max-width: 100%; }
+.ch-btn-group--attached { flex-wrap: nowrap; gap: 0; }
+.ch-btn-group--attached > .ch-btn { position: relative; flex: 0 1 auto; min-width: 0; }
+.ch-btn-group--attached > .ch-btn + .ch-btn { margin-left: -1px; }
+.ch-btn-group--attached > .ch-btn:not([class*="--"]) { border-color: var(--ch-line); color: var(--ch-fg); }
+.ch-btn-group--attached > .ch-btn:not([class*="--"]):hover { border-color: var(--ch-mute); z-index: 1; }
+.ch-btn-group--attached > .ch-btn:hover, .ch-btn-group--attached > .ch-btn:focus-visible { z-index: 1; }
+.ch-btn-group--attached > .ch-btn[aria-pressed="true"] { background: var(--ch-acc); border-color: var(--ch-acc); color: var(--ch-on-acc); z-index: 1; }
+.ch-btn-group--attached > .ch-btn[disabled] { background: none; border-color: var(--ch-line); color: var(--ch-mute); }

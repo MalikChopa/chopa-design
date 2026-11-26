@@ -1,0 +1,43 @@
+{
+  "slug": "button",
+  "aliases": ["bouton"],
+  "piece": "Bouton (ch-btn)",
+  "note": "Slug de la fiche : button (confirmé à J2b). Les exemples de site/src/examples/button/ sont chargés tels quels côté Chopa ; la planche reçoit le balisage équivalent (.btn, .btn-primary, .btn-secondary, .btn-ghost).",
+  "cases": [
+    {
+      "id": "primary",
+      "example": "button/primary",
+      "board": "<button class=\"btn btn-primary\" type=\"button\">Me contacter</button>",
+      "pairs": [ { "id": "primary", "ch": ".ch-btn--primary", "board": ".btn-primary", "states": ["rest", "hover", "focus"] } ]
+    },
+    {
+      "id": "secondary",
+      "example": "button/secondary",
+      "board": "<button class=\"btn btn-secondary\" type=\"button\">Voir les projets</button>",
+      "pairs": [ { "id": "secondary", "ch": ".ch-btn--secondary", "board": ".btn-secondary", "states": ["rest", "hover", "focus"] } ]
+    },
+    {
+      "id": "ghost-et-desactive",
+      "example": "button/ghost",
+      "board": "<button class=\"btn btn-ghost\" type=\"button\">En savoir plus</button>\n<button class=\"btn\" type=\"button\" disabled>Indisponible</button>",
+      "pairs": [
+        {
+          "id": "ghost", "ch": ".ch-btn--ghost", "board": ".btn-ghost", "states": ["rest", "hover", "focus"],
+          "ignore": [ { "target": "::before", "reason": "ajout voulu de Chopa : zone de clic invisible de 44 px (docs/ARCHITECTURE.md, section 2) ; la planche n'a pas de ::before. Il est mesuré à part, dans « asserts »." } ],
+          "asserts": [
+            { "target": "::before", "prop": "content", "value": "\"\"" },
+            { "target": "::before", "prop": "height", "value": "44px" },
+            { "target": "::before", "prop": "position", "value": "absolute" }
+          ]
+        },
+        { "id": "desactive", "ch": ".ch-btn[disabled]", "board": ".btn[disabled]", "states": ["rest", "hover"] }
+      ]
+    },
+    {
+      "id": "base",
+      "ch": "<button class=\"ch-btn\" type=\"button\">Neutre</button>",
+      "board": "<button class=\"btn\" type=\"button\">Neutre</button>",
+      "pairs": [ { "id": "base", "ch": ".ch-btn", "board": ".btn", "states": ["rest", "hover", "focus"] } ]
+    }
+  ]
+}

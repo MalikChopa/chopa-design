@@ -1,0 +1,9 @@
+/* Citation (pièce 38) : figure.ch-quote > blockquote.ch-quote__text + figcaption.ch-quote__source (la source dans un <cite> ; cite="" sur le blockquote
+   si elle a une adresse). Filet acc à gauche, fond bg2, comme la citation de ch-prose.
+   Couleurs : fg (texte), mute (source) sur bg2. */
+.ch-quote { box-sizing: border-box; margin: 0; padding: var(--ch-s4) var(--ch-s5); max-width: var(--ch-measure); border-left: 2px solid var(--ch-acc); background: var(--ch-bg2); }
+.ch-quote__text { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; line-height: 1.4; color: var(--ch-fg); }
+.ch-quote__text > * { margin: 0; padding: 0; }
+.ch-quote__text > * + * { margin-top: var(--ch-s3); }
+.ch-quote__source { box-sizing: border-box; margin: var(--ch-s3) 0 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--ch-mute); }
+.ch-quote__source cite { font-style: normal; }

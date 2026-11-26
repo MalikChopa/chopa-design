@@ -1,0 +1,18 @@
+/* Progression (pièce 56) : <progress class="ch-progress" max="100" value="64"> natif, avec un <label> (ou aria-label) obligatoire.
+   Carré, 10 px de haut, piste bg2 cernée de mute (le remplissage orange seul ne fait pas 3 : 1 sur la piste en thème clair), remplissage acc.
+   Moteurs : ::-webkit-progress-bar / ::-webkit-progress-value (Chromium, WebKit), ::-moz-progress-bar (Firefox : non testé).
+   Indéterminée (sans attribut value) : une barre qui glisse (fond animé de l'élément). Mouvement réduit : plus de glissement, la piste est
+   rayée sur toute sa longueur (aspect « en cours », pas une valeur) ; le libellé doit dire « en cours ».
+   Couleurs : acc (remplissage), mute (cadre) : éléments graphiques, aucun texte. */
+.ch-progress { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; height: 10px; border: 1px solid var(--ch-mute); border-radius: 0; background: var(--ch-bg2); color: var(--ch-acc);
+  -webkit-appearance: none; appearance: none; overflow: hidden; vertical-align: baseline; }
+.ch-progress::-webkit-progress-bar { background: transparent; border-radius: 0; }
+.ch-progress::-webkit-progress-value { background: var(--ch-acc); border-radius: 0; }
+.ch-progress::-moz-progress-bar { background: var(--ch-acc); border-radius: 0; }
+.ch-progress:indeterminate { background-image: linear-gradient(90deg, var(--ch-acc), var(--ch-acc)); background-repeat: no-repeat; background-size: 35% 100%; background-position: -35% 0; animation: ch-progress-slide 1.4s linear infinite; }
+.ch-progress:indeterminate::-webkit-progress-value { background: transparent; }
+.ch-progress:indeterminate::-moz-progress-bar { background: transparent; }
+@keyframes ch-progress-slide { to { background-position: 135% 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .ch-progress:indeterminate { animation: none; background-image: repeating-linear-gradient(90deg, var(--ch-acc) 0 8px, transparent 8px 16px); background-size: 100% 100%; background-position: 0 0; }
+}

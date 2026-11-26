@@ -1,0 +1,15 @@
+{
+  "slug": "texte",
+  "piece": "Texte (échelle de la planche)",
+  "note": "Table « Parité : sélecteur de la planche » de J1b-2. Même balise des deux côtés ; toutes les propriétés calculées sont comparées. Les propriétés posées en plus par Chopa (font-family, line-height, overflow-wrap, margin, padding, box-sizing) ne sont pas des écarts quand la valeur calculée est égale.",
+  "cases": [
+    { "id": "giant", "ch": "<h1 class=\"ch-t-giant\">Sites qui tapent</h1>", "board": "<h1 class=\"t-giant\">Sites qui tapent</h1>", "pairs": [ { "id": "giant", "ch": ".ch-t-giant", "board": ".t-giant", "ignoreProps": ["overflow-wrap"], "ignoreWhy": "ajout voulu de Chopa (table de J1b-2) : overflow-wrap: anywhere, pour que les mots longs ne débordent pas" } ] },
+    { "id": "h2", "ch": "<h2 class=\"ch-t-h2\">Projets récents</h2>", "board": "<h2 class=\"t-h2\">Projets récents</h2>", "pairs": [ { "id": "h2", "ch": ".ch-t-h2", "board": ".t-h2", "ignoreProps": ["overflow-wrap"], "ignoreWhy": "ajout voulu de Chopa (table de J1b-2) : overflow-wrap: anywhere" } ] },
+    { "id": "h3", "ch": "<h3 class=\"ch-t-h3\">Refonte d'une boutique en ligne fictive</h3>", "board": "<h3 class=\"t-h3\">Refonte d'une boutique en ligne fictive</h3>", "pairs": [ { "id": "h3", "ch": ".ch-t-h3", "board": ".t-h3" } ] },
+    { "id": "body", "ch": "<p class=\"ch-t-body\">Je conçois des sites et des applis rapides, sobres et accessibles.</p>", "board": "<p class=\"t-body\">Je conçois des sites et des applis rapides, sobres et accessibles.</p>", "pairs": [ { "id": "body", "ch": ".ch-t-body", "board": ".t-body" } ] },
+    { "id": "small", "ch": "<p class=\"ch-t-small\">Mis à jour il y a 3 jours · 4 min de lecture</p>", "board": "<p class=\"t-small\">Mis à jour il y a 3 jours · 4 min de lecture</p>", "pairs": [ { "id": "small", "ch": ".ch-t-small", "board": ".t-small" } ] },
+    { "id": "mono", "ch": "<p class=\"ch-t-mono\">Développeur · Sites &amp; applis · France</p>", "board": "<p class=\"t-mono\">Développeur · Sites &amp; applis · France</p>", "pairs": [ { "id": "mono", "ch": ".ch-t-mono", "board": ".t-mono" } ] },
+    { "id": "label", "ch": "<p class=\"ch-label\">Planche de style · contenu fictif</p>", "board": "<p class=\"label\">Planche de style · contenu fictif</p>", "pairs": [ { "id": "label", "ch": ".ch-label", "board": ".label" } ] },
+    { "id": "giant-375", "widths": [375], "ch": "<h1 class=\"ch-t-giant\">Sites qui tapent</h1>", "board": "<h1 class=\"t-giant\">Sites qui tapent</h1>", "pairs": [ { "id": "giant", "ch": ".ch-t-giant", "board": ".t-giant", "ignoreProps": ["overflow-wrap"], "ignoreWhy": "ajout voulu de Chopa (table de J1b-2) : overflow-wrap: anywhere, pour que les mots longs ne débordent pas" } ] }
+  ]
+}

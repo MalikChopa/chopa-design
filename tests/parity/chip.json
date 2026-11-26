@@ -1,0 +1,106 @@
+{
+  "slug": "chip",
+  "piece": "Puce (ch-chip)",
+  "note": "Planche : .chip, .chip:hover, .chip[aria-pressed=\"true\"]. Deux puces (pressée, non pressée) comparées au repos, au survol et au focus clavier, 3 thèmes, 1280 et 375 px. Deux écarts voulus de Chopa, déclarés (ignoreProps / ignore), et une différence d'écriture : (1) la zone de clic invisible de 44 px en ::before : ignorée ici, mesurée dans « asserts » (content, height, position) et par contenu.mjs (largeur et hauteur ≥ 44 px, elementFromPoint) ; (2) position: relative sur la puce, qui ancre ce ::before (la planche : static) : « position » et les propriétés top, right, bottom, left, inset-* (0px d'un côté, auto de l'autre, conséquence de position) sont ignorées ; (3) fond de la puce pressée : même couleur, sérialisation différente (la planche écrit #ff5a1f22 ou #ff5a1f1f, Chopa calcule color-mix) : comparé quand même, le moteur de parité tient deux écritures d'une même couleur sRGB pour égales (1/255 par canal, 0,005 d'alpha ; Diapason, J4a). La puce-lien (a.ch-chip), l'icône et l'état désactivé n'existent pas dans la planche : palette seulement.",
+  "cases": [
+    {
+      "id": "puces",
+      "ch": "<div class=\"ch-row\"><button class=\"ch-chip\" type=\"button\" aria-pressed=\"true\">Toutes</button><button class=\"ch-chip\" type=\"button\" aria-pressed=\"false\">Soupes</button></div>",
+      "board": "<div class=\"chips\"><button class=\"chip\" type=\"button\" aria-pressed=\"true\">Toutes</button><button class=\"chip\" type=\"button\" aria-pressed=\"false\">Soupes</button></div>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "pressee",
+          "ch": ".ch-chip[aria-pressed=\"true\"]",
+          "board": ".chip[aria-pressed=\"true\"]",
+          "states": [
+            "rest",
+            "hover",
+            "focus"
+          ],
+          "ignore": [
+            {
+              "target": "::before",
+              "reason": "ajout voulu de Chopa : zone de clic invisible de 44 px (docs/ARCHITECTURE.md, section 2) ; la planche n'a pas de ::before. Elle est mesurée à part, dans « asserts »."
+            }
+          ],
+          "ignoreProps": [
+            "position",
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "inset-block-start",
+            "inset-block-end",
+            "inset-inline-start",
+            "inset-inline-end"
+          ],
+          "asserts": [
+            {
+              "target": "::before",
+              "prop": "content",
+              "value": "\"\""
+            },
+            {
+              "target": "::before",
+              "prop": "height",
+              "value": "44px"
+            },
+            {
+              "target": "::before",
+              "prop": "position",
+              "value": "absolute"
+            }
+          ]
+        },
+        {
+          "id": "repos",
+          "ch": ".ch-chip[aria-pressed=\"false\"]",
+          "board": ".chip[aria-pressed=\"false\"]",
+          "states": [
+            "rest",
+            "hover",
+            "focus"
+          ],
+          "ignore": [
+            {
+              "target": "::before",
+              "reason": "ajout voulu de Chopa : zone de clic invisible de 44 px (docs/ARCHITECTURE.md, section 2) ; la planche n'a pas de ::before. Elle est mesurée à part, dans « asserts »."
+            }
+          ],
+          "ignoreProps": [
+            "position",
+            "top",
+            "right",
+            "bottom",
+            "left",
+            "inset-block-start",
+            "inset-block-end",
+            "inset-inline-start",
+            "inset-inline-end"
+          ],
+          "asserts": [
+            {
+              "target": "::before",
+              "prop": "content",
+              "value": "\"\""
+            },
+            {
+              "target": "::before",
+              "prop": "height",
+              "value": "44px"
+            },
+            {
+              "target": "::before",
+              "prop": "position",
+              "value": "absolute"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

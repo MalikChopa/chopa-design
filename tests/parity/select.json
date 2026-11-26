@@ -1,0 +1,69 @@
+{
+  "slug": "select",
+  "piece": "Liste déroulante (ch-select)",
+  "note": "Planche : .field select. Au repos, toutes les propriétés calculées sont comparées. Survol et focus : la planche n'a pas de règle de survol ni de bordure de focus pour le select (seulement .field input) ; Chopa y ajoute la même bordure que le champ texte (ajout voulu, cohérence). Ces deux états sont donc comparés sans les couleurs de bordure ni le décalage du contour (liste « only » ci-dessous : dimensions, remplissage, fond, texte, épaisseurs et styles de bordure, contour).",
+  "cases": [
+    {
+      "id": "defaut",
+      "ch": "<label class=\"ch-field\"><span class=\"ch-label\">Budget</span><select class=\"ch-select\"><option>Moins de 1 000 €</option><option>1 000 à 3 000 €</option><option>Plus de 3 000 €</option></select></label>",
+      "board": "<label class=\"field\"><span class=\"label\">Budget</span><select><option>Moins de 1 000 €</option><option>1 000 à 3 000 €</option><option>Plus de 3 000 €</option></select></label>",
+      "widths": [
+        1280,
+        375
+      ],
+      "pairs": [
+        {
+          "id": "repos",
+          "ch": ".ch-select",
+          "board": ".field select",
+          "states": [
+            "rest"
+          ]
+        },
+        {
+          "id": "survol-focus",
+          "ch": ".ch-select",
+          "board": ".field select",
+          "states": [
+            "hover",
+            "focus"
+          ],
+          "only": [
+            "display",
+            "box-sizing",
+            "width",
+            "height",
+            "min-height",
+            "padding-top",
+            "padding-right",
+            "padding-bottom",
+            "padding-left",
+            "background-color",
+            "color",
+            "font-family",
+            "font-size",
+            "font-weight",
+            "line-height",
+            "letter-spacing",
+            "text-transform",
+            "border-top-width",
+            "border-right-width",
+            "border-bottom-width",
+            "border-left-width",
+            "border-top-style",
+            "border-bottom-style",
+            "border-top-left-radius",
+            "border-bottom-right-radius",
+            "outline-style",
+            "outline-width",
+            "outline-color",
+            "margin-top",
+            "margin-right",
+            "margin-bottom",
+            "margin-left"
+          ]
+        }
+      ]
+    }
+  ]
+}

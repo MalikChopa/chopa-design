@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Appli : tableau de bord</title>
+  <meta name="description" content="Tableau de bord d'un carnet de lecture : chiffres clés, objectif, tableau triable, notification et état vide.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/appli/tableau-de-bord/">Marque-page</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/appli/tableau-de-bord/" aria-current="page">Tableau de bord</a>
+        <a href="/gabarits/appli/reglages/">Réglages</a>
+        <a href="/gabarits/appli/connexion/">Connexion</a>
+      </nav>
+      <div class="ch-row" role="group" aria-label="Thème">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+      <div class="ch-wrap">
+        <div class="ch-stack ch-stack--s6">
+        <div class="ch-stack ch-stack--s3">
+          <p class="ch-label">Novembre</p>
+          <h1 class="ch-t-h2">Mon carnet de lecture</h1>
+          <p class="ch-t-body">Sept livres en cours, un objectif de douze pour l'année. Le prochain à finir : un roman de montagne.</p>
+        </div>
+
+        <div class="ch-grid ch-grid--2-1">
+        <section class="ch-stack ch-stack--s3" aria-labelledby="titre-chiffres">
+          <h2 class="ch-t-h3" id="titre-chiffres">Ce mois-ci</h2>
+          <dl class="ch-stats ch-stats--4">
+            <div class="ch-stats__item">
+              <dt class="ch-stats__label">Livres terminés</dt>
+              <dd class="ch-stats__value">3<small class="ch-stats__trend">↑ 1<span class="ch-stats__sr"> de plus que le mois dernier</span></small></dd>
+            </div>
+            <div class="ch-stats__item">
+              <dt class="ch-stats__label">Pages lues</dt>
+              <dd class="ch-stats__value">642<small class="ch-stats__trend">↑ 120<span class="ch-stats__sr"> de plus que le mois dernier</span></small></dd>
+            </div>
+            <div class="ch-stats__item">
+              <dt class="ch-stats__label">Minutes par jour</dt>
+              <dd class="ch-stats__value">38<small class="ch-stats__trend ch-stats__trend--down">↓ 5<span class="ch-stats__sr"> de moins que le mois dernier</span></small></dd>
+            </div>
+            <div class="ch-stats__item">
+              <dt class="ch-stats__label">Jours d'affilée</dt>
+              <dd class="ch-stats__value">9</dd>
+            </div>
+          </dl>
+        </section>
+
+        <section class="ch-stack ch-stack--s2" aria-labelledby="titre-objectif">
+          <h2 class="ch-t-h3" id="titre-objectif">Objectif de l'année</h2>
+          <label class="ch-label" for="objectif-annee">Neuf livres sur douze</label>
+          <progress class="ch-progress" id="objectif-annee" max="12" value="9">9 sur 12</progress>
+          <p class="ch-t-small">Il reste trois livres et six semaines : un livre toutes les deux semaines suffit.</p>
+        </section>
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ch-section ch-section--alt">
+      <div class="ch-wrap">
+        <div class="ch-grid ch-grid--2-1">
+        <section class="ch-stack ch-stack--s3" aria-labelledby="titre-lectures">
+          <div class="ch-row ch-row--between">
+            <h2 class="ch-t-h3" id="titre-lectures">Lectures en cours</h2>
+            <button class="ch-btn ch-btn--secondary" type="button" data-ch-toast="Progression enregistrée : 642 pages ce mois-ci." data-ch-needs-js>Enregistrer la progression</button>
+          </div>
+          <div class="ch-table__wrap" role="region" aria-label="Tableau des livres ouverts" tabindex="0">
+            <table class="ch-table" data-ch-sort>
+              <caption class="ch-table__caption">Les sept livres ouverts, triables par colonne</caption>
+              <thead>
+                <tr><th scope="col">Titre</th><th scope="col">Genre</th><th scope="col" class="ch-table__num">Pages</th><th scope="col" class="ch-table__num">Avancement</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Le col des Brumes</td><td class="ch-t-small">Roman</td><td class="ch-table__num">312</td><td class="ch-table__num" data-ch-value="82">82&#160;%</td></tr>
+                <tr><td>Atlas des îles désertes</td><td class="ch-t-small">Récit</td><td class="ch-table__num">208</td><td class="ch-table__num" data-ch-value="45">45&#160;%</td></tr>
+                <tr><td>Petit traité du potager</td><td class="ch-t-small">Guide</td><td class="ch-table__num">176</td><td class="ch-table__num" data-ch-value="100">100&#160;%</td></tr>
+                <tr><td>La nuit des lucioles</td><td class="ch-t-small">Poésie</td><td class="ch-table__num">96</td><td class="ch-table__num" data-ch-value="60">60&#160;%</td></tr>
+                <tr><td>Carnets d'un cartographe</td><td class="ch-t-small">Récit</td><td class="ch-table__num">344</td><td class="ch-table__num" data-ch-value="12">12&#160;%</td></tr>
+                <tr><td>Quarante recettes de pain</td><td class="ch-t-small">Guide</td><td class="ch-table__num">128</td><td class="ch-table__num" data-ch-value="70">70&#160;%</td></tr>
+                <tr><td>L'horloger de Sainte-Brune</td><td class="ch-t-small">Roman</td><td class="ch-table__num">420</td><td class="ch-table__num" data-ch-value="5">5&#160;%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="ch-stack ch-stack--s3" aria-labelledby="titre-envies">
+          <h2 class="ch-t-h3" id="titre-envies">Liste d'envies</h2>
+          <div class="ch-empty">
+            <h3 class="ch-empty__title">Aucun livre en attente</h3>
+            <p class="ch-empty__text">Ajoute un titre croisé en librairie ou conseillé par un ami : il apparaîtra ici.</p>
+            <button class="ch-btn ch-btn--secondary ch-empty__action" type="button" data-ch-toast="Ajout impossible dans cette démonstration." data-ch-toast-type="warn" data-ch-needs-js>Ajouter un livre</button>
+          </div>
+        </section>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="ch-footer ch-footer--compact">
+    <div class="ch-footer__inner">
+      <nav class="ch-footer__nav" aria-label="Liens utiles">
+        <ul class="ch-footer__list">
+          <li><a class="ch-footer__link" href="/gabarits/appli/reglages/">Réglages</a></li>
+          <li><a class="ch-footer__link" href="/gabarits/appli/connexion/">Se déconnecter</a></li>
+        </ul>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Marque-page, un carnet de lecture personnel. Contenu fictif.</p>
+  </footer>
+</body>
+</html>

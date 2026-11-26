@@ -1,0 +1,56 @@
+/* « Créer ton thème » (J1c) : feuille propre à la page, préfixe .doc-tm-. Le texte de la page lui-même suit le thème de
+   la doc ; les cadres d'aperçu (.doc-tm-frame) portent leur propre data-ch-theme et reçoivent les réglages calculés par
+   une feuille <style> créée par le script (jamais de style en ligne), limitée à .doc-tm-frame. */
+.doc-tm-form { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 24px; margin: 0 0 24px; padding: 0; border: 0; }
+.doc-tm-field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.doc-tm-field--wide { grid-column: 1 / -1; }
+.doc-tm-label { font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-soft); }
+.doc-tm-input { box-sizing: border-box; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); color: var(--ch-fg); border: 1px solid var(--ch-line); border-radius: 0; font-family: var(--ch-mono); font-size: 14px; }
+.doc-tm-input:focus-visible, .doc-tm-details summary:focus-visible, .doc-tm-pre:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 2px; }
+.doc-tm-input[aria-invalid="true"] { border-color: var(--ch-fg); border-width: 2px; }
+.doc-tm-help { margin: 0; font-size: 13px; color: var(--ch-mute); }
+.doc-tm-error { margin: 0; font-size: 13px; font-weight: 600; color: var(--ch-fg); }
+.doc-tm-error[hidden] { display: none; }
+.doc-tm-actions { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 24px; }
+.doc-tm-verdict { margin: 0 0 24px; padding: 16px 20px; border: 1px solid var(--ch-line); background: var(--ch-card); color: var(--ch-fg); }
+.doc-tm-verdict--refus { border-width: 2px; border-color: var(--ch-fg); }
+.doc-tm-verdict p { margin: 0 0 8px; }
+.doc-tm-verdict ul { margin: 0; padding-left: 20px; }
+.doc-tm-verdict li { margin-bottom: 4px; color: var(--ch-soft); }
+
+/* Aperçu : 3 cadres côte à côte (1 colonne sur petit écran). */
+.doc-tm-frames { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0 0 24px; }
+.doc-tm-frame { box-sizing: border-box; min-width: 0; padding: 20px; border: 1px solid var(--ch-line); font-family: var(--ch-sans); }
+.doc-tm-frame__title { margin: 0 0 12px; font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); }
+.doc-tm-frame__display { margin: 0 0 8px; font-family: var(--ch-display); font-weight: var(--ch-display-weight); letter-spacing: var(--ch-display-track); font-size: 28px; line-height: 1; text-transform: uppercase; color: var(--ch-fg); }
+.doc-tm-frame__body { margin: 0 0 12px; font-size: 15px; color: var(--ch-soft); }
+.doc-tm-frame__link { color: var(--ch-acc-text); text-decoration: underline; }
+.doc-tm-frame__mono { display: block; margin: 0 0 16px; font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+.doc-tm-frame__row { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 0 0 16px; }
+.doc-tm-frame__tint { margin: 0; padding: 12px 14px; background: var(--ch-acc-dim); border-radius: var(--ch-radius); color: var(--ch-fg); font-size: 14px; }
+.doc-tm-frame .ch-btn:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+
+/* Réglages calculés et paires. */
+.doc-tm-table { width: 100%; border-collapse: collapse; margin: 0 0 24px; font-size: 14px; }
+.doc-tm-table th, .doc-tm-table td { padding: 10px 12px; border-bottom: 1px solid var(--ch-line); text-align: left; vertical-align: top; color: var(--ch-soft); }
+.doc-tm-table th { font-family: var(--ch-mono); font-size: 11px; font-weight: 400; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); }
+.doc-tm-table td:first-child, .doc-tm-table th[scope="row"] { color: var(--ch-fg); }
+.doc-tm-table code { font-family: var(--ch-mono); font-size: 13px; color: var(--ch-fg); }
+.doc-tm-scroll { overflow-x: auto; }
+.doc-tm-details { margin: 0 0 12px; border: 1px solid var(--ch-line); }
+.doc-tm-details summary { display: flex; align-items: center; min-height: 44px; padding: 0 16px; cursor: pointer; color: var(--ch-fg); font-weight: 600; }
+.doc-tm-details .doc-tm-scroll { padding: 0 16px 16px; }
+.doc-tm-details .doc-tm-table { margin: 0; min-width: 480px; }
+
+/* Sortie. */
+.doc-tm-pre { box-sizing: border-box; margin: 0 0 12px; padding: 16px 20px; overflow-x: auto; background: var(--ch-card); border: 1px solid var(--ch-line); color: var(--ch-fg); font-family: var(--ch-mono); font-size: 13px; line-height: 1.55; white-space: pre; }
+.doc-tm-pre--vide { color: var(--ch-soft); white-space: normal; }
+.doc-tm-sr { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+
+@media (max-width: 899px) { .doc-tm-frames { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 599px) { .doc-tm-form { grid-template-columns: minmax(0, 1fr); } }
+
+/* Pièces ajoutées à l'aperçu (J2b, preview.mjs) : seules les mises en page sont ici, les pièces viennent de chopa.css. */
+.doc-tm-frame__pieces { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; margin: 0 0 16px; min-width: 0; }
+.doc-tm-frame__pieces .doc-tm-frame__row { margin: 0; }
+.doc-tm-frame__fields { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; min-width: 0; }

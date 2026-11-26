@@ -1,0 +1,26 @@
+/* Liste (pièce 33) : ch-list sur ul, ol ou dl. Variantes : --rule (filets entre les éléments), --media (une image ou un avatar devant le texte).
+   ul : marqueurs carrés natifs en acc-text ; ol : chiffres natifs en mono mute ; dl : terme en étiquette mono mute, définition en soft.
+   --rule et --media retirent les puces : posez role="list" sur la liste pour que Safari garde la sémantique de liste.
+   Parties : ch-list__media (image ou avatar), ch-list__text (bloc de texte), ch-list__title (fg), ch-list__meta (mute).
+   Couleurs : fg, soft, mute, acc-text (marqueurs) sur bg, bg2, card ; filets line. */
+.ch-list { box-sizing: border-box; margin: 0; padding: 0 0 0 1.25em; font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
+ul.ch-list { list-style: square; }
+ol.ch-list { list-style: decimal; }
+.ch-list > li { box-sizing: border-box; margin: 0; padding: var(--ch-s1) 0 var(--ch-s1) var(--ch-s1); }
+ul.ch-list > li::marker { color: var(--ch-acc-text); }
+ol.ch-list > li::marker { font-family: var(--ch-mono); font-size: 12px; color: var(--ch-mute); }
+dl.ch-list { padding-left: 0; }
+dl.ch-list > dt { box-sizing: border-box; margin: 0; padding: var(--ch-s2) 0 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+dl.ch-list > dd { box-sizing: border-box; margin: 0; padding: var(--ch-s1) 0 var(--ch-s2); }
+
+.ch-list.ch-list--rule, .ch-list.ch-list--media { list-style: none; padding-left: 0; }
+.ch-list--rule > li, .ch-list--media > li { padding: var(--ch-s3) 0; border-bottom: 1px solid var(--ch-line); }
+.ch-list--rule > li:first-child, .ch-list--media > li:first-child { border-top: 1px solid var(--ch-line); }
+dl.ch-list--rule > dt { padding: var(--ch-s3) 0 0; border-top: 1px solid var(--ch-line); }
+dl.ch-list--rule > dd { padding: var(--ch-s1) 0 var(--ch-s3); }
+dl.ch-list--rule > dd:last-child { border-bottom: 1px solid var(--ch-line); }
+.ch-list--media > li { display: flex; align-items: center; gap: var(--ch-s4); }
+.ch-list__media { flex: none; }
+.ch-list__text { box-sizing: border-box; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; }
+.ch-list__title { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }
+.ch-list__meta { box-sizing: border-box; margin: 0; padding: 0; font-size: 14px; color: var(--ch-mute); }

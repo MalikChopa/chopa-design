@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="fr" data-ch-theme="sombre">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Journal de bord de Veilleurs de cendre</title>
+  <meta name="description" content="Gabarit de site de jeu vidéo : notes de version d'un jeu fictif, avec sommaire, frise des patchs, badges et tableau.">
+  <link rel="stylesheet" href="/chopa/chopa.css">
+  <link rel="stylesheet" href="/chopa/chopa-reset.css">
+  <script src="/chopa/chopa.js" defer onerror="document.documentElement.classList.remove('ch-js')"></script>
+  <script src="/chopa/chopa-theme.js"></script>
+</head>
+<body>
+  <a class="ch-skip" href="#contenu">Aller au contenu</a>
+  <header class="ch-header" data-ch-menu>
+    <div class="ch-header__inner">
+      <a class="ch-header__brand" href="/gabarits/jeu/accueil/">Veilleurs de cendre</a>
+      <button class="ch-btn ch-btn--secondary ch-header__toggle" type="button" aria-expanded="false" aria-controls="menu-principal"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-menu"></use></svg>Menu</button>
+      <nav class="ch-nav ch-header__nav" id="menu-principal" aria-label="Principale">
+        <a href="/gabarits/jeu/accueil/">Le jeu</a>
+        <a href="/gabarits/jeu/accueil/#regions">Régions</a>
+        <a href="/gabarits/jeu/journal/" aria-current="page">Journal</a>
+        <a href="/gabarits/jeu/accueil/#editions">Éditions</a>
+        <a href="/gabarits/jeu/accueil/#faq">Questions</a>
+      </nav>
+      <div class="ch-row ch-row--nowrap" role="group" aria-label="Thème de la page">
+        <button class="ch-chip" type="button" data-ch-theme-set="sombre" aria-pressed="true">Sombre</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="clair" aria-pressed="false">Clair</button>
+        <button class="ch-chip" type="button" data-ch-theme-set="chaud" aria-pressed="false">Chaud</button>
+      </div>
+    </div>
+  </header>
+  <main id="contenu" tabindex="-1">
+    <div class="ch-section">
+    <div class="ch-wrap">
+      <div class="ch-stack ch-stack--s6">
+        <nav class="ch-breadcrumb" aria-label="Fil d'Ariane">
+          <ol class="ch-breadcrumb__list">
+            <li class="ch-breadcrumb__item"><a class="ch-breadcrumb__link" href="/gabarits/jeu/accueil/">Le jeu</a></li>
+            <li class="ch-breadcrumb__item"><span aria-current="page">Journal de bord</span></li>
+          </ol>
+        </nav>
+        <header class="ch-stack ch-stack--s4">
+          <p class="ch-label">Notes de version</p>
+          <h1 class="ch-t-h2">Journal de bord</h1>
+          <p class="ch-t-body">Tout ce qui change dans <em>Veilleurs de cendre</em>, version après version : les nouveautés, les confort et les correctifs.</p>
+        </header>
+        <div class="ch-grid ch-grid--sidebar">
+        <nav class="ch-toc" aria-label="Sommaire du journal" data-ch-toc>
+          <p class="ch-toc__title">Sur cette page</p>
+          <ol class="ch-toc__list">
+            <li><a class="ch-toc__link" href="#patch-1-3">Patch 1.3 · Les marées</a></li>
+            <li><a class="ch-toc__link" href="#patch-1-2">Patch 1.2 · Le sommeil</a></li>
+            <li><a class="ch-toc__link" href="#patch-1-1">Patch 1.1 · Correctifs</a></li>
+            <li><a class="ch-toc__link" href="#patch-1-0">Sortie 1.0</a></li>
+            <li><a class="ch-toc__link" href="#equilibrage">Équilibrage des ennemis</a></li>
+          </ol>
+        </nav>
+        <div class="ch-stack ch-stack--s6">
+        <section class="ch-stack ch-stack--s4" aria-labelledby="t-historique">
+          <h2 class="ch-t-h3" id="t-historique">Historique</h2>
+          <ol class="ch-timeline">
+            <li class="ch-timeline__item" aria-current="date">
+              <time class="ch-timeline__time" datetime="2026-06-12">12 juin 2026</time>
+              <h3 class="ch-timeline__title"><span class="ch-timeline__state">Version actuelle : </span><a href="#patch-1-3">Patch 1.3 · Les marées</a></h3>
+            </li>
+            <li class="ch-timeline__item">
+              <time class="ch-timeline__time" datetime="2026-04-30">30 avril 2026</time>
+              <h3 class="ch-timeline__title"><a href="#patch-1-2">Patch 1.2 · Le sommeil</a></h3>
+            </li>
+            <li class="ch-timeline__item">
+              <time class="ch-timeline__time" datetime="2026-03-02">2 mars 2026</time>
+              <h3 class="ch-timeline__title"><a href="#patch-1-1">Patch 1.1 · Correctifs</a></h3>
+            </li>
+            <li class="ch-timeline__item">
+              <time class="ch-timeline__time" datetime="2026-01-15">15 janvier 2026</time>
+              <h3 class="ch-timeline__title"><a href="#patch-1-0">Sortie 1.0</a></h3>
+            </li>
+          </ol>
+        </section>
+        <section class="ch-stack ch-stack--s3" id="patch-1-3" aria-labelledby="t-patch-1-3">
+          <h2 class="ch-t-h3" id="t-patch-1-3">Patch 1.3 · Les marées</h2>
+          <p class="ch-row"><time class="ch-t-mono" datetime="2026-06-12">12 juin 2026</time><span class="ch-badge ch-badge--solid">Nouveau</span><span class="ch-badge ch-badge--outline">Zone</span></p>
+          <ul class="ch-list" role="list">
+            <li>Nouvelle zone côtière : la plage des Sentinelles et ses quatre tours.</li>
+            <li>Quatre nouveaux ennemis : le crabe de brume, la méduse sèche, le héron de pierre et le veilleur noir.</li>
+            <li>Le sac à dos passe à vingt emplacements.</li>
+          </ul>
+        </section>
+        <section class="ch-stack ch-stack--s3" id="patch-1-2" aria-labelledby="t-patch-1-2">
+          <h2 class="ch-t-h3" id="t-patch-1-2">Patch 1.2 · Le sommeil</h2>
+          <p class="ch-row"><time class="ch-t-mono" datetime="2026-04-30">30 avril 2026</time><span class="ch-badge ch-badge--solid">Nouveau</span><span class="ch-badge ch-badge--outline">Confort</span></p>
+          <ul class="ch-list" role="list">
+            <li>Un mode nuit qui réduit les contrastes et baisse la musique.</li>
+            <li>Les sauvegardes sont deux fois plus rapides.</li>
+            <li>La carte peut être annotée avec quatre repères.</li>
+          </ul>
+        </section>
+        <section class="ch-stack ch-stack--s3" id="patch-1-1" aria-labelledby="t-patch-1-1">
+          <h2 class="ch-t-h3" id="t-patch-1-1">Patch 1.1 · Correctifs</h2>
+          <p class="ch-row"><time class="ch-t-mono" datetime="2026-03-02">2 mars 2026</time><span class="ch-badge ch-badge--mute">Correctif</span></p>
+          <ul class="ch-list" role="list">
+            <li>Dix-huit correctifs, dont le saut cassé près du pont de pierre.</li>
+            <li>La manette de la seconde lanterne n'est plus ignorée au démarrage.</li>
+            <li>Les sous-titres suivent mieux le rythme des dialogues.</li>
+          </ul>
+        </section>
+        <section class="ch-stack ch-stack--s3" id="patch-1-0" aria-labelledby="t-patch-1-0">
+          <h2 class="ch-t-h3" id="t-patch-1-0">Sortie 1.0</h2>
+          <p class="ch-row"><time class="ch-t-mono" datetime="2026-01-15">15 janvier 2026</time><span class="ch-badge ch-badge--solid">Lancement</span></p>
+          <ul class="ch-list" role="list">
+            <li>Le jeu est disponible sur ordinateur, avec les trois premières régions.</li>
+            <li>Quarante-deux succès, une bande-son de quatorze pistes et le mode à deux joueurs.</li>
+          </ul>
+        </section>
+        <section class="ch-stack ch-stack--s3" id="equilibrage" aria-labelledby="t-equilibrage">
+          <h2 class="ch-t-h3" id="t-equilibrage">Équilibrage des ennemis</h2>
+          <div class="ch-table__wrap" role="region" aria-label="Équilibrage des ennemis du patch 1.3" tabindex="0">
+            <table class="ch-table">
+              <caption class="ch-table__caption">Points de vie et vitesse des ennemis ajoutés au patch 1.3</caption>
+              <thead>
+                <tr><th scope="col">Ennemi</th><th scope="col">Région</th><th scope="col" class="ch-table__num">Points de vie</th><th scope="col" class="ch-table__num">Vitesse</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Crabe de brume</td><td class="ch-t-small">Côte</td><td class="ch-table__num">12</td><td class="ch-table__num">3</td></tr>
+                <tr><td>Méduse sèche</td><td class="ch-t-small">Côte</td><td class="ch-table__num">8</td><td class="ch-table__num">5</td></tr>
+                <tr><td>Héron de pierre</td><td class="ch-t-small">Marais</td><td class="ch-table__num">20</td><td class="ch-table__num">2</td></tr>
+                <tr><td>Veilleur noir</td><td class="ch-t-small">Côte</td><td class="ch-table__num">35</td><td class="ch-table__num">4</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <div class="ch-row ch-row--between">
+          <a class="ch-btn ch-btn--ghost" href="/gabarits/jeu/accueil/"><svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-chevron-left"></use></svg> Retour au jeu</a>
+          <a class="ch-btn ch-btn--secondary" href="/gabarits/jeu/accueil/#editions">Acheter le jeu <svg class="ch-icon" aria-hidden="true" focusable="false"><use href="/chopa/chopa-icons.svg#ch-i-arrow"></use></svg></a>
+        </div>
+        </div>
+        </div>
+      </div>
+    </div>
+    </div>
+  </main>
+  <footer class="ch-footer">
+    <div class="ch-footer__inner">
+      <div class="ch-footer__brand">
+        <p class="ch-footer__name">Veilleurs de cendre</p>
+        <p class="ch-footer__text">Un jeu d'aventure et de lumière, fait à trois dans un atelier de Rennes (fictif).</p>
+      </div>
+      <nav class="ch-footer__nav" aria-label="Pied de page">
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Le jeu</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#regions">Les régions</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#captures">Les captures</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#editions">Les éditions</a></li>
+          </ul>
+        </div>
+        <div class="ch-footer__col">
+          <p class="ch-footer__title">Suivre</p>
+          <ul class="ch-footer__list">
+            <li><a class="ch-footer__link" href="/gabarits/jeu/journal/">Journal de bord</a></li>
+            <li><a class="ch-footer__link" href="/gabarits/jeu/accueil/#faq">Questions fréquentes</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
+    <p class="ch-footer__legal">Veilleurs de cendre est un jeu fictif. Toutes les images de cette page sont des remplacements gris.</p>
+  </footer>
+</body>
+</html>

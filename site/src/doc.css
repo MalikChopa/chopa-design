@@ -1,0 +1,104 @@
+/* Habillage de la doc seulement (préfixe .doc-). Tout le reste vient de chopa.css. */
+body { margin: 0; font-family: var(--ch-sans); line-height: 1.5; background: var(--ch-bg); color: var(--ch-fg); }
+.doc-bar { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 14px 28px; border-bottom: 1px solid var(--ch-line); }
+.doc-brand { padding: 10px 0; font-weight: 800; letter-spacing: -.045em; text-transform: uppercase; color: var(--ch-fg); text-decoration: none; } /* 24 + 20 = 44 px de cible (Diapason, vérif. J1b-1) */
+.doc-dot { display: inline-block; width: .34em; height: .34em; margin-left: .14em; background: var(--ch-acc); }
+.doc-themes { display: inline-flex; border: 1px solid var(--ch-line); }
+.doc-themes button { min-height: 44px; min-width: 44px; padding: 0 16px; background: none; border: 0; border-right: 1px solid var(--ch-line); font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); cursor: pointer; }
+.doc-themes button:last-child { border-right: 0; }
+.doc-themes button:hover { color: var(--ch-fg); }
+.doc-themes button[aria-pressed="true"] { background: var(--ch-fg); color: var(--ch-bg); }
+.doc-themes button:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 3px; }
+.doc-main { box-sizing: border-box; width: 100%; min-width: 0; max-width: 1016px; margin: 0 auto; padding: 48px 28px 72px; } /* largeur bornée par la piste de grille : à 1024 px, un long bloc de code l'élargissait à 1016 px (Diapason, vérif. J2a-1) ; 1016 = 960 + 2 × 28, inchangé en grand écran */
+.doc-h1 { margin: 0 0 16px; font-weight: 800; font-size: clamp(40px, 8vw, 96px); line-height: .9; letter-spacing: -.045em; text-transform: uppercase; }
+.doc-h2 { margin: 48px 0 16px; font-size: 22px; font-weight: 600; }
+.doc-lead { max-width: 620px; color: var(--ch-soft); }
+.doc-example { margin: 0 0 24px; border: 1px solid var(--ch-line); }
+.doc-example__preview { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; padding: 24px; background: var(--ch-bg); }
+.doc-example__code { border-top: 1px solid var(--ch-line); }
+.doc-example__code pre { margin: 0; padding: 16px 24px; overflow-x: auto; font-family: var(--ch-mono); font-size: 13px; }
+
+/* --- Bloc de code : Shiki `css-variables` (docs/ARCHITECTURE.md, section 7) ---
+   Les variables --astro-code-* sont posées par thème depuis les rôles, sur la surface `card` ; seulement des couleurs,
+   ni gras ni italique. 4 niveaux : mot-clé accent ; chaîne, nombre, paramètre soft ; fonction, balise, attribut, texte fg ;
+   commentaire, ponctuation mute. Posées sur `:root, [data-ch-theme]` : un cadre local prend les couleurs de son thème.
+   scripts/checks/code-contrast.mjs lit ces déclarations : chaque couleur × `card`, 3 thèmes, au moins 4,5 : 1. */
+:root, [data-ch-theme] {
+  --astro-code-foreground: var(--ch-fg);
+  --astro-code-background: var(--ch-card);
+  --astro-code-token-keyword: var(--ch-acc-text);
+  --astro-code-token-link: var(--ch-acc-text);
+  --astro-code-token-string: var(--ch-soft);
+  --astro-code-token-constant: var(--ch-soft);
+  --astro-code-token-parameter: var(--ch-soft);
+  --astro-code-token-changed: var(--ch-soft);
+  --astro-code-token-function: var(--ch-fg);
+  --astro-code-token-string-expression: var(--ch-fg);
+  --astro-code-token-inserted: var(--ch-fg);
+  --astro-code-token-comment: var(--ch-mute);
+  --astro-code-token-punctuation: var(--ch-mute);
+  --astro-code-token-deleted: var(--ch-mute);
+}
+.doc-example__code .astro-code, .doc-example__code--solo .astro-code { margin: 0; }
+.doc-example__code--solo { margin: 0 0 24px; border: 1px solid var(--ch-line); }
+
+/* --- Structure de la page --- */
+.doc-skip { position: absolute; left: 8px; top: -80px; z-index: var(--ch-z-overlay); box-sizing: border-box; min-height: 44px; padding: 12px 16px; background: var(--ch-fg); color: var(--ch-bg); font-family: var(--ch-mono); font-size: 13px; text-decoration: none; }
+.doc-skip:focus { top: 8px; outline: 2px solid var(--ch-focus); outline-offset: 2px; }
+.doc-sr, .doc-search__label { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+.doc-shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); align-items: start; }
+.doc-nav { position: sticky; top: 0; max-height: 100vh; overflow-y: auto; padding: 24px 16px 24px 28px; border-right: 1px solid var(--ch-line); font-size: 15px; }
+.doc-nav__toggle { display: none; min-height: 44px; align-items: center; cursor: pointer; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-soft); }
+.doc-nav__toggle:focus-visible, .doc-nav a:focus-visible, .doc-search a:focus-visible, .doc-cards a:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 2px; }
+.doc-nav ul { margin: 0; padding: 0; list-style: none; }
+.doc-nav a, .doc-nav__soon { display: block; box-sizing: border-box; min-height: 44px; padding: 10px 0; color: var(--ch-soft); text-decoration: none; } /* 42,5 px mesurés sans min-height (Diapason, vérif. J1b-1) */
+.doc-nav a:hover { color: var(--ch-fg); }
+.doc-nav a[aria-current="page"] { color: var(--ch-acc-text); font-weight: 600; }
+.doc-nav__soon { color: var(--ch-mute); }
+.doc-nav small { font-family: var(--ch-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; }
+.doc-nav__group ul { padding-left: 12px; }
+.doc-nav__family, .doc-nav__empty { margin: 12px 0 0; font-family: var(--ch-mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); }
+.doc-nav__empty { text-transform: none; letter-spacing: 0; }
+.doc-footer { padding: 24px 28px; border-top: 1px solid var(--ch-line); color: var(--ch-mute); font-size: 13px; }
+.doc-footer p { margin: 0; }
+
+/* --- Recherche --- */
+.doc-search { position: relative; flex: 1 1 220px; max-width: 360px; }
+.doc-search__form { margin: 0; }
+.doc-search__input { box-sizing: border-box; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); color: var(--ch-fg); border: 1px solid var(--ch-line); font: inherit; font-size: 15px; }
+.doc-search__input:focus-visible { outline: 2px solid var(--ch-focus); outline-offset: 2px; }
+.doc-search__results { position: absolute; left: 0; right: 0; top: 100%; z-index: var(--ch-z-bar); margin: 4px 0 0; padding: 0; list-style: none; background: var(--ch-card); border: 1px solid var(--ch-line); }
+.doc-search__results[hidden] { display: none; }
+.doc-search__results li { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; padding: 0 14px; min-height: 44px; color: var(--ch-soft); }
+.doc-search__results a { display: flex; align-items: center; flex: 1; min-height: 44px; color: var(--ch-fg); text-decoration: none; }
+.doc-search__results a:hover { color: var(--ch-acc-text); }
+.doc-search__results small { font-family: var(--ch-mono); font-size: 11px; letter-spacing: .06em; text-transform: uppercase; color: var(--ch-mute); }
+.doc-search__results li:not(:has(a)) { align-items: center; }
+
+/* --- Contenu des pages --- */
+.doc-h1--page { font-size: clamp(32px, 6vw, 64px); }
+.doc-h3 { margin: 24px 0 12px; font-size: 17px; font-weight: 600; }
+.doc-eyebrow { margin: 0 0 12px; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--ch-mute); }
+.doc-text { max-width: 65ch; margin: 0 0 16px; color: var(--ch-soft); }
+.doc-text a, .doc-lead a { color: var(--ch-acc-text); }
+.doc-lead { margin: 0 0 16px; }
+.doc-list { max-width: 65ch; margin: 0 0 16px; padding-left: 20px; color: var(--ch-soft); }
+.doc-list li { margin-bottom: 8px; }
+.doc-variant { margin: 0 0 16px; }
+.doc-themes-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.doc-themes-grid .doc-example { margin: 0; }
+.doc-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin: 0 0 24px; padding: 0; list-style: none; }
+.doc-cards a, .doc-cards li > span { display: flex; flex-direction: column; gap: 6px; box-sizing: border-box; height: 100%; padding: 16px; border: 1px solid var(--ch-line); background: var(--ch-card); color: var(--ch-soft); text-decoration: none; }
+.doc-cards a:hover { border-color: var(--ch-acc-text); }
+.doc-cards strong { color: var(--ch-fg); font-weight: 600; }
+.doc-cards li > span { color: var(--ch-mute); }
+
+@media (max-width: 899px) {
+  .doc-shell { display: block; }
+  .doc-nav { position: static; max-height: none; border-right: 0; border-bottom: 1px solid var(--ch-line); padding: 4px 16px; }
+  .doc-nav__toggle { display: flex; }
+  .doc-bar, .doc-main, .doc-footer { padding-left: 16px; padding-right: 16px; }
+  .doc-bar { flex-direction: column; align-items: stretch; }
+  .doc-search { flex: none; max-width: none; } /* en colonne, la base de 220 px devenait une hauteur (Diapason, vérif. J1b-1) */
+  .doc-themes-grid { grid-template-columns: minmax(0, 1fr); }
+}

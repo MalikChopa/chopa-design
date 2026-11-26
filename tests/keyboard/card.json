@@ -1,0 +1,49 @@
+{
+  "slug": "card",
+  "cases": [
+    {
+      "id": "cartes-lien",
+      "example": "card/lien",
+      "tabOrder": [
+        ".ch-card:nth-child(1) .ch-card__link",
+        ".ch-card:nth-child(2) .ch-card__link",
+        ".ch-card:nth-child(3) .ch-card__link"
+      ],
+      "setup": [
+        {
+          "sel": ".ch-card:nth-child(1) .ch-card__link",
+          "listen": "click",
+          "as": "clic"
+        }
+      ],
+      "steps": [
+        {
+          "key": "Enter",
+          "expect": {
+            "focus": ".ch-card:nth-child(1) .ch-card__link",
+            "count": {
+              "clic": 1
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "carte-lien-et-image",
+      "example": "card/lien-media",
+      "tabOrder": [
+        ".ch-card:nth-child(1) .ch-card__link",
+        ".ch-card:nth-child(2) .ch-card__link"
+      ]
+    },
+    {
+      "id": "cartes-a-actions",
+      "example": "card/defaut",
+      "tabOrder": [
+        ".ch-card:nth-child(1) .ch-btn--primary",
+        ".ch-card:nth-child(1) .ch-btn--ghost",
+        ".ch-card:nth-child(2) .ch-btn--secondary"
+      ]
+    }
+  ]
+}

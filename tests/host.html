@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Test hôte : chopa.css dans un site qui a ses propres règles</title>
+<!-- Page de test lue par scripts/browser/host.mjs (servie sous /tests/host.html ; chopa.css sous /chopa/chopa.css).
+     host.html            : hôte nu (pas de règle hostile).
+     host.html?hostile    : + tests/host-hostile.css et <html data-theme="light"> (l'attribut de l'hôte, pas le nôtre).
+     host.html?reset      : + chopa-reset.css (la remise à zéro globale facultative).
+     Contenu fictif. Les éléments marqués data-host sont à l'hôte : leur style calculé ne doit pas changer avec chopa.css. -->
+<link rel="stylesheet" href="/chopa/chopa.css">
+<script>
+  (function () {
+    var q = location.search;
+    if (q.indexOf('hostile') > -1) {
+      document.write('<link rel="stylesheet" href="/tests/host-hostile.css">');
+      document.documentElement.setAttribute('data-theme', 'light');
+    }
+    if (q.indexOf('reset') > -1) document.write('<link rel="stylesheet" href="/chopa/chopa-reset.css">');
+  })();
+</script>
+<style>
+  /* Typographie et couleurs de l'hôte (posées sur body : chopa.css ne les touche pas). */
+  body { font-family: Georgia, serif; font-size: 15px; line-height: 1.7; color: #222222; background: #ffffff; }
+</style>
+</head>
+<body>
+<main id="hote">
+  <h1 data-host>Titre de l'hôte</h1>
+  <p data-host>Un paragraphe de l'hôte avec <a data-host href="#">un lien</a>.</p>
+  <ul data-host><li data-host>Première puce</li><li data-host>Deuxième puce</li></ul>
+  <button data-host type="button">Bouton de l'hôte</button>
+  <input data-host type="text" value="Champ de l'hôte" aria-label="Champ de l'hôte">
+  <textarea data-host aria-label="Zone de l'hôte">Zone de l'hôte</textarea>
+</main>
+
+<section id="chopa">
+  <!-- Éléments Chopa, une fois en forme normale, une fois avec un saut de ligne ou une tabulation dans l'attribut class.
+       data-twin pointe vers l'élément de référence : tous les styles calculés doivent être égaux. -->
+  <h2 id="t-h2" class="ch-t-h2">Projets récents</h2>
+  <p id="t-body" class="ch-t-body">Texte courant de Chopa.</p>
+  <p id="t-small" class="ch-t-small">Petit texte de Chopa.</p>
+  <p id="t-small-nl" data-twin="t-small" class="ch-t-small
+">Petit texte, class terminée par un saut de ligne.</p>
+  <p id="label" class="ch-label">Libellé</p>
+  <p id="label-nl" data-twin="label" class="note
+ch-label">Libellé, saut de ligne avant ch-label.</p>
+  <p id="label-tab" data-twin="label" class="note	ch-label">Libellé, tabulation avant ch-label.</p>
+  <button id="btn" class="ch-btn ch-btn--primary" type="button">Me contacter</button>
+  <button id="btn-nl" data-twin="btn" class="ch-btn
+ch-btn--primary" type="button">Me contacter</button>
+  <button id="btn-nl2" data-twin="btn" class="ch-btn--primary
+ch-btn" type="button">Me contacter</button>
+  <a id="btn-a" class="ch-btn ch-btn--secondary" href="#">Lien en bouton</a>
+  <div id="row" class="ch-row"><span>A</span><span>B</span></div>
+  <div id="grid" class="ch-grid ch-grid--3"><div>A</div><div>B</div><div>C</div></div>
+  <div id="wrap" class="ch-wrap"><p data-host="in-wrap">Un paragraphe de l'hôte dans un conteneur Chopa : il reste à l'hôte.</p></div>
+  <div id="stack" class="ch-stack">
+    <p data-host="stack-direct">Enfant direct d'une pile : marges verticales remises à zéro (exception documentée).</p>
+    <div><p data-host>Petit-enfant d'une pile : reste à l'hôte.</p></div>
+  </div>
+</section>
+</body>
+</html>

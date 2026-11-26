@@ -1,0 +1,12 @@
+/* Envoi de fichier (pièce 14) : <input type="file" class="ch-file">. Le bouton natif est habillé par
+   ::file-selector-button (fg sur card). États : survol, focus, erreur (aria-invalid), désactivé. */
+.ch-file { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-soft); font: inherit; cursor: pointer; transition: border-color var(--ch-t-fast); }
+.ch-file::file-selector-button { box-sizing: border-box; min-height: 42px; margin: 0 14px 0 0; padding: 0 16px; background: var(--ch-card); border: 0; border-right: 1px solid var(--ch-line); border-radius: 0; color: var(--ch-fg); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; cursor: pointer; transition: background var(--ch-t-fast), color var(--ch-t-fast); }
+.ch-file:hover { border-color: var(--ch-mute); }
+.ch-file:hover::file-selector-button { background: var(--ch-fg); color: var(--ch-bg); }
+.ch-file:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-file[aria-invalid="true"], .ch-field.is-error .ch-file,
+.ch-file[aria-invalid="true"]:hover, .ch-field.is-error .ch-file:hover { border-color: var(--ch-acc); }
+.ch-file:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); cursor: not-allowed; }
+.ch-file:disabled::file-selector-button { background: none; color: var(--ch-mute); cursor: not-allowed; }
+.ch-file:disabled:hover::file-selector-button { background: none; color: var(--ch-mute); }

@@ -1,0 +1,9 @@
+/* Champ avec préfixe ou suffixe (pièce 15) : <div class="ch-input-group ch-input-group--prefix"> avec un
+   <span class="ch-input-group__addon"> (soft sur card) et un ch-input. Le libellé du champ est lié par for/id ;
+   l'ajout est décoratif ou rappelé dans le libellé. L'ordre du HTML fait le préfixe ou le suffixe. */
+.ch-input-group { box-sizing: border-box; margin: 0; padding: 0; display: flex; align-items: stretch; width: 100%; }
+.ch-input-group > .ch-input { flex: 1 1 auto; min-width: 0; width: auto; }
+.ch-input-group__addon { box-sizing: border-box; margin: 0; flex: none; display: inline-flex; align-items: center; min-height: 44px; padding: 0 14px; background: var(--ch-card); border: 1px solid var(--ch-line); color: var(--ch-soft); font-family: var(--ch-mono); font-size: 12px; letter-spacing: .1em; }
+.ch-input-group--prefix > .ch-input-group__addon { border-right-width: 0; }
+.ch-input-group--suffix > .ch-input-group__addon { border-left-width: 0; }
+.ch-field.is-error .ch-input-group__addon { border-color: var(--ch-acc); }

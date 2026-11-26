@@ -1,0 +1,13 @@
+/* Champ texte (pièce 10). Planche : .field input. États : survol, focus (contour + bordure), erreur, désactivé,
+   lecture seule. Textes : fg, mute (aide, repère) sur bg2 ; désactivé et lecture seule restent des paires autorisées
+   (mute ou soft sur bg, bg2, card), sans opacité. */
+.ch-input { box-sizing: border-box; margin: 0; width: 100%; min-height: 44px; padding: 0 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; transition: border-color var(--ch-t-fast); }
+.ch-input::placeholder { color: var(--ch-mute); opacity: 1; }
+.ch-input:hover { border-color: var(--ch-mute); }
+.ch-input:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-input[readonly] { background: none; border-style: dashed; color: var(--ch-soft); }
+.ch-input[readonly]:hover { border-color: var(--ch-line); }
+.ch-input[aria-invalid="true"], .ch-field.is-error .ch-input,
+.ch-input[aria-invalid="true"]:hover, .ch-field.is-error .ch-input:hover { border-color: var(--ch-acc); }
+.ch-input:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; }
+.ch-input:disabled::placeholder { color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); }

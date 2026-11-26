@@ -1,0 +1,18 @@
+Chopa Design
+Copyright (c) 2026 Malik Moussaoui (Chopa). Tous droits réservés. All rights reserved.
+
+FR : Ce dépôt est public pour être lu, à titre de portfolio. Aucune licence n'est accordée : sans
+accord écrit de l'auteur, il est interdit de copier, modifier, redistribuer ou utiliser tout ou
+partie du code, des styles, des gabarits, de la documentation et de l'identité visuelle « Chopa »,
+y compris dans un autre projet. Lire et regarder le code reste libre.
+
+EN: This repository is public to be read, as a portfolio piece. No licence is granted: without the
+author's written permission, you may not copy, modify, redistribute or use any part of the code,
+styles, templates, documentation or the "Chopa" visual identity, including in another project.
+Reading and browsing the code is fine.
+
+Exceptions (third-party files, under their own licences, kept next to them):
+- Inter Tight and IBM Plex Mono fonts: SIL Open Font License 1.1
+  (dist-lib/fonts/, maquette/assets/fonts/, with their LICENSE files).
+- Carbon icons by IBM: Apache License 2.0 (src/icons/carbon/LICENSE, dist-lib/LICENSE-icones-carbon.txt).
+- Lucide (ISC) and Material Symbols (Apache 2.0) icon candidates: site/src/icones-candidats/, with their LICENSE files.

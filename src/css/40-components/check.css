@@ -1,0 +1,15 @@
+/* Case à cocher (pièce 16) : <input type="checkbox" class="ch-check"> dans un <label class="ch-choice">.
+   Planche : .check (étiquette) et .check input (case 20 px, coché = fond acc, marque on-acc de 8 px).
+   Ajouts : indéterminé (barre), erreur (aria-invalid), désactivé. Aucune transition (la planche n'en a pas).
+   Zone de clic : le libellé fait au moins 44 px de haut (cible tactile, planche : min-height 44px).
+   Textes : fg sur bg, bg2, card ; désactivé mute (paire autorisée, sans opacité). Marques : on-acc sur acc. */
+.ch-choice { box-sizing: border-box; margin: 0; padding: 0; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-size: 15px; }
+.ch-choice:has(> :disabled) { color: var(--ch-mute); cursor: not-allowed; }
+.ch-check { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; appearance: none; -webkit-appearance: none; width: 20px; height: 20px; border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); background: var(--ch-bg2); color: inherit; display: grid; place-items: center; cursor: pointer; }
+.ch-check:checked, .ch-check:indeterminate { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-check:checked::after, .ch-check:indeterminate::after { content: ""; width: 8px; height: 8px; background: var(--ch-on-acc); }
+.ch-check:indeterminate::after { width: 10px; height: 2px; }
+.ch-check[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-check:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-check:disabled:checked, .ch-check:disabled:indeterminate { background: none; border-color: var(--ch-mute); }
+.ch-check:disabled:checked::after, .ch-check:disabled:indeterminate::after { background: var(--ch-mute); }

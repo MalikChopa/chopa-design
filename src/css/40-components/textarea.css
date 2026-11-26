@@ -1,0 +1,10 @@
+/* Zone de texte (pièce 11) : mêmes états que ch-input ; hauteur libre vers le bas seulement. */
+.ch-textarea { box-sizing: border-box; margin: 0; display: block; width: 100%; min-height: 120px; padding: 12px 14px; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); color: var(--ch-fg); font: inherit; resize: vertical; transition: border-color var(--ch-t-fast); }
+.ch-textarea::placeholder { color: var(--ch-mute); opacity: 1; }
+.ch-textarea:hover { border-color: var(--ch-mute); }
+.ch-textarea:focus-visible { border-color: var(--ch-focus); outline-offset: 0; }
+.ch-textarea[readonly] { background: none; border-style: dashed; color: var(--ch-soft); }
+.ch-textarea[readonly]:hover { border-color: var(--ch-line); }
+.ch-textarea[aria-invalid="true"], .ch-field.is-error .ch-textarea,
+.ch-textarea[aria-invalid="true"]:hover, .ch-field.is-error .ch-textarea:hover { border-color: var(--ch-acc); }
+.ch-textarea:disabled { background: none; border-color: var(--ch-line); color: var(--ch-mute); -webkit-text-fill-color: var(--ch-mute); opacity: 1; cursor: not-allowed; resize: none; }

@@ -1,0 +1,11 @@
+/* Fixture jaune #ffd400, après correction de dim-pct : feuille de réglages d'un site, posée après chopa.css (tests/fixtures, J1a-2).
+   Réglages calculés par src/lib (node scripts/static/check-contrast.mjs --derive #ffd400) ; données de test, pas un thème Chopa.
+   Écart assumé : arrondi 8px et polices système (la palette stricte ne vaut que pour les 3 thèmes Chopa). */
+:root {
+  --ch-acc: #ffd400; --ch-on-acc: #050505;
+  --ch-radius: 8px;
+  --ch-sans: system-ui, sans-serif; --ch-display: var(--ch-sans); --ch-mono: ui-monospace, monospace;
+}
+:root, [data-ch-theme="sombre"] { --ch-acc-text: #ffd400; --ch-dim-pct: 10.3%; }
+[data-ch-theme="clair"] { --ch-acc-text: #7d6700; --ch-dim-pct: 12.2%; }
+[data-ch-theme="chaud"] { --ch-acc-text: #ffd400; --ch-dim-pct: 13.3%; }

@@ -1,0 +1,12 @@
+/* Image, vidéo légendée (pièce 41) : ch-figure (figure) > ch-figure__media (img ou video) + ch-figure__caption (figcaption).
+   Ratios : 16 : 9 (base, ou ch-figure--16x9), ch-figure--4x3, ch-figure--1x1. Le ratio est posé sur le média (aspect-ratio, boîte de bordure) :
+   l'image est rognée par object-fit: cover, la vidéo reste entière (contain). Sans fichier chargé, le fond bg2 tient la place.
+   L'attribut alt de l'image et l'attribut controls de la vidéo sont exigés par scripts/checks/figure.mjs.
+   Couleurs : légende mute sur bg, bg2, card ; filet line ; fond du média bg2. Aucun mouvement. */
+.ch-figure { box-sizing: border-box; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--ch-s2); min-width: 0; color: var(--ch-fg); }
+.ch-figure__media { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; max-width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; background: var(--ch-bg2); border: 1px solid var(--ch-line); border-radius: var(--ch-radius); }
+video.ch-figure__media { object-fit: contain; }
+.ch-figure__caption { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; color: var(--ch-mute); overflow-wrap: anywhere; }
+.ch-figure--16x9 > .ch-figure__media { aspect-ratio: 16 / 9; }
+.ch-figure--4x3 > .ch-figure__media { aspect-ratio: 4 / 3; }
+.ch-figure--1x1 > .ch-figure__media { aspect-ratio: 1 / 1; }

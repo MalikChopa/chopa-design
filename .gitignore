@@ -1,0 +1,28 @@
+# Secrets et fichiers locaux : à ne jamais mettre dans git (modèle de Diapason, à compléter selon le projet)
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+id_rsa*
+.npmrc
+.netrc
+
+# Fichiers de la machine et fichiers générés
+.DS_Store
+node_modules/
+dist/
+build/
+.venv/
+__pycache__/
+*.log
+
+# Chopa Design : sorties générées du site (dist-lib/ reste versionné)
+site/dist/
+site/public/chopa/
+.astro/
+
+# Sorties des agents en parallèle (CH_OUT)
+.out/
+livraison/

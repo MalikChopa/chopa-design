@@ -1,0 +1,29 @@
+/* Notification (pièce 54) : pile fixe ch-toast-stack (créée par le module toast, jamais dans le code à copier) > ch-toast.
+   ch-toast : icône (sprite) · ch-toast__body (ch-toast__kind = le mot « Info », « Attention » ou « Erreur », puis ch-toast__text,
+   puis éventuellement ch-toast__action) · ch-toast__close. Variantes : --info (barre acc à gauche), --warn (idem, mot et glyphe d'alerte),
+   --error (cadre acc entier). Le sens est dit par le mot et le glyphe, jamais par la seule couleur.
+   Sans JavaScript : le déclencheur [data-ch-toast] est masqué (il ne sert à rien sans module).
+   Couleurs : fg (mot, croix), soft (texte) sur card ; acc-text (bouton d'action secondaire) sur card ; filets line et acc.
+   Entrée : @starting-style, limitée à la pile (un toast fixe d'une page ne s'anime pas au chargement). Mouvement réduit : aucune transition. */
+.ch-toast-stack { box-sizing: border-box; margin: 0; padding: 0; position: fixed; right: var(--ch-s4); bottom: var(--ch-s4); z-index: var(--ch-z-overlay);
+  width: min(420px, calc(100% - 2 * var(--ch-s4))); max-height: calc(100vh - 2 * var(--ch-s4)); max-height: calc(100dvh - 2 * var(--ch-s4));
+  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--ch-s2); overflow: hidden auto; pointer-events: none; }
+.ch-toast { box-sizing: border-box; margin: 0; padding: var(--ch-s2) var(--ch-s2) var(--ch-s2) var(--ch-s4); display: flex; flex-wrap: wrap; align-items: center; gap: var(--ch-s2) var(--ch-s3);
+  background: var(--ch-card); color: var(--ch-soft); border: 1px solid var(--ch-line); border-left: 2px solid var(--ch-acc); border-radius: var(--ch-radius);
+  font-family: var(--ch-sans); font-size: 14px; line-height: 1.5; pointer-events: auto; opacity: 1; translate: 0 0; transition: opacity var(--ch-t-fast), translate var(--ch-t-fast); }
+@starting-style { .ch-toast-stack .ch-toast { opacity: 0; translate: 0 12px; } }
+.ch-toast--info { border-left-color: var(--ch-acc); }
+.ch-toast--warn { border-left-width: 4px; }
+.ch-toast--error { border-color: var(--ch-acc); }
+.ch-toast .ch-icon { color: var(--ch-fg); }
+.ch-toast__body { box-sizing: border-box; margin: 0; padding: var(--ch-s2) 0; flex: 1 1 160px; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 var(--ch-s2); overflow-wrap: anywhere; }
+.ch-toast__kind { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-fg); font-weight: 600; }
+.ch-toast__text { box-sizing: border-box; margin: 0; padding: 0; color: var(--ch-soft); }
+.ch-toast__action, .ch-toast__close { flex: none; }
+.ch-toast__action { margin-left: auto; }
+.ch-toast__action + .ch-toast__close { margin-left: 0; }
+.ch-toast__body + .ch-toast__close { margin-left: auto; }
+:root:not(.ch-js) [data-ch-toast], .ch-js [data-ch-toast][data-ch-failed] { display: none; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-toast { transition: none; }
+}

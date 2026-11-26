@@ -1,0 +1,7 @@
+/* État vide (pièce 59) : un titre, un texte, une action. Fond libre (il prend la surface de la page), cadre en tirets line.
+   ch-empty > ch-empty__title (titre de niveau choisi par la page), ch-empty__text, ch-empty__action (un ch-btn).
+   Couleurs : fg (titre), soft (texte) sur bg, bg2 ou card : paires autorisées ; bouton : celles de ch-btn. */
+.ch-empty { box-sizing: border-box; margin: 0; padding: var(--ch-s7) var(--ch-s5); display: flex; flex-direction: column; align-items: center; gap: var(--ch-s3); border: 1px dashed var(--ch-line); border-radius: var(--ch-radius); text-align: center; }
+.ch-empty__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 22px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-empty__text { box-sizing: border-box; margin: 0; padding: 0; max-width: 44ch; font-family: var(--ch-sans); font-size: 16px; line-height: 1.5; color: var(--ch-soft); }
+.ch-empty__action { margin: var(--ch-s2) 0 0; }

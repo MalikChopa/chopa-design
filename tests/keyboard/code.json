@@ -1,0 +1,41 @@
+{
+  "slug": "code",
+  "cases": [
+    {
+      "id": "copier-au-clavier",
+      "example": "code/defaut",
+      "js": true,
+      "tabOrder": [
+        ".ch-code__copy",
+        ".ch-code__pre"
+      ],
+      "steps": [
+        {
+          "key": "Enter"
+        },
+        {
+          "wait": 200,
+          "expect": {
+            "focus": ".ch-code__copy",
+            "attrOneOf": {
+              "sel": ".ch-code__copy",
+              "name": "data-ch-state",
+              "values": [
+                "ok",
+                "manual"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "id": "sans-bouton",
+      "example": "code/sans-bouton",
+      "js": true,
+      "tabOrder": [
+        ".ch-code__pre"
+      ]
+    }
+  ]
+}

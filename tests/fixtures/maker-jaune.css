@@ -1,0 +1,11 @@
+/* Réglages d'un site, à poser après chopa.css. Accent #ffd400.
+   Produit par « créer ton thème » : acc-text, on-acc et dim-pct recalculés, toutes les paires autorisées à 4,5 : 1 au moins dans les 3 thèmes.
+   Écart assumé : arrondi 8px (la palette stricte et les coins carrés ne valent que pour les 3 thèmes Chopa). */
+:root {
+  --ch-acc: #ffd400; --ch-on-acc: #050505;
+  --ch-radius: 8px;
+  --ch-sans: system-ui, sans-serif; --ch-display: var(--ch-sans); --ch-mono: ui-monospace, monospace;
+}
+:root, [data-ch-theme="sombre"] { --ch-acc-text: #ffd400; --ch-dim-pct: 10.3%; }
+[data-ch-theme="clair"] { --ch-acc-text: #7d6700; --ch-dim-pct: 12.2%; }
+[data-ch-theme="chaud"] { --ch-acc-text: #ffd400; --ch-dim-pct: 13.3%; }

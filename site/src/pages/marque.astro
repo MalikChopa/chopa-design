@@ -1,0 +1,116 @@
+---
+// Page « Marque » (J8a) : le logotype C, « CHOPA » en police d'affichage avec un point carré orange (pièce ch-wordmark).
+import { Code } from 'astro:components';
+import DocLayout from '../components/DocLayout.astro';
+
+const THEMES = ['sombre', 'clair', 'chaud'];
+const SURFACES = [
+  { id: 'bg', nom: 'bg' },
+  { id: 'bg2', nom: 'bg2' },
+  { id: 'card', nom: 'card' },
+];
+// Tailles minimales : la taille du point vaut 0,34 fois la taille de police (voir wordmark.css).
+const MINIMA = [
+  { usage: 'Minimum absolu (mention, pied de page)', px: 12 },
+  { usage: 'Minimum en en-tête (lien d\'accueil)', px: 16 },
+];
+const dot = (px: number) => (px * 0.34).toFixed(2).replace('.', ',');
+const code = `<span class="ch-wordmark">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span></span>
+
+<!-- Un autre nom, en lien, en grand : -->
+<a class="ch-wordmark ch-wordmark--lg" href="/" aria-label="Tuilage, accueil">Tuilage<span class="ch-wordmark__dot" aria-hidden="true"></span></a>`;
+---
+<DocLayout title="Marque">
+  <h1 class="doc-h1 doc-h1--page">Marque</h1>
+  <p class="doc-lead">Le logotype de Chopa : le nom en majuscules grasses (Inter Tight 800, serrées), suivi d'un point carré orange. Il se pose avec la pièce « Logotype » (<code>ch-wordmark</code>) ; chaque site peut y mettre son propre nom.</p>
+
+  <h2 class="doc-h2">Le logotype dans les trois thèmes</h2>
+  <p class="doc-text">Sur les trois fonds de la bibliothèque : <code>bg</code> (page), <code>bg2</code> (bandeau) et <code>card</code> (carte). Le nom suit la couleur de texte du thème ; le point reste du même orange et carré dans les trois thèmes.</p>
+  <div class="doc-mq-themes">
+    {THEMES.map((t) => (
+      <section class="doc-mq-theme" data-ch-theme={t} aria-labelledby={`mq-${t}`}>
+        <h3 class="doc-mq-theme__t" id={`mq-${t}`}>Thème « {t} »</h3>
+        {SURFACES.map((s) => (
+          <div class={`doc-mq-tile doc-mq-tile--${s.id}`}>
+            <span class="ch-wordmark ch-wordmark--lg">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span></span>
+            <span class="doc-mq-tile__n">sur {s.nom}</span>
+          </div>
+        ))}
+      </section>
+    ))}
+  </div>
+
+  <h2 class="doc-h2">Tailles minimales</h2>
+  <p class="doc-text">Le point mesure 0,34 fois la taille du texte. Il doit rester d'au moins 4 px, sinon il se réduit à une poussière et ne se voit plus carré ; la taille du texte ne descend donc jamais sous 12 px.</p>
+  <div class="doc-mq-scroll" role="region" aria-label="Tableau des tailles minimales" tabindex="0">
+    <table class="doc-mq-table">
+      <thead><tr><th scope="col">Usage</th><th scope="col">Taille du texte</th><th scope="col">Taille du point</th><th scope="col">Exemple (taille réelle)</th></tr></thead>
+      <tbody>
+        {MINIMA.map((m) => (
+          <tr>
+            <th scope="row">{m.usage}</th>
+            <td>{m.px} px</td>
+            <td>{dot(m.px)} px</td>
+            <td><span class="ch-wordmark" style={`font-size:${m.px}px`}>Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span></span></td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+  <p class="doc-text">Au-dessous de 12 px, on écrit « Chopa » en texte ordinaire, sans point.</p>
+
+  <h2 class="doc-h2">Zone de protection</h2>
+  <p class="doc-text">Garde autour du logotype un espace libre d'au moins une demi-fois la taille du texte (0,5 em), soit environ une fois et demie la hauteur du point, sur les quatre côtés. Rien d'autre (texte, bord de page, image) n'entre dans cette zone. Le cadre en pointillé ci-dessous la montre, ici pour un logotype de 64 px (zone de 32 px).</p>
+  <div class="doc-mq-space"><span class="ch-wordmark ch-wordmark--xl">Chopa<span class="ch-wordmark__dot" aria-hidden="true"></span></span></div>
+
+  <h2 class="doc-h2">À ne pas faire</h2>
+  <ul class="doc-list">
+    <li><strong>Un point rond ou aux coins arrondis.</strong> Le point est un carré (<code>border-radius: 0</code>), même si un site règle <code>--ch-radius</code>. Le bouton radio est la seule forme ronde de la bibliothèque.</li>
+    <li><strong>Une autre couleur de point.</strong> Il prend toujours l'orange du thème (<code>--ch-acc</code>) ; le texte du logotype reste dans la couleur du texte (<code>--ch-fg</code>).</li>
+    <li><strong>Étirer ou écraser le logotype.</strong> Il se règle par la taille du texte (<code>font-size</code>) seulement : jamais de <code>transform: scale</code>, de largeur ou de hauteur forcées.</li>
+    <li><strong>Une autre police ou une autre graisse.</strong> Le nom s'écrit avec <code>--ch-display</code> et sa graisse d'affichage, en majuscules.</li>
+    <li><strong>Plusieurs points ou un point à part.</strong> Le point colle au nom (écart de 0,14 em) et reste à la fin ; il ne sert jamais de ponctuation ailleurs dans le texte du logotype.</li>
+    <li><strong>Un point comme seul porteur de sens.</strong> Il est décoratif (<code>aria-hidden="true"</code>) ; le nom reste du vrai texte.</li>
+  </ul>
+
+  <h2 class="doc-h2">Rappel de la palette</h2>
+  <p class="doc-text">Rien d'autre que du noir, du blanc, des gris et <strong>un seul orange</strong> : <code>#ff5a1f</code> pour les fonds et les points. En thème clair, l'orange en texte, lien ou focus passe à <code>#c23300</code> (contraste d'au moins 4,5 : 1).</p>
+  <ul class="doc-mq-sw" aria-label="Rôles de couleur du thème courant">
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-bg)" aria-hidden="true"></span><code>bg</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-bg2)" aria-hidden="true"></span><code>bg2</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-card)" aria-hidden="true"></span><code>card</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-line)" aria-hidden="true"></span><code>line</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-mute)" aria-hidden="true"></span><code>mute</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-fg)" aria-hidden="true"></span><code>fg</code></li>
+    <li><span class="doc-mq-sw__c" style="background: var(--ch-acc)" aria-hidden="true"></span><code>acc</code></li>
+  </ul>
+  <p class="doc-text">Les valeurs exactes, thème par thème, sont sur la page <a href="/jetons/">Jetons</a>.</p>
+
+  <h2 class="doc-h2">Le code</h2>
+  <div class="doc-example__code doc-example__code--solo"><Code code={code} lang="html" theme="css-variables" /></div>
+  <p class="doc-text">La pièce, ses variantes et ses réglages sont sur la page <a href="/composants/wordmark/">Logotype</a>.</p>
+</DocLayout>
+
+<style>
+  .doc-mq-themes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0 0 24px; }
+  .doc-mq-theme { box-sizing: border-box; min-width: 0; padding: 16px; border: 1px solid var(--ch-line); }
+  .doc-mq-theme__t { margin: 0 0 12px; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; font-weight: 400; color: var(--ch-mute); }
+  .doc-mq-tile { box-sizing: border-box; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin: 0 0 8px; padding: 20px 16px; border: 1px solid var(--ch-line); color: var(--ch-fg); }
+  .doc-mq-tile--bg { background: var(--ch-bg); }
+  .doc-mq-tile--bg2 { background: var(--ch-bg2); }
+  .doc-mq-tile--card { background: var(--ch-card); }
+  .doc-mq-tile__n { font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--ch-mute); }
+  .doc-mq-scroll { max-width: 100%; margin: 0 0 16px; overflow-x: auto; border: 1px solid var(--ch-line); }
+  .doc-mq-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .doc-mq-table th, .doc-mq-table td { padding: 12px 14px; border-bottom: 1px solid var(--ch-line); text-align: left; vertical-align: middle; color: var(--ch-soft); }
+  .doc-mq-table thead th { color: var(--ch-fg); font-weight: 600; background: var(--ch-bg2); }
+  .doc-mq-table tbody th { font-weight: 400; }
+  .doc-mq-table td:last-child { color: var(--ch-fg); }
+  .doc-mq-space { box-sizing: border-box; display: inline-block; max-width: 100%; margin: 0 0 24px; padding: 32px; border: 1px dashed var(--ch-mute); overflow-x: auto; }
+  .doc-mq-sw { display: flex; flex-wrap: wrap; gap: 12px 20px; margin: 0 0 16px; padding: 0; list-style: none; color: var(--ch-soft); }
+  .doc-mq-sw li { display: flex; align-items: center; gap: 8px; }
+  .doc-mq-sw__c { display: inline-block; width: 24px; height: 24px; border: 1px solid var(--ch-line); }
+  @media (max-width: 899px) {
+    .doc-mq-themes { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

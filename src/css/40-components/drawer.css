@@ -1,0 +1,28 @@
+/* Tiroir (pièce 51) : <dialog class="ch-drawer ch-drawer--left|--right" aria-labelledby>, modal comme ch-modal (même module dialog :
+   data-ch-dialog-open="#id", data-ch-dialog-close), collé au bord gauche ou droit, pleine hauteur, jamais plus large que la fenêtre (100 %).
+   ch-drawer__head (ch-drawer__title + bouton ch-drawer__close), ch-drawer__body (défile à l'intérieur), ch-drawer__foot.
+   Entrée : le tiroir glisse depuis son bord (@starting-style) ; pas de sortie animée. Mouvement réduit : aucune transition, voile compris.
+   Sans JavaScript ou module en échec : le contenu s'affiche dans la page (voir modal.css pour les boutons masqués).
+   Couleurs : fg, soft, mute sur card ; filets line ; voile = bg à 72 %. */
+.ch-drawer { box-sizing: border-box; margin: 0; padding: 0; position: fixed; top: 0; bottom: 0; width: min(420px, 100%); max-width: 100%; height: 100vh; height: 100dvh; max-height: none; overflow: hidden; background: var(--ch-card); color: var(--ch-fg); border: 0 solid var(--ch-line); border-radius: var(--ch-radius); opacity: 1; transform: none; transition: transform var(--ch-t-panel), opacity var(--ch-t-panel); }
+.ch-drawer[open] { display: flex; flex-direction: column; }
+.ch-drawer--left { left: 0; right: auto; border-right-width: 1px; }
+.ch-drawer--right { right: 0; left: auto; border-left-width: 1px; }
+.ch-drawer::backdrop { background: color-mix(in srgb, var(--ch-bg) 72%, transparent); opacity: 1; transition: opacity var(--ch-t-panel); }
+@starting-style {
+  .ch-drawer--left[open] { transform: translateX(-100%); opacity: 0; }
+  .ch-drawer--right[open] { transform: translateX(100%); opacity: 0; }
+  .ch-drawer[open]::backdrop { opacity: 0; }
+}
+.ch-drawer__head { box-sizing: border-box; margin: 0; display: flex; flex: none; align-items: center; justify-content: space-between; gap: var(--ch-s4); padding: var(--ch-s3) var(--ch-s3) var(--ch-s3) var(--ch-s5); border-bottom: 1px solid var(--ch-line); }
+.ch-drawer__title { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-sans); font-size: 20px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2; color: var(--ch-fg); overflow-wrap: anywhere; }
+.ch-drawer__close { flex: none; }
+.ch-drawer__body { box-sizing: border-box; margin: 0; padding: var(--ch-s5); flex: 1 1 auto; min-height: 0; overflow: auto; overscroll-behavior: contain; color: var(--ch-soft); font-size: 15px; line-height: 1.5; }
+.ch-drawer__foot { box-sizing: border-box; margin: 0; display: flex; flex: none; flex-wrap: wrap; justify-content: flex-end; gap: var(--ch-s3); padding: var(--ch-s4) var(--ch-s5); border-top: 1px solid var(--ch-line); }
+
+:root:not(.ch-js) .ch-drawer:not([open]), .ch-js .ch-drawer[data-ch-failed]:not([open]) { display: block; position: static; width: auto; height: auto; border-width: 1px; }
+.ch-js .ch-drawer[data-ch-failed] [data-ch-dialog-close] { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ch-drawer, .ch-drawer::backdrop { transition: none; }
+}

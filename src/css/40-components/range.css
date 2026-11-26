@@ -1,0 +1,15 @@
+/* Curseur (pièce 19) : <input type="range" class="ch-range"> natif (flèches, Début, Fin, PageHaut/Bas : navigateur).
+   Piste de 6 px (bordure mute), poignée carrée de 20 px en acc ; hauteur de la zone 44 px. La valeur se montre dans
+   un <output class="ch-range__value"> relié par for, vide dans le HTML : le module `range` de chopa.js (data-ch-range sur le
+   curseur, J3a) y écrit la valeur courante après chaque changement ; sans JavaScript rien n'est affiché (pas de valeur périmée). Focus : contour de la base (30-base.css). Désactivé : bordure line, poignée mute. */
+.ch-range { box-sizing: border-box; margin: 0; padding: 0; color: inherit; appearance: none; -webkit-appearance: none; display: block; width: 100%; height: 44px; background: transparent; cursor: pointer; }
+.ch-range::-webkit-slider-runnable-track { box-sizing: border-box; height: 6px; background: var(--ch-bg2); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); }
+.ch-range::-moz-range-track { box-sizing: border-box; height: 6px; background: var(--ch-bg2); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); }
+.ch-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; box-sizing: border-box; width: 20px; height: 20px; margin-top: -8px; background: var(--ch-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-range::-moz-range-thumb { box-sizing: border-box; width: 20px; height: 20px; background: var(--ch-acc); border: 0; border-radius: var(--ch-radius); }
+.ch-range:disabled { cursor: not-allowed; }
+.ch-range:disabled::-webkit-slider-runnable-track { border-color: var(--ch-line); }
+.ch-range:disabled::-moz-range-track { border-color: var(--ch-line); }
+.ch-range:disabled::-webkit-slider-thumb { background: var(--ch-mute); }
+.ch-range:disabled::-moz-range-thumb { background: var(--ch-mute); }
+.ch-range__value { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--ch-mono); font-size: 12px; letter-spacing: .12em; color: var(--ch-fg); font-variant-numeric: tabular-nums; text-align: right; min-width: 3ch; }

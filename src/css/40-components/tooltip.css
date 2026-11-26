@@ -1,0 +1,21 @@
+/* Infobulle (pièce 52) : <span class="ch-tooltip" data-ch-tooltip> > déclencheur (bouton, lien…, aria-describedby="id") + <span class="ch-tooltip__bubble" role="tooltip" id>.
+   Placement par position: relative (le conteneur) et absolute (la bulle) : au-dessus par défaut (--haut), en dessous (--bas) ;
+   le module recale la bulle dans la fenêtre (décalage horizontal par `translate`) et la retourne de l'autre côté s'il manque de place.
+   Affichée par le module (classe is-open sur ch-tooltip) : survol et focus ; Échap la masque sans bouger le focus ; la bulle fait partie du
+   conteneur et un pont invisible de 8 px la relie au déclencheur, donc le pointeur peut passer de l'un à l'autre (WCAG 1.4.13).
+   Sans JavaScript, ou module en échec : la bulle reste masquée (display: none) ; elle n'est jamais le seul porteur d'une information.
+   Entrée : @starting-style (opacité seule, pour que la mesure du module reste exacte). Mouvement réduit : aucune transition.
+   Couleurs : fg sur card ; filet mute (bord, pas du texte). */
+.ch-tooltip { box-sizing: border-box; margin: 0; padding: 0; position: relative; display: inline-block; }
+.ch-tooltip__bubble { box-sizing: border-box; margin: 0; padding: var(--ch-s2) var(--ch-s3); display: none; position: absolute; z-index: var(--ch-z-overlay); left: 50%; bottom: calc(100% + 8px); transform: translateX(-50%); width: max-content; max-width: min(260px, calc(100vw - 16px)); background: var(--ch-card); color: var(--ch-fg); border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); font-family: var(--ch-sans); font-size: 13px; font-weight: 400; line-height: 1.4; letter-spacing: 0; text-align: left; text-transform: none; white-space: normal; opacity: 1; transition: opacity var(--ch-t-fast); }
+.ch-tooltip__bubble::before { content: ""; position: absolute; left: 0; right: 0; bottom: -9px; height: 9px; }
+.ch-tooltip.is-open > .ch-tooltip__bubble { display: block; }
+@starting-style { .ch-tooltip.is-open > .ch-tooltip__bubble { opacity: 0; } }
+.ch-tooltip--haut > .ch-tooltip__bubble { bottom: calc(100% + 8px); }
+.ch-tooltip--bas > .ch-tooltip__bubble, .ch-tooltip[data-ch-flip]:not(.ch-tooltip--bas) > .ch-tooltip__bubble { bottom: auto; top: calc(100% + 8px); }
+.ch-tooltip--bas > .ch-tooltip__bubble::before, .ch-tooltip[data-ch-flip]:not(.ch-tooltip--bas) > .ch-tooltip__bubble::before { bottom: auto; top: -9px; }
+.ch-tooltip--bas[data-ch-flip] > .ch-tooltip__bubble { top: auto; bottom: calc(100% + 8px); }
+.ch-tooltip--bas[data-ch-flip] > .ch-tooltip__bubble::before { top: auto; bottom: -9px; }
+@media (prefers-reduced-motion: reduce) {
+  .ch-tooltip__bubble { transition: none; }
+}

@@ -1,0 +1,13 @@
+/* Interrupteur (pièce 18) : <input type="checkbox" role="switch" class="ch-switch"> dans un <label class="ch-choice">.
+   Piste carrée de 40 × 24 px, curseur carré de 16 px : à droite et rempli d'accent quand c'est activé (la position
+   le dit aussi, pas la couleur seule). Espace bascule (natif). Mouvement : le curseur glisse (--ch-t-fast), annulé
+   par prefers-reduced-motion (30-base.css). Désactivé : bordure et curseur en line (éteint) ou mute (allumé). */
+.ch-switch { box-sizing: border-box; margin: 0; padding: 0; flex-shrink: 0; color: inherit; appearance: none; -webkit-appearance: none; position: relative; width: 40px; height: 24px; border: 1px solid var(--ch-mute); border-radius: var(--ch-radius); background: var(--ch-bg2); cursor: pointer; transition: background var(--ch-t-fast), border-color var(--ch-t-fast); }
+.ch-switch::after { content: ""; position: absolute; top: 3px; left: 3px; width: 16px; height: 16px; background: var(--ch-mute); transition: transform var(--ch-t-fast), background var(--ch-t-fast); }
+.ch-switch:checked { background: var(--ch-acc); border-color: var(--ch-acc); }
+.ch-switch:checked::after { background: var(--ch-on-acc); transform: translateX(16px); }
+.ch-switch[aria-invalid="true"] { border-color: var(--ch-acc); }
+.ch-switch:disabled { background: none; border-color: var(--ch-line); cursor: not-allowed; }
+.ch-switch:disabled::after { background: var(--ch-line); }
+.ch-switch:disabled:checked { background: none; border-color: var(--ch-mute); }
+.ch-switch:disabled:checked::after { background: var(--ch-mute); }

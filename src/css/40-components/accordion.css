@@ -1,0 +1,16 @@
+/* Accordéon (pièce 43) : ch-accordion (div) > details.ch-accordion__item [name] > summary.ch-accordion__summary (texte + glyphe chevron-down
+   ch-accordion__icon) + div.ch-accordion__panel. Natif, sans JavaScript : `name` identique sur plusieurs details = un seul ouvert à la fois
+   (sans support de l'attribut, chaque details reste indépendant : seule l'exclusivité est perdue). État ouvert : attribut `open`.
+   L'état ouvert ne tient pas à la couleur : le chevron fait un demi-tour et le titre passe en gras.
+   Résumé : 44 px de haut, contour de focus tracé à l'intérieur (-2px).
+   Couleurs : titre fg, panneau soft, glyphe fg (survol acc-text) sur bg, bg2, card ; filets line. */
+.ch-accordion { box-sizing: border-box; margin: 0; padding: 0; display: block; width: 100%; border-bottom: 1px solid var(--ch-line); }
+.ch-accordion__item { box-sizing: border-box; margin: 0; padding: 0; display: block; border-top: 1px solid var(--ch-line); }
+.ch-accordion__summary { box-sizing: border-box; margin: 0; padding: var(--ch-s2); display: flex; align-items: center; justify-content: space-between; gap: var(--ch-s4); min-height: var(--ch-hit); font-family: var(--ch-sans); font-size: 16px; line-height: 1.4; color: var(--ch-fg); cursor: pointer; list-style: none; }
+.ch-accordion__summary::-webkit-details-marker { display: none; }
+.ch-accordion__summary:focus-visible { outline-offset: -2px; }
+.ch-accordion__icon { transition: transform var(--ch-t-fast), color var(--ch-t-fast); }
+.ch-accordion__summary:hover .ch-accordion__icon { color: var(--ch-acc-text); }
+.ch-accordion__item[open] > .ch-accordion__summary { font-weight: 600; }
+.ch-accordion__item[open] > .ch-accordion__summary .ch-accordion__icon { transform: rotate(180deg); }
+.ch-accordion__panel { box-sizing: border-box; margin: 0; padding: 0 var(--ch-s2) var(--ch-s4); max-width: var(--ch-measure); font-family: var(--ch-sans); font-size: 15px; line-height: 1.5; color: var(--ch-soft); }
